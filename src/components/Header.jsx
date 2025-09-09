@@ -12,7 +12,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <header className="bg-white shadow-md sticky top-0 z-50 font-vietnam">
       <div className="max-w-[1200px] mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div

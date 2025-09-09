@@ -10,6 +10,8 @@ export default {
         title: "var(--font-title)",
         sub_title: "var(--font-subTitle)",
         text: "var(--font-text)",
+
+        vietnam: ['"Be Vietnam Pro"', "sans-serif"],
       },
       fontSize: {
         title: "var(--font-size-title)",
