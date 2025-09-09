@@ -21,7 +21,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#F2F0F1] px-4">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg space-y-6">
         {/* Title */}
         <div className="text-center">

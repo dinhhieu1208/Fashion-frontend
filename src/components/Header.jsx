@@ -39,7 +39,6 @@ export default function Header() {
           </ul>
 
           <div className="flex items-center gap-4">
-            {/* Search */}
             <form className="relative hidden lg:flex items-center border border-gray-300 rounded-full px-3 h-10 w-72">
               <img
                 src={icon_search}
@@ -110,7 +109,6 @@ export default function Header() {
         </>
       )}
 
-      {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <>
           <div
