@@ -7,6 +7,7 @@ import LoginPage from "../page/LoginPage.jsx";
 import RegisterPage from "../page/RegisterPage.jsx";
 import ContactPage from "../components/Contact.jsx";
 import IntroducePage from "../page/IntroducePage.jsx";
+import CartPage from "../page/CartPage.jsx";
 // import CartPage from "../pages/client/CartPage";
 
 const AppRouter = () => {
@@ -20,6 +21,7 @@ const AppRouter = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/introduce" element={<IntroducePage />} />
+        <Route path="/cart" element={<CartPage />} />
         {/* <Route path="/cart" element={<CartPage />} /> */}
 
         {/* Admin Routes */}
