@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import CartTotal from "./CartTotal";
 import { useNavigate } from "react-router-dom";
-
+import clother1 from "../assets/images/clother-1.jpg";
+import clother2 from "../assets/images/clother-2.jpg";
 const Cart = () => {
   const navigate = useNavigate();
 
@@ -10,7 +11,7 @@ const Cart = () => {
     {
       _id: "1",
       name: "Áo Thun Unisex Basic",
-      image: "/images/clother-1.jpg",
+      image: clother1,
       price: 150000,
       size: "M",
       quantity: 2,
@@ -18,7 +19,7 @@ const Cart = () => {
     {
       _id: "2",
       name: "Quần Jean Nam Rách Gối",
-      image: "/images/clother-2.jpg",
+      image: clother2,
       price: 200000,
       size: "L",
       quantity: 1,

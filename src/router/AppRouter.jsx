@@ -8,6 +8,7 @@ import RegisterPage from "../page/RegisterPage.jsx";
 import ContactPage from "../components/Contact.jsx";
 import IntroducePage from "../page/IntroducePage.jsx";
 import CartPage from "../page/CartPage.jsx";
+import PaymentPage from "../page/PaymentPage.jsx";
 // import CartPage from "../pages/client/CartPage";
 
 const AppRouter = () => {
@@ -22,6 +23,8 @@ const AppRouter = () => {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/introduce" element={<IntroducePage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
+
         {/* <Route path="/cart" element={<CartPage />} /> */}
 
         {/* Admin Routes */}
