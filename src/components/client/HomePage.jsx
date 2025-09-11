@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Banner from "../../assets/images/Banner.jpg";
-import logo1 from "../../assets/images/Logo-1.png";
-import logo2 from "../../assets/images/Logo-2.png";
-import logo3 from "../../assets/images/Logo-3.png";
-import logo4 from "../../assets/images/Logo-4.png";
+// import Banner from "../../assets/images/Banner.jpg";
+// import logo1 from "../../assets/images/Logo-1.png";
+// import logo2 from "../../assets/images/Logo-2.png";
+// import logo3 from "../../assets/images/Logo-3.png";
+// import logo4 from "../../assets/images/Logo-4.png";
 import clother1 from "../../assets/images/clother-1.jpg";
 import clother2 from "../../assets/images/clother-2.jpg";
 import banner1 from "../../assets/images/ilutranstion-1.jpg";

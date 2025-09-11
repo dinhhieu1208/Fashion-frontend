@@ -23,15 +23,66 @@ export default function Header() {
           </div>
 
           {/* Navbar */}
-          <ul className="hidden lg:flex items-center space-x-8 text-black text-sm font-medium">
+          <ul className="hidden lg:flex items-center space-x-8 text-black text-[18px] font-medium">
             <li className="relative after:absolute after:h-[1.5px] after:bg-black after:left-0 after:bottom-[-2px] hover:after:scale-x-100 after:scale-x-0 after:w-full after:transition-all after:duration-300">
               <Link to="/">Trang Chủ</Link>
             </li>
+
+            {/* Danh mục có submenu */}
+            <li className="relative group">
+              <Link
+                to="#"
+                className="relative after:absolute after:h-[1.5px] after:bg-black after:left-0 after:bottom-[-2px] hover:after:scale-x-100 after:scale-x-0 after:w-full after:transition-all after:duration-300"
+              >
+                Danh Mục
+              </Link>
+              {/* Submenu */}
+              <ul className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transform translate-y-2 transition-all duration-300 z-50">
+                {/* Nam */}
+                <li className="px-4 py-2 hover:bg-gray-100 relative group/sub">
+                  <Link to="/nam" className="flex justify-between items-center">
+                    Nam
+                  </Link>
+                  {/* Submenu con */}
+                  <ul className="absolute left-full top-0 ml-2 w-40 bg-white shadow-lg rounded-lg opacity-0 group-hover/sub:opacity-100 transform translate-y-2 group-hover/sub:translate-y-0 transition-all duration-300">
+                    <li className="px-4 py-2 hover:bg-gray-100">
+                      <Link to="/nam/ao-so-mi">Áo sơ mi</Link>
+                    </li>
+                    <li className="px-4 py-2 hover:bg-gray-100">
+                      <Link to="/nam/quan-thun">Quần thun</Link>
+                    </li>
+                    <li className="px-4 py-2 hover:bg-gray-100">
+                      <Link to="/nam/ao-thun">Áo thun</Link>
+                    </li>
+                  </ul>
+                </li>
+
+                {/* Nữ */}
+                <li className="px-4 py-2 hover:bg-gray-100 relative group/sub">
+                  <Link to="/nu" className="flex justify-between items-center">
+                    Nữ
+                  </Link>
+                  {/* Submenu con */}
+                  <ul className="absolute left-full top-0 ml-2 w-40 bg-white shadow-lg rounded-lg opacity-0 group-hover/sub:opacity-100 transform translate-y-2 group-hover/sub:translate-y-0 transition-all duration-300">
+                    <li className="px-4 py-2 hover:bg-gray-100">
+                      <Link to="/nu/quan-dai">Quần dài</Link>
+                    </li>
+                    <li className="px-4 py-2 hover:bg-gray-100">
+                      <Link to="/nu/chan-vay">Chân váy</Link>
+                    </li>
+                    <li className="px-4 py-2 hover:bg-gray-100">
+                      <Link to="/nu/ao-kieu">Áo kiểu</Link>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+
             <li className="relative after:absolute after:h-[1.5px] after:bg-black after:left-0 after:bottom-[-2px] hover:after:scale-x-100 after:scale-x-0 after:w-full after:transition-all after:duration-300">
               <Link to="/product">Sản Phẩm</Link>
             </li>
             <li className="relative after:absolute after:h-[1.5px] after:bg-black after:left-0 after:bottom-[-2px] hover:after:scale-x-100 after:scale-x-0 after:w-full after:transition-all after:duration-300">
-              <Link to="/introduce">Giới thiệu</Link>
+              <Link to="/introduce">Giới Thiệu</Link>
             </li>
             <li className="relative after:absolute after:h-[1.5px] after:bg-black after:left-0 after:bottom-[-2px] hover:after:scale-x-100 after:scale-x-0 after:w-full after:transition-all after:duration-300">
               <Link to="/contact">Liên Hệ</Link>
