@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CartTotal from "./CartTotal";
-import bank1 from "../assets/images/bank-2.png";
-import momo from "../assets/images/momo.webp";
+import bank1 from "../../assets/images/bank-2.png";
+import momo from "../../assets/images/momo.webp";
 // Dữ liệu giỏ hàng mẫu
 const sampleCart = [
   {

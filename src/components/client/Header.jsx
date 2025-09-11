@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import user from "../assets/icons/user.svg";
-import carts from "../assets/icons/carts.svg";
-import icon_search from "../assets/images/icon_search.png";
-import icon_nav_menu from "../assets/images/nav menu.png";
+import user from "../../assets/icons/user.svg";
+import carts from "../../assets/icons/carts.svg";
+import icon_search from "../../assets/images/icon_search.png";
+import icon_nav_menu from "../../assets/images/nav menu.png";
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
@@ -13,7 +13,7 @@ export default function Header() {
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50 font-vietnam">
-      <div className="max-w-[1200px] mx-auto px-4 py-4">
+      <div className="max-w-[1400px] mx-auto px-6 py-6">
         <div className="flex items-center justify-between">
           <div
             onClick={() => navigate("/")}

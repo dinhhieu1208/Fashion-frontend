@@ -1,5 +1,5 @@
 import React from "react";
-import about from "../assets/images/aboutUs.jpg";
+import about from "../../assets/images/aboutUs.jpg";
 const About = () => {
   return (
     <div className="max-w-[1200px] mx-auto px-4 py-4">

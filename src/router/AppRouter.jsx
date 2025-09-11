@@ -1,14 +1,15 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Header from "../components/Header.jsx";
-import Footer from "../components/Footer.jsx";
-import HomePage from "../components/HomePage.jsx";
-import LoginPage from "../page/LoginPage.jsx";
-import RegisterPage from "../page/RegisterPage.jsx";
-import ContactPage from "../components/Contact.jsx";
-import IntroducePage from "../page/IntroducePage.jsx";
-import CartPage from "../page/CartPage.jsx";
-import PaymentPage from "../page/PaymentPage.jsx";
+import Header from "./../components/client/Header.jsx";
+import Footer from "./../components/client/Footer.jsx";
+import HomePage from "./../components/client/HomePage.jsx";
+import LoginPage from "./../page/client/LoginPage.jsx";
+import RegisterPage from "./../page/client/RegisterPage.jsx";
+import ContactPage from "./../components/client/Contact.jsx";
+import IntroducePage from "./../page/client/IntroducePage.jsx";
+import CartPage from "./../page/client/CartPage.jsx";
+import PaymentPage from "./../page/client/PaymentPage.jsx";
+import ProductPage from "./../page/client/ProductPage.jsx";
 // import CartPage from "../pages/client/CartPage";
 
 const AppRouter = () => {
@@ -24,6 +25,7 @@ const AppRouter = () => {
         <Route path="/introduce" element={<IntroducePage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/product" element={<ProductPage />} />
 
         {/* <Route path="/cart" element={<CartPage />} /> */}
 

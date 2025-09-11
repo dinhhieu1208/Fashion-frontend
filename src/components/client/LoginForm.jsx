@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import Google from "../assets/images/logo_google.png";
-import Facebook from "../assets/images/logo_facebook.png";
-import Twitter from "../assets/images/logo_Twitter.png";
+import Google from "../../assets/images/logo_google.png";
+import Facebook from "../../assets/images/logo_facebook.png";
+import Twitter from "../../assets/images/logo_Twitter.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-export default function RegisterForm() {
-  const [form, setForm] = useState({ full_name: "", email: "", password: "" });
+export default function LoginForm() {
+  const [form, setForm] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -16,32 +16,22 @@ export default function RegisterForm() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", form);
-    navigate("/login");
+    console.log("Login data:", form);
+    navigate("/");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F2F0F1] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#F2F0F1] px-4 ">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg space-y-6">
-        {/* Title */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900">Create Account</h2>
+          <h2 className="text-3xl font-bold text-gray-900">
+            Login to Your Account
+          </h2>
           <p className="text-gray-500 text-sm mt-2">
-            Bạn chỉ còn một bước nữa để trở thành thành viên của Fashion Store
+            Đăng nhập để tiếp tục khám phá xu hướng thời trang mới nhất
           </p>
         </div>
-
-        {/* Form */}
         <form className="space-y-4" onSubmit={onSubmit}>
-          <input
-            type="text"
-            name="full_name"
-            placeholder="Full Name"
-            value={form.full_name}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-
           <input
             type="email"
             name="email"
@@ -74,17 +64,17 @@ export default function RegisterForm() {
             type="submit"
             className="w-full bg-black text-white py-2 rounded-md font-medium hover:bg-gray-500 transition"
           >
-            Create Account
+            Login
           </button>
         </form>
 
         <div className="flex items-center">
           <hr className="flex-grow border-gray-300" />
-          <span className="mx-3 text-sm text-gray-500">Or sign up with</span>
+          <span className="mx-3 text-sm text-gray-500">Or login with</span>
           <hr className="flex-grow border-gray-300" />
         </div>
 
-        {/* Social Register */}
+        {/* Social Login */}
         <div className="flex justify-center gap-4">
           <button className="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-100">
             <img src={Google} alt="Google" className="w-6 h-6" />
@@ -97,14 +87,14 @@ export default function RegisterForm() {
           </button>
         </div>
 
-        {/* Login link */}
+        {/* Register link */}
         <p className="text-center text-sm text-gray-600">
-          Already have an account?{" "}
+          Don’t have an account?{" "}
           <Link
-            to="/login"
+            to="/register"
             className="text-indigo-600 font-medium hover:underline"
           >
-            Login
+            Create Account
           </Link>
         </p>
       </div>

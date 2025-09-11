@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import DiscountBox from "./DiscountBox";
-import contact from "../assets/images/contact2.jpg";
+import contact from "../../assets/images/contact2.jpg";
 const Contact = () => {
   const [state, handleSubmit] = useForm("xeokwkeg");
   if (state.succeeded) {

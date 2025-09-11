@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Banner from "../assets/images/Banner.jpg";
-import logo1 from "../assets/images/Logo-1.png";
-import logo2 from "../assets/images/Logo-2.png";
-import logo3 from "../assets/images/Logo-3.png";
-import logo4 from "../assets/images/Logo-4.png";
-import clother1 from "../assets/images/clother-1.jpg";
-import clother2 from "../assets/images/clother-2.jpg";
-import banner1 from "../assets/images/ilutranstion-1.jpg";
-import banner2 from "../assets/images/ilutranstion-2.jpg";
-import banner3 from "../assets/images/ilutranstion-3.jpg";
-import banner4 from "../assets/images/ilutranstion-4.jpg";
+import Banner from "../../assets/images/Banner.jpg";
+import logo1 from "../../assets/images/Logo-1.png";
+import logo2 from "../../assets/images/Logo-2.png";
+import logo3 from "../../assets/images/Logo-3.png";
+import logo4 from "../../assets/images/Logo-4.png";
+import clother1 from "../../assets/images/clother-1.jpg";
+import clother2 from "../../assets/images/clother-2.jpg";
+import banner1 from "../../assets/images/ilutranstion-1.jpg";
+import banner2 from "../../assets/images/ilutranstion-2.jpg";
+import banner3 from "../../assets/images/ilutranstion-3.jpg";
+import banner4 from "../../assets/images/ilutranstion-4.jpg";
 
 export default function HomePage() {
   const products = [
@@ -101,7 +101,7 @@ export default function HomePage() {
   });
   return (
     <main className="bg-[#F2F0F1]">
-      <section className="max-w-[1200px] mx-auto px-4 py-4">
+      <section className="max-w-[1400px] mx-auto px-6 py-6">
         <div className="flex flex-col lg:flex-row justify-between items-center">
           <div className="max-w-xl">
             <h2 className="text-[48px] font-black mb-8">
@@ -144,7 +144,7 @@ export default function HomePage() {
       </section>
 
       <section className="bg-black">
-        <div className="max-w-[1200px] mx-auto px-4 py-4">
+        <div className="max-w-[1400px] mx-auto px-6 py-6">
           <div className="flex flex-wrap items-center justify-center gap-y-6 lg:justify-between py-7">
             {[logo1, logo2, logo3, logo4].map((logo, i) => (
               <div key={i} className="w-1/2 lg:w-auto flex justify-center">
@@ -156,7 +156,7 @@ export default function HomePage() {
       </section>
 
       <section className="mt-9 bg-white">
-        <div className="max-w-[1200px] mx-auto px-4 py-4">
+        <div className="max-w-[1400px] mx-auto px-6 py-6">
           <h2 className="text-4xl font-bold text-center">
             SẢN PHẨM BÁN CHẠY NHẤT
           </h2>
@@ -236,7 +236,7 @@ export default function HomePage() {
         </div>
       </section>
       <section className="mt-9 bg-white">
-        <div className="max-w-[1200px] mx-auto px-4 py-4">
+        <div className="max-w-[1400px] mx-auto px-6 py-6">
           <h2 className="text-4xl font-bold text-center">SẢN PHẨM MỚI NHẤT</h2>
           <ul className="mt-8 lg:grid grid-cols-4 gap-7">
             {Products1.map((item) => (

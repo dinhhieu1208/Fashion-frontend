@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import CartTotal from "./CartTotal";
 import { useNavigate } from "react-router-dom";
-import clother1 from "../assets/images/clother-1.jpg";
-import clother2 from "../assets/images/clother-2.jpg";
+import clother1 from "../../assets/images/clother-1.jpg";
+import clother2 from "../../assets/images/clother-2.jpg";
 const Cart = () => {
   const navigate = useNavigate();
 
