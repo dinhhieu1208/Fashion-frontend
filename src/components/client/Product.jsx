@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Spinner from "../../components/Spinner";
 // import Pagination from "@/components/Pagination";
+import banner2 from "../../assets/images/banner2.webp";
 
 const ProductPage = () => {
   const [loading, setLoading] = useState(false);
@@ -61,9 +62,9 @@ const ProductPage = () => {
     <main>
       <section className="relative">
         <img
-          src="/images/img_product_list_banner.webp"
+          src={banner2}
           alt="Banner"
-          className="w-full object-cover"
+          className="w-full h-[400px] object-cover  bg-white rounded-xl"
         />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
           <h2 className="text-4xl font-semibold text-white">Product</h2>

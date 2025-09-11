@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Banner from "../../assets/images/Banner.jpg";
 import logo1 from "../../assets/images/Logo-1.png";
 import logo2 from "../../assets/images/Logo-2.png";
@@ -11,8 +12,22 @@ import banner1 from "../../assets/images/ilutranstion-1.jpg";
 import banner2 from "../../assets/images/ilutranstion-2.jpg";
 import banner3 from "../../assets/images/ilutranstion-3.jpg";
 import banner4 from "../../assets/images/ilutranstion-4.jpg";
+import slideshow1 from "../../assets/images/slideshow_1.jpg";
+import slideshow2 from "../../assets/images/slideshow_2.jpg";
+import slideshow3 from "../../assets/images/slideshow_3.jpg";
+import slideshow4 from "../../assets/images/slideshow_4.jpg";
 
 export default function HomePage() {
+  const slides = [slideshow1, slideshow2, slideshow3, slideshow4];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
+    }, 10000); // 10 giây đổi ảnh
+    return () => clearInterval(interval);
+  }, []);
+
   const products = [
     {
       _id: "1",
@@ -101,49 +116,37 @@ export default function HomePage() {
   });
   return (
     <main className="bg-[#F2F0F1]">
-      <section className="max-w-[1400px] mx-auto px-6 py-6">
-        <div className="flex flex-col lg:flex-row justify-between items-center">
-          <div className="max-w-xl">
-            <h2 className="text-[48px] font-black mb-8">
-              CHUYÊN THỜI TRANG PHONG CÁCH, HIỆN ĐẠI
-            </h2>
-            <p className="text-[16px] font-normal opacity-60 mb-12">
-              Chúng tôi chuyên cung cấp nhiều loại quần áo được chế tác tỉ mỉ,
-              được thiết kế để làm nổi bật cá tính của bạn và đáp ứng phong cách
-              của bạn.
-            </p>
-            <a
-              href="#"
-              className="inline-block text-white bg-black py-4 px-[65px] rounded-full mb-12"
-            >
-              Xem ngay
-            </a>
-            <div className="flex flex-wrap gap-4 lg:gap-0">
-              <div className="border-r border-gray-400 pr-8 mr-8">
-                <div className="text-[40px] font-bold">200+</div>
-                <div className="opacity-60">Thương Hiệu</div>
-              </div>
-              <div className="border-r border-gray-400 pr-8 mr-8">
-                <div className="text-[40px] font-bold">2,000+</div>
-                <div className="opacity-60">Sản Phẩm Chất Lượng</div>
-              </div>
-              <div>
-                <div className="text-[40px] font-bold">200+</div>
-                <div className="opacity-60">Khách Hàng</div>
-              </div>
-            </div>
-          </div>
-          <div className="relative overflow-hidden w-full lg:w-1/2 mt-10 lg:mt-0">
+      <section className="relative w-full max-w-[1400px] mx-auto overflow-hidden rounded-xl">
+        {/* Slide wrapper */}
+        <div
+          className="flex transition-transform duration-1000 ease-in-out"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {slides.map((slide, index) => (
             <img
-              src={Banner}
-              alt=""
-              className="w-full object-cover pt-[50px] -mb-2"
+              key={index}
+              src={slide}
+              alt={`Slide ${index}`}
+              className="w-full h-[500px] object-cover flex-shrink-0"
             />
-          </div>
+          ))}
+        </div>
+
+        {/* Indicator dots */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-3 h-3 rounded-full ${
+                index === currentIndex ? "bg-black" : "bg-gray-400"
+              }`}
+            ></button>
+          ))}
         </div>
       </section>
 
-      <section className="bg-black">
+      {/* <section className="bg-black">
         <div className="max-w-[1400px] mx-auto px-6 py-6">
           <div className="flex flex-wrap items-center justify-center gap-y-6 lg:justify-between py-7">
             {[logo1, logo2, logo3, logo4].map((logo, i) => (
@@ -153,7 +156,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="mt-9 bg-white">
         <div className="max-w-[1400px] mx-auto px-6 py-6">
