@@ -13,6 +13,8 @@ import ProductPage from "./../page/client/ProductPage.jsx";
 import { Dashboard } from "@/page/admin/Dashboard.jsx";
 import { Layout } from "lucide-react";
 import { LayoutAdmin } from "@/components/admin/LayoutAdmin.jsx";
+import { LayoutClient } from "@/Layout.jsx";
+import { CategoryList } from "@/page/admin/category/CategoryList.jsx";
 // import CartPage from "../pages/client/CartPage";
 
 const AppRouter = () => {
@@ -20,7 +22,7 @@ const AppRouter = () => {
     <>
       <Routes>
         {/* Client Routes */}
-        <Route element={<Layout />}>
+        <Route element={<LayoutClient />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -38,6 +40,7 @@ const AppRouter = () => {
       <Routes>
         <Route element={<LayoutAdmin/>}>
           <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/category/list" element={<CategoryList/>}/>
         </Route>
       </Routes>
 
