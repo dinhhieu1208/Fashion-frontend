@@ -12,6 +12,7 @@ import PaymentPage from "./../page/client/PaymentPage.jsx";
 import ProductPage from "./../page/client/ProductPage.jsx";
 import { Dashboard } from "@/page/admin/Dashboard.jsx";
 import { Layout } from "lucide-react";
+import { LayoutAdmin } from "@/components/admin/LayoutAdmin.jsx";
 // import CartPage from "../pages/client/CartPage";
 
 const AppRouter = () => {
@@ -35,7 +36,9 @@ const AppRouter = () => {
 
       {/* admin route */}
       <Routes>
-        <Route path="/admin/dashboard" element={<Dashboard />} />
+        <Route element={<LayoutAdmin/>}>
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+        </Route>
       </Routes>
 
     </>
