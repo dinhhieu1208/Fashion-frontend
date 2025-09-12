@@ -10,31 +10,34 @@ import IntroducePage from "./../page/client/IntroducePage.jsx";
 import CartPage from "./../page/client/CartPage.jsx";
 import PaymentPage from "./../page/client/PaymentPage.jsx";
 import ProductPage from "./../page/client/ProductPage.jsx";
+import { Dashboard } from "@/page/admin/Dashboard.jsx";
+import { Layout } from "lucide-react";
 // import CartPage from "../pages/client/CartPage";
 
 const AppRouter = () => {
   return (
     <>
-      <Header />
       <Routes>
         {/* Client Routes */}
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/introduce" element={<IntroducePage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/payment" element={<PaymentPage />} />
-        <Route path="/product" element={<ProductPage />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/introduce" element={<IntroducePage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/product" element={<ProductPage />} />
 
-        {/* <Route path="/cart" element={<CartPage />} /> */}
-
-        {/* Admin Routes */}
-        {/* <Route path="/admin" element={<AdminDashboard />} /> */}
-        {/* <Route path="/admin/products" element={<AdminProducts />} /> */}
-        {/* <Route path="/admin/orders" element={<AdminOrders />} /> */}
+          {/* <Route path="/cart" element={<CartPage />} /> */}
+        </Route>
       </Routes>
-      <Footer />
+
+      {/* admin route */}
+      <Routes>
+        <Route path="/admin/dashboard" element={<Dashboard />} />
+      </Routes>
+
     </>
   );
 };

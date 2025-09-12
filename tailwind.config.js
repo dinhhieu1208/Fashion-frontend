@@ -2,36 +2,86 @@ export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}", "./pages/**/*.{js,ts,jsx,tsx}"],
   darkMode: ["media", "class"],
   theme: {
-    extend: {
-      fontFamily: {
-        inter: ["Inter", "sans-serif"],
-        roboto: ["Roboto", "sans-serif"],
-        montserrat: ["Montserrat", "sans-serif"],
-        title: "var(--font-title)",
-        sub_title: "var(--font-subTitle)",
-        text: "var(--font-text)",
-
-        vietnam: ['"Be Vietnam Pro"', "sans-serif"],
-      },
-      fontSize: {
-        title: "var(--font-size-title)",
-        sub_title: "var(--font-size-subTitle)",
-        text: "var(--font-size-text)",
-        mini_text: "var(--font-size-mini-text)",
-      },
-      colors: {
-        primary: {
-          DEFAULT: "var(--primary)",
-        },
-        text: {
-          DEFAULT: "var(--text-color)",
-        },
-        border: {
-          DEFAULT: "var(--border-card)",
-        },
-        heading: "var(--heading)",
-        background: "var(--background)",
-      },
-    },
+  	extend: {
+  		fontFamily: {
+  			inter: [
+  				'Inter',
+  				'sans-serif'
+  			],
+  			roboto: [
+  				'Roboto',
+  				'sans-serif'
+  			],
+  			montserrat: [
+  				'Montserrat',
+  				'sans-serif'
+  			],
+  			title: 'var(--font-title)',
+  			sub_title: 'var(--font-subTitle)',
+  			text: 'var(--font-text)',
+  			vietnam: [
+  				'Be Vietnam Pro"',
+  				'sans-serif'
+  			]
+  		},
+  		fontSize: {
+  			title: 'var(--font-size-title)',
+  			sub_title: 'var(--font-size-subTitle)',
+  			text: 'var(--font-size-text)',
+  			mini_text: 'var(--font-size-mini-text)'
+  		},
+  		colors: {
+  			primary: {
+  				DEFAULT: 'hsl(var(--primary))',
+  				foreground: 'hsl(var(--primary-foreground))'
+  			},
+  			text: {
+  				DEFAULT: 'var(--text-color)'
+  			},
+  			border: 'hsl(var(--border))',
+  			heading: 'var(--heading)',
+  			background: 'hsl(var(--background))',
+  			foreground: 'hsl(var(--foreground))',
+  			card: {
+  				DEFAULT: 'hsl(var(--card))',
+  				foreground: 'hsl(var(--card-foreground))'
+  			},
+  			popover: {
+  				DEFAULT: 'hsl(var(--popover))',
+  				foreground: 'hsl(var(--popover-foreground))'
+  			},
+  			secondary: {
+  				DEFAULT: 'hsl(var(--secondary))',
+  				foreground: 'hsl(var(--secondary-foreground))'
+  			},
+  			muted: {
+  				DEFAULT: 'hsl(var(--muted))',
+  				foreground: 'hsl(var(--muted-foreground))'
+  			},
+  			accent: {
+  				DEFAULT: 'hsl(var(--accent))',
+  				foreground: 'hsl(var(--accent-foreground))'
+  			},
+  			destructive: {
+  				DEFAULT: 'hsl(var(--destructive))',
+  				foreground: 'hsl(var(--destructive-foreground))'
+  			},
+  			input: 'hsl(var(--input))',
+  			ring: 'hsl(var(--ring))',
+  			chart: {
+  				'1': 'hsl(var(--chart-1))',
+  				'2': 'hsl(var(--chart-2))',
+  				'3': 'hsl(var(--chart-3))',
+  				'4': 'hsl(var(--chart-4))',
+  				'5': 'hsl(var(--chart-5))'
+  			}
+  		},
+  		borderRadius: {
+  			lg: 'var(--radius)',
+  			md: 'calc(var(--radius) - 2px)',
+  			sm: 'calc(var(--radius) - 4px)'
+  		}
+  	}
   },
+    plugins: [require("tailwindcss-animate")]
 };
