@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import Google from "../../assets/images/logo_google.png";
 import Facebook from "../../assets/images/logo_facebook.png";
 import Twitter from "../../assets/images/logo_Twitter.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import ConfirmEmail from "./ConfirmEmail";
 
 export default function RegisterForm() {
   const [form, setForm] = useState({ full_name: "", email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) =>
@@ -17,8 +18,12 @@ export default function RegisterForm() {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log("Form data:", form);
-    navigate("/login");
+    setIsRegistered(true);
   };
+
+  if (isRegistered) {
+    return <ConfirmEmail onConfirmed={() => navigate("/login")} />;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F2F0F1] px-4">
