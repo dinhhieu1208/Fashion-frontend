@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import user from "../../assets/icons/user.svg";
-import carts from "../../assets/icons/carts.svg";
+import user from "../../assets/icons/user.png";
+import carts from "../../assets/icons/shopping-bag.svg";
 import icon_search from "../../assets/images/icon_search.png";
 import icon_nav_menu from "../../assets/images/nav menu.png";
 export default function Header() {
