@@ -1,7 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Header from "./../components/client/Header.jsx";
-import Footer from "./../components/client/Footer.jsx";
 import HomePage from "./../components/client/HomePage.jsx";
 import LoginPage from "./../page/client/LoginPage.jsx";
 import RegisterPage from "./../page/client/RegisterPage.jsx";
@@ -11,11 +9,11 @@ import CartPage from "./../page/client/CartPage.jsx";
 import PaymentPage from "./../page/client/PaymentPage.jsx";
 import ProductPage from "./../page/client/ProductPage.jsx";
 import { Dashboard } from "@/page/admin/Dashboard.jsx";
-import { Layout } from "lucide-react";
 import { LayoutAdmin } from "@/components/admin/LayoutAdmin.jsx";
 import { LayoutClient } from "@/Layout.jsx";
 import { CategoryList } from "@/page/admin/category/CategoryList.jsx";
-// import CartPage from "../pages/client/CartPage";
+import { Toaster } from "sonner";
+import { ConfirmEmail } from "@/page/client/ConfirmEmail.jsx";
 
 const AppRouter = () => {
   return (
@@ -31,7 +29,7 @@ const AppRouter = () => {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/product" element={<ProductPage />} />
-
+          <Route path="/confirm/email" element={<ConfirmEmail/>}/>
           {/* <Route path="/cart" element={<CartPage />} /> */}
         </Route>
       </Routes>
@@ -44,6 +42,7 @@ const AppRouter = () => {
         </Route>
       </Routes>
 
+      <Toaster position="top-right" richColors className="mt-[70px]"/>
     </>
   );
 };
