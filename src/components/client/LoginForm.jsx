@@ -5,19 +5,41 @@ import Google from "../../assets/images/logo_google.png";
 import Facebook from "../../assets/images/logo_facebook.png";
 import Twitter from "../../assets/images/logo_Twitter.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useMutation } from "@tanstack/react-query";
+import { loginService } from "@/services/authService";
+import { toast } from "sonner";
 
 export default function LoginForm() {
-  const [form, setForm] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const mutation = useMutation({
+    mutationFn: loginService,
+    onSuccess: (res) => {
+      toast.success(res.data.message);
+      localStorage.setItem("isLogin", true);
+      navigate("/")
+    },
+    onError: (error) => {
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
+    }
+  })
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("Login data:", form);
-    navigate("/");
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    if (!email || !password) {
+      toast.warning("Vui lòng nhập đầy đủ thông tin")
+    } else {
+      const data = {
+        email: email,
+        password: password
+      };
+      mutation.mutate(data);
+    }
+
   };
 
   return (
@@ -36,8 +58,6 @@ export default function LoginForm() {
             type="email"
             name="email"
             placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
 
@@ -46,8 +66,6 @@ export default function LoginForm() {
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
-              value={form.password}
-              onChange={handleChange}
               className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             <button

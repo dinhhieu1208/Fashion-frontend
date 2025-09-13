@@ -1,15 +1,31 @@
-import React, { useState } from "react";
+import { confirmEmail } from "@/services/authService";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
-export default function ConfirmEmail({ onConfirmed }) {
-  const [email, setEmail] = useState("");
-
-  const handleConfirm = () => {
-    if (!email) {
-      alert("Vui lòng nhập email để xác nhận!");
-      return;
+export default function ConfirmEmailComponent() {
+  const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationFn: confirmEmail,
+    onSuccess: (res) => {
+      if(res.data.code === "success") {
+        toast.success(res.data.message);
+        navigate("/login");
+      }
+    },
+    onError: (error) => {
+      toast.error(error.response.data.message)
     }
-    alert(`Email ${email} đã được xác nhận ✅`);
-    onConfirmed();
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(e.target.otp.value);
+    if(!e.target.otp.value) {
+      toast.warning("Vui lòng điền mã otp trước khi gửi");
+    } else {
+      mutation.mutate({ otp: e.target.otp.value });
+    }
   };
 
   return (
@@ -38,20 +54,20 @@ export default function ConfirmEmail({ onConfirmed }) {
           Nhấn vào nút bên dưới để xác nhận địa chỉ email của bạn
         </p>
 
-        <input
-          type="email"
-          placeholder="Enter your OTP email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-2 border rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+        <form action="" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Enter your OTP email"
+            name="otp"
+            className="w-full px-4 py-2 border rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
 
-        <button
-          onClick={handleConfirm}
-          className="w-full bg-blue-500 text-white py-2 rounded-lg font-medium hover:bg-blue-600 transition"
-        >
-          Confirm
-        </button>
+          <button
+            className="w-full bg-blue-500 text-white py-2 rounded-lg font-medium hover:bg-blue-600 transition"
+          >
+            Confirm
+          </button>
+        </form>
       </div>
     </div>
   );
