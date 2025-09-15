@@ -20,3 +20,8 @@ export const loginAdmin = async (data) => {
   const res = await axiosAdmin.post("/admin/account/login", data);
   return res;
 }
+
+export const profileAdmin = async () => {
+  const res = await axiosAdmin.get("/admin/account/profile");
+  return res.data;
+}
