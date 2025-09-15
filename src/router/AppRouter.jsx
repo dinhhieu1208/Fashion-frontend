@@ -7,6 +7,8 @@ import IntroducePage from "./../page/client/IntroducePage.jsx";
 import CartPage from "./../page/client/CartPage.jsx";
 import PaymentPage from "./../page/client/PaymentPage.jsx";
 import ProductPage from "./../page/client/ProductPage.jsx";
+import ProfilePage from "./../page/client/ProfilePage.jsx";
+import ChangePasswordPage from "@/page/client/ChangePasswordPage.jsx";
 import { Dashboard } from "@/page/admin/Dashboard.jsx";
 import { LayoutAdmin } from "@/components/admin/LayoutAdmin.jsx";
 import { LayoutClient } from "@/Layout.jsx";
@@ -31,6 +33,8 @@ const AppRouter = () => {
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/product" element={<ProductPage />} />
           <Route path="/confirm/email" element={<ConfirmEmail />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/ChangePassword" element={<ChangePasswordPage />} />
           {/* <Route path="/cart" element={<CartPage />} /> */}
         </Route>
       </Routes>

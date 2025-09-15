@@ -1,5 +1,5 @@
 import React from "react";
-import Profile from "@/components/client/Profilem";
+import Profile from "../../components/client/Profile";
 export default function ProfilePage() {
   return <Profile />;
 }
