@@ -1,5 +1,5 @@
 import axiosClient from "./axiosClient";
-
+import axiosAdmin from "./axiosAdmin";
 export const registerUser = async (userInfor) => {
   const data = userInfor
   const res = await axiosClient.post("/client/account/register", data);
@@ -13,5 +13,10 @@ export const confirmEmail = async (otp) => {
 
 export const loginService = async (data) => {
   const res = await axiosClient.post("/client/account/login", data);
+  return res;
+}
+
+export const loginAdmin = async (data) => {
+  const res = await axiosAdmin.post("/admin/account/login", data);
   return res;
 }
