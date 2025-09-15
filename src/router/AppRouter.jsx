@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./../components/client/HomePage.jsx";
 import LoginPage from "./../page/client/LoginPage.jsx";
@@ -15,6 +14,7 @@ import { CategoryList } from "@/page/admin/category/CategoryList.jsx";
 import { Toaster } from "sonner";
 import { ConfirmEmail } from "@/page/client/ConfirmEmail.jsx";
 import { Login } from "@/page/admin/auth/Login.jsx";
+import { ProtectedRoute } from "./ProtectedRoute.jsx";
 
 const AppRouter = () => {
   return (
@@ -30,22 +30,22 @@ const AppRouter = () => {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/product" element={<ProductPage />} />
-          <Route path="/confirm/email" element={<ConfirmEmail/>}/>
+          <Route path="/confirm/email" element={<ConfirmEmail />} />
           {/* <Route path="/cart" element={<CartPage />} /> */}
         </Route>
       </Routes>
-      <Toaster position="top-right" richColors className="mt-[70px]"/>
-      
+      <Toaster position="top-right" richColors />
+
       {/* admin route */}
       <Routes>
-        <Route path="/admin/login" element={<Login/>}/>
-        <Route element={<LayoutAdmin/>}>
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/category/list" element={<CategoryList/>}/>
+        <Route path="/admin/login" element={<Login />} />
+        <Route element={<ProtectedRoute />}>
+          <Route element={<LayoutAdmin />}>
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/category/list" element={<CategoryList />} />
+          </Route>
         </Route>
       </Routes>
-
-
     </>
   );
 };
