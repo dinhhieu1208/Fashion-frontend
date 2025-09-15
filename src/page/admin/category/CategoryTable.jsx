@@ -76,6 +76,5 @@ export const CategoryTable = () => {
         </tbody>
       </table>
     </div>
-
   );
 }

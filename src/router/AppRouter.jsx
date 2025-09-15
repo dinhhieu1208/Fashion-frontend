@@ -14,6 +14,7 @@ import { LayoutClient } from "@/Layout.jsx";
 import { CategoryList } from "@/page/admin/category/CategoryList.jsx";
 import { Toaster } from "sonner";
 import { ConfirmEmail } from "@/page/client/ConfirmEmail.jsx";
+import { Login } from "@/page/admin/auth/Login.jsx";
 
 const AppRouter = () => {
   return (
@@ -33,16 +34,18 @@ const AppRouter = () => {
           {/* <Route path="/cart" element={<CartPage />} /> */}
         </Route>
       </Routes>
-
+      <Toaster position="top-right" richColors className="mt-[70px]"/>
+      
       {/* admin route */}
       <Routes>
+        <Route path="/admin/login" element={<Login/>}/>
         <Route element={<LayoutAdmin/>}>
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/category/list" element={<CategoryList/>}/>
         </Route>
       </Routes>
 
-      <Toaster position="top-right" richColors className="mt-[70px]"/>
+
     </>
   );
 };
