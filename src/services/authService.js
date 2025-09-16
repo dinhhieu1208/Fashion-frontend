@@ -16,6 +16,16 @@ export const loginService = async (data) => {
   return res;
 }
 
+export const profileUser = async () => {
+  const res = await axiosClient.get("/client/account/profile");
+  return res.data;
+}
+
+export const profileUserEdit = async (data) => {
+  const res = await axiosClient.patch("/client/account/profile/edit", data);
+  return res;
+}
+
 export const loginAdmin = async (data) => {
   const res = await axiosAdmin.post("/admin/account/login", data);
   return res;
