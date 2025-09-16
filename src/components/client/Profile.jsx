@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ChangePassword from "./ChangePassword";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { profileUser } from "@/services/authService";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -22,6 +24,20 @@ const Profile = () => {
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["users"],
+    queryFn: profileUser,
+    retry: false
+  });
+
+  if (isLoading) {
+    return <div>Đang kiểm tra đăng nhập...</div>;
+  }
+
+  if (isError || data.code === "error") {
+    return <Navigate to="/login" replace />;
+  }
+
   const handleSave = () => {
     console.log("Dữ liệu lưu:", userData);
     setIsEditing(false);
@@ -34,20 +50,20 @@ const Profile = () => {
 
         {/* Avatar + Info */}
         <div className="flex items-center gap-4 mb-6">
-          {userData.image ? (
+          {data.data.image ? (
             <img
-              src={userData.image}
+              src={data.data.image}
               alt="Avatar"
               className="w-16 h-16 rounded-full object-cover"
             />
           ) : (
             <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-xl font-bold">
-              {userData.fullName.charAt(0)}
+              {data.data.fullName.charAt(0)}
             </div>
           )}
           <div>
-            <p className="text-lg font-semibold">{userData.fullName}</p>
-            <p className="text-gray-500">{userData.email}</p>
+            <p className="text-lg font-semibold">{data.data.fullName}</p>
+            <p className="text-gray-500">{data.data.email}</p>
           </div>
         </div>
 
@@ -60,7 +76,7 @@ const Profile = () => {
             <input
               type="text"
               name="fullName"
-              value={userData.fullName}
+              value={data.data.fullName}
               onChange={handleInputChange}
               disabled={!isEditing}
               className="w-full px-3 py-2 border border-gray-300 rounded-md disabled:bg-gray-100"
@@ -74,7 +90,7 @@ const Profile = () => {
             <input
               type="email"
               name="email"
-              value={userData.email}
+              value={data.data.email}
               disabled
               className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 cursor-not-allowed"
             />
@@ -87,7 +103,7 @@ const Profile = () => {
             <input
               type="tel"
               name="phone"
-              value={userData.phone}
+              value={data.data.phone}
               onChange={handleInputChange}
               disabled={!isEditing}
               className="w-full px-3 py-2 border border-gray-300 rounded-md disabled:bg-gray-100"
@@ -101,7 +117,7 @@ const Profile = () => {
             <input
               type="text"
               name="address"
-              value={userData.address}
+              value={data.data.address}
               onChange={handleInputChange}
               disabled={!isEditing}
               className="w-full px-3 py-2 border border-gray-300 rounded-md disabled:bg-gray-100"
@@ -115,7 +131,7 @@ const Profile = () => {
             <input
               type="date"
               name="birthDay"
-              value={userData.birthDay}
+              value={data.data.birthDay}
               onChange={handleInputChange}
               disabled={!isEditing}
               className="w-full px-3 py-2 border border-gray-300 rounded-md disabled:bg-gray-100"
@@ -129,7 +145,7 @@ const Profile = () => {
             <input
               type="text"
               name="bankCode"
-              value={userData.bankCode}
+              value={data.data.bankCode}
               onChange={handleInputChange}
               disabled={!isEditing}
               className="w-full px-3 py-2 border border-gray-300 rounded-md disabled:bg-gray-100"
