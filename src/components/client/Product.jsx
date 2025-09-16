@@ -120,7 +120,7 @@ const ProductPage = () => {
                   </div>
                   <select
                     onChange={(e) => setSortType(e.target.value)}
-                    className="border-2 border-gray-300 text-sm px-2 cursor-pointer"
+                    className="border-2 border-white text-sm px-2 cursor-pointer"
                   >
                     <option value="relavent">
                       Sắp xếp theo giá: Liên quan

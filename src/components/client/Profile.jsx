@@ -5,29 +5,14 @@ import { useQuery } from "@tanstack/react-query";
 import { profileUser } from "@/services/authService";
 
 const Profile = () => {
-  const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
-
-  const [userData, setUserData] = useState({
-    fullName: "Lam Thanh Duy",
-    email: "fititah236@certve.com",
-    phone: "0987654321",
-    address: "TP.HCM",
-    birthDay: "",
-    bankCode: "098658432169",
-    image:
-      "https://res.cloudinary.com/dculf3koq/image/upload/v1757575266/g93n7onk4lyrzwmkf9.jpg",
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUserData((prev) => ({ ...prev, [name]: value }));
-  };
-
+  const [previewImage, setPreviewImage] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [formValues, setFormValues] = useState({});
   const { data, isLoading, isError } = useQuery({
     queryKey: ["users"],
     queryFn: profileUser,
-    retry: false
+    retry: false,
   });
 
   if (isLoading) {
@@ -38,9 +23,36 @@ const Profile = () => {
     return <Navigate to="/login" replace />;
   }
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  };
+
+  // Lưu chỉnh sửa
   const handleSave = () => {
-    console.log("Dữ liệu lưu:", userData);
-    setIsEditing(false);
+    const formData = new FormData();
+    formData.append("fullName", formValues.fullName || data.data.fullName);
+    formData.append("email", formValues.email || data.data.email);
+    formData.append("phone", formValues.phone || data.data.phone);
+    formData.append("address", formValues.address || data.data.address);
+    formData.append("birthDay", formValues.birthDay || data.data.birthDay);
+    formData.append("bankCode", formValues.bankCode || data.data.bankCode);
+    if (selectedFile) {
+      formData.append("image", selectedFile);
+    }
+
+    console.log("FormData chuẩn bị gửi:");
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ": " + pair[1]);
+    }
   };
 
   return (
@@ -48,19 +60,23 @@ const Profile = () => {
       <div className="w-full max-w-3xl bg-white p-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold mb-6">Thông tin cá nhân</h2>
 
-        {/* Avatar + Info */}
+        {/* Avatar */}
         <div className="flex items-center gap-4 mb-6">
-          {data.data.image ? (
+          <label htmlFor="imageUpload" className="cursor-pointer">
             <img
-              src={data.data.image}
+              src={previewImage || data.data.image}
               alt="Avatar"
-              className="w-16 h-16 rounded-full object-cover"
+              className="w-16 h-16 rounded-full object-cover border"
             />
-          ) : (
-            <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-xl font-bold">
-              {data.data.fullName.charAt(0)}
-            </div>
-          )}
+            <input
+              id="imageUpload"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageChange}
+            />
+          </label>
+
           <div>
             <p className="text-lg font-semibold">{data.data.fullName}</p>
             <p className="text-gray-500">{data.data.email}</p>
@@ -78,8 +94,7 @@ const Profile = () => {
               name="fullName"
               value={data.data.fullName}
               onChange={handleInputChange}
-              disabled={!isEditing}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md disabled:bg-gray-100"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
           </div>
 
@@ -91,8 +106,7 @@ const Profile = () => {
               type="email"
               name="email"
               value={data.data.email}
-              disabled
-              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 cursor-not-allowed"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md  "
             />
           </div>
 
@@ -105,8 +119,7 @@ const Profile = () => {
               name="phone"
               value={data.data.phone}
               onChange={handleInputChange}
-              disabled={!isEditing}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md disabled:bg-gray-100"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
           </div>
 
@@ -119,8 +132,7 @@ const Profile = () => {
               name="address"
               value={data.data.address}
               onChange={handleInputChange}
-              disabled={!isEditing}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md disabled:bg-gray-100"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
           </div>
 
@@ -133,8 +145,7 @@ const Profile = () => {
               name="birthDay"
               value={data.data.birthDay}
               onChange={handleInputChange}
-              disabled={!isEditing}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md disabled:bg-gray-100"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
           </div>
 
@@ -147,8 +158,7 @@ const Profile = () => {
               name="bankCode"
               value={data.data.bankCode}
               onChange={handleInputChange}
-              disabled={!isEditing}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md disabled:bg-gray-100"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
           </div>
         </div>
@@ -163,31 +173,14 @@ const Profile = () => {
           </button>
         </div>
 
-        {/* Buttons chỉnh sửa */}
+        {/* Nút lưu */}
         <div className="flex justify-start gap-4 mt-8">
-          {isEditing ? (
-            <>
-              <button
-                onClick={() => setIsEditing(false)}
-                className="px-4 py-2 border rounded-md hover:bg-gray-100"
-              >
-                Hủy
-              </button>
-              <button
-                onClick={handleSave}
-                className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-              >
-                Lưu thay đổi
-              </button>
-            </>
-          ) : (
-            <button
-              onClick={() => setIsEditing(true)}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-            >
-              Chỉnh sửa
-            </button>
-          )}
+          <button
+            onClick={handleSave}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          >
+            Chỉnh sửa
+          </button>
         </div>
       </div>
     </div>
