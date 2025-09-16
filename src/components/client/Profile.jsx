@@ -143,7 +143,7 @@ const Profile = () => {
             <input
               type="date"
               name="birthDay"
-              value={data.data.birthDay}
+              value={formValues.birthDay || data.data.birthDay || ""}
               onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
@@ -163,18 +163,13 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Đổi mật khẩu */}
-        <div className="border-t pt-6 mt-6">
+        <div className="border-t pt-6 mt-6 flex justify-start gap-4">
           <button
             onClick={() => navigate("/ChangePassword")}
             className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
           >
             Đổi mật khẩu
           </button>
-        </div>
-
-        {/* Nút lưu */}
-        <div className="flex justify-start gap-4 mt-8">
           <button
             onClick={handleSave}
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
