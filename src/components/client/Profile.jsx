@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { profileUser } from "@/services/authService";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { profileUser, profileUserEdit } from "@/services/authService";
+import { toast } from "sonner";
 
 const Profile = () => {
   const navigate = useNavigate();
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [formValues, setFormValues] = useState({});
-
+  const queryClient = useQueryClient();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["users"],
     queryFn: profileUser,
     retry: false,
   });
+
+  const mutation = useMutation({
+    mutationFn: profileUserEdit,
+    onSuccess: (res) => {
+      queryClient.invalidateQueries(["users"]);
+      toast.success(res.data.message);
+    },
+    onError: (error) => {
+      console.log(error.response.data.message);
+    }
+  })
 
   // Khi có data thì set vào formValues
   useEffect(() => {
@@ -29,6 +41,7 @@ const Profile = () => {
   if (isError || data.code === "error") {
     return <Navigate to="/login" replace />;
   }
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -54,7 +67,10 @@ const Profile = () => {
     if (selectedFile) {
       formData.append("image", selectedFile);
     };
-    console.log(formData);
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+    mutation.mutate(formData);
   };
 
   return (

@@ -1,4 +1,4 @@
-import axiosClient from "./axiosClient";
+import { axiosClient, axiosClientFormData } from "./axiosClient";
 import axiosAdmin from "./axiosAdmin";
 export const registerUser = async (userInfor) => {
   const data = userInfor
@@ -22,7 +22,7 @@ export const profileUser = async () => {
 }
 
 export const profileUserEdit = async (data) => {
-  const res = await axiosClient.patch("/client/account/profile/edit", data);
+  const res = await axiosClientFormData.patch("/client/account/profile/edit", data);
   return res;
 }
 
