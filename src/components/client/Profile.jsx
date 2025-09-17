@@ -1,19 +1,38 @@
-import React, { useState } from "react";
-import ChangePassword from "./ChangePassword";
+import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { profileUser } from "@/services/authService";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { profileUser, profileUserEdit } from "@/services/authService";
+import { toast } from "sonner";
 
 const Profile = () => {
   const navigate = useNavigate();
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [formValues, setFormValues] = useState({});
+  const queryClient = useQueryClient();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["users"],
     queryFn: profileUser,
     retry: false,
   });
+
+  const mutation = useMutation({
+    mutationFn: profileUserEdit,
+    onSuccess: (res) => {
+      queryClient.invalidateQueries(["users"]);
+      toast.success(res.data.message);
+    },
+    onError: (error) => {
+      console.log(error.response.data.message);
+    }
+  })
+
+  // Khi có data thì set vào formValues
+  useEffect(() => {
+    if (data?.data) {
+      setFormValues(data.data);
+    }
+  }, [data]);
 
   if (isLoading) {
     return <div>Đang kiểm tra đăng nhập...</div>;
@@ -22,6 +41,7 @@ const Profile = () => {
   if (isError || data.code === "error") {
     return <Navigate to="/login" replace />;
   }
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,23 +56,21 @@ const Profile = () => {
     }
   };
 
-  // Lưu chỉnh sửa
   const handleSave = () => {
     const formData = new FormData();
-    formData.append("fullName", formValues.fullName || data.data.fullName);
-    formData.append("email", formValues.email || data.data.email);
-    formData.append("phone", formValues.phone || data.data.phone);
-    formData.append("address", formValues.address || data.data.address);
-    formData.append("birthDay", formValues.birthDay || data.data.birthDay);
-    formData.append("bankCode", formValues.bankCode || data.data.bankCode);
+    formData.append("fullName", formValues.fullName || "");
+    formData.append("email", formValues.email || "");
+    formData.append("phone", formValues.phone || "");
+    formData.append("address", formValues.address || "");
+    formData.append("birthDay", formValues.birthDay || "");
+    formData.append("bankCode", formValues.bankCode || "");
     if (selectedFile) {
       formData.append("image", selectedFile);
-    }
-
-    console.log("FormData chuẩn bị gửi:");
+    };
     for (let pair of formData.entries()) {
-      console.log(pair[0] + ": " + pair[1]);
+      console.log(pair[0], pair[1]);
     }
+    mutation.mutate(formData);
   };
 
   return (
@@ -64,7 +82,7 @@ const Profile = () => {
         <div className="flex items-center gap-4 mb-6">
           <label htmlFor="imageUpload" className="cursor-pointer">
             <img
-              src={previewImage || data.data.image}
+              src={previewImage || formValues.image}
               alt="Avatar"
               className="w-16 h-16 rounded-full object-cover border"
             />
@@ -78,8 +96,8 @@ const Profile = () => {
           </label>
 
           <div>
-            <p className="text-lg font-semibold">{data.data.fullName}</p>
-            <p className="text-gray-500">{data.data.email}</p>
+            <p className="text-lg font-semibold">{formValues.fullName}</p>
+            <p className="text-gray-500">{formValues.email}</p>
           </div>
         </div>
 
@@ -92,7 +110,7 @@ const Profile = () => {
             <input
               type="text"
               name="fullName"
-              value={data.data.fullName}
+              value={formValues.fullName || ""}
               onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
@@ -105,8 +123,10 @@ const Profile = () => {
             <input
               type="email"
               name="email"
-              value={data.data.email}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md  "
+              value={formValues.email || ""}
+              onChange={handleInputChange} // nếu muốn cho sửa
+              // disabled // nếu không cho sửa thì mở dòng này và bỏ onChange
+              className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
           </div>
 
@@ -117,7 +137,7 @@ const Profile = () => {
             <input
               type="tel"
               name="phone"
-              value={data.data.phone}
+              value={formValues.phone || ""}
               onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
@@ -130,7 +150,7 @@ const Profile = () => {
             <input
               type="text"
               name="address"
-              value={data.data.address}
+              value={formValues.address || ""}
               onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
@@ -143,7 +163,7 @@ const Profile = () => {
             <input
               type="date"
               name="birthDay"
-              value={formValues.birthDay || data.data.birthDay || ""}
+              value={formValues.birthDay || ""}
               onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
@@ -156,7 +176,7 @@ const Profile = () => {
             <input
               type="text"
               name="bankCode"
-              value={data.data.bankCode}
+              value={formValues.bankCode || ""}
               onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
