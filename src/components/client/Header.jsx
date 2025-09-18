@@ -1,48 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import user from "../../assets/icons/user.png";
 import carts from "../../assets/icons/shopping-bag.svg";
 import icon_search from "../../assets/images/icon_search.png";
 import icon_nav_menu from "../../assets/images/nav menu.png";
-import Avatar from "../../assets/icons/avatar.jpg";
-import { useQuery } from "@tanstack/react-query";
-import { profileUser } from "@/services/authService";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { logoutClient, profileUser } from "@/services/authService";
+import { toast } from "sonner";
 
 export default function Header() {
+  const queryClient = useQueryClient();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
-  const [fullName, setFullName] = useState("");
-  const [avatar, setAvatar] = useState(Avatar);
   const navigate = useNavigate();
-
+  const location = useLocation();
   // Call API lấy profile user
-  const { data, isError } = useQuery({
+  const { data } = useQuery({
     queryKey: ["user"],
     queryFn: profileUser,
     retry: false,
   });
 
-  // update state khi data thay đổi
   useEffect(() => {
-    if (data && !isError) {
-      setIsLogin(true);
-      setFullName(data.fullName || "nguoi dung");
-      setAvatar(data.avatar || Avatar);
-    } else {
-      setIsLogin(false);
-      setFullName("");
-      setAvatar(Avatar);
-    }
-  }, [data, isError]);
+    queryClient.invalidateQueries(["users"]);
+  }, [location.pathname, queryClient])
 
-  // Đăng xuất
-  const handleLogout = () => {
-    localStorage.removeItem("isLogin");
-    setIsLogin(false);
-    setFullName("");
-    navigate("/login");
-  };
+  const handleLogout = async () => {
+    try {
+      await logoutClient();
+      queryClient.removeQueries(["user"]);
+      toast.success("Đăng xuất thành công");
+      navigate("/login");
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <header className="bg-white shadow-md sticky top-0 z-50 font-vietnam">
       <div className="max-w-[1400px] mx-auto px-6 py-6">
@@ -126,15 +118,15 @@ export default function Header() {
               <img src={icon_search} alt="Search" className="w-6 h-6" />
             </button>
             {/* User */}
-            {isLogin ? (
+            {data?.data ? (
               <div className="relative group">
                 <button className="flex items-center gap-2">
                   <img
-                    src={avatar}
+                    src={data.data.image}
                     alt="User"
                     className="w-6 h-6 rounded-full"
                   />
-                  <span className="hidden lg:block text-sm">{fullName}</span>
+                  <span className="hidden lg:block text-sm">{data.data.fullName}</span>
                 </button>
                 <ul className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-50">
                   <li
