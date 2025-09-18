@@ -18,7 +18,9 @@ export default function LoginForm() {
     onSuccess: (res) => {
       toast.success(res.data.message);
       localStorage.setItem("isLogin", true);
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     },
     onError: (error) => {
       console.log(error.response.data.message);

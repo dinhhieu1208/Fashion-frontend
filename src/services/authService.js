@@ -26,6 +26,11 @@ export const profileUserEdit = async (data) => {
   return res;
 }
 
+export const logoutClient = async () => {
+  const res = axiosClient.post("/client/account/logout");
+  return res
+}
+
 export const loginAdmin = async (data) => {
   const res = await axiosAdmin.post("/admin/account/login", data);
   return res;
