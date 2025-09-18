@@ -18,28 +18,27 @@ export default function LoginForm() {
     onSuccess: (res) => {
       toast.success(res.data.message);
       localStorage.setItem("isLogin", true);
-      navigate("/")
+      navigate("/");
     },
     onError: (error) => {
       console.log(error.response.data.message);
       toast.error(error.response.data.message);
-    }
-  })
+    },
+  });
 
   const onSubmit = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     if (!email || !password) {
-      toast.warning("Vui lòng nhập đầy đủ thông tin")
+      toast.warning("Vui lòng nhập đầy đủ thông tin");
     } else {
       const data = {
         email: email,
-        password: password
+        password: password,
       };
       mutation.mutate(data);
     }
-
   };
 
   return (

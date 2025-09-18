@@ -5,10 +5,10 @@ export const axiosClient = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true
+  withCredentials: true,
 });
 
 export const axiosClientFormData = axios.create({
   baseURL: "http://localhost:4000/api", // backend API URL
-  withCredentials: true
+  withCredentials: true,
 });

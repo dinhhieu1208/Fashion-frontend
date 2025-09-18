@@ -24,8 +24,9 @@ const Profile = () => {
     },
     onError: (error) => {
       console.log(error.response.data.message);
-    }
-  })
+      toast.error(error.response.data.message);
+    },
+  });
 
   // Khi có data thì set vào formValues
   useEffect(() => {
@@ -41,7 +42,6 @@ const Profile = () => {
   if (isError || data.code === "error") {
     return <Navigate to="/login" replace />;
   }
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -66,7 +66,7 @@ const Profile = () => {
     formData.append("bankCode", formValues.bankCode || "");
     if (selectedFile) {
       formData.append("image", selectedFile);
-    };
+    }
     for (let pair of formData.entries()) {
       console.log(pair[0], pair[1]);
     }

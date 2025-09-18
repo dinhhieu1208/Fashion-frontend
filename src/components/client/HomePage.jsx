@@ -115,7 +115,7 @@ export default function HomePage() {
     return { ...item, hasDiscount, finalPrice };
   });
   return (
-    <main className="bg-[#F2F0F1]">
+    <main className="bg-white">
       <section className="relative w-full max-w-[1400px] mx-auto overflow-hidden rounded-xl">
         {/* Slide wrapper */}
         <div

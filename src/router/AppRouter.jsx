@@ -34,7 +34,7 @@ const AppRouter = () => {
           <Route path="/product" element={<ProductPage />} />
           <Route path="/confirm/email" element={<ConfirmEmail />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/ChangePassword" element={<ChangePasswordPage />} />
+          <Route path="/changePassword" element={<ChangePasswordPage />} />
           {/* <Route path="/cart" element={<CartPage />} /> */}
         </Route>
       </Routes>
