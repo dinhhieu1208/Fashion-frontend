@@ -7,6 +7,7 @@ import icon_nav_menu from "../../assets/images/nav menu.png";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { logoutClient, profileUser } from "@/services/authService";
 import { toast } from "sonner";
+import { MainCategory } from "./MainCategory";
 
 export default function Header() {
   const queryClient = useQueryClient();
@@ -35,7 +36,7 @@ export default function Header() {
       console.log(error)
     }
   };
-  
+
   return (
     <header className="bg-white shadow-md sticky top-0 z-50 font-vietnam">
       <div className="max-w-[1400px] mx-auto px-6 py-6">
@@ -55,36 +56,7 @@ export default function Header() {
             <li className="relative group  after:absolute after:h-[1.5px] after:bg-black after:left-0 after:bottom-[-2px] hover:after:scale-x-100 after:scale-x-0 after:w-full after:transition-all after:duration-300">
               <Link to="#">Danh Mục</Link>
               {/* Submenu */}
-              <ul className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transform translate-y-2 transition-all duration-300 z-50">
-                <li className="px-4 py-2 hover:bg-gray-100 relative group/sub">
-                  <Link to="/nam">Nam</Link>
-                  <ul className="absolute left-full top-0 ml-2 w-40 bg-white shadow-lg rounded-lg opacity-0 group-hover/sub:opacity-100 transform translate-y-2 group-hover/sub:translate-y-0 transition-all duration-300">
-                    <li className="px-4 py-2 hover:bg-gray-100">
-                      <Link to="/nam/ao-so-mi">Áo sơ mi</Link>
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-100">
-                      <Link to="/nam/quan-thun">Quần thun</Link>
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-100">
-                      <Link to="/nam/ao-thun">Áo thun</Link>
-                    </li>
-                  </ul>
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-100 relative group/sub">
-                  <Link to="/nu">Nữ</Link>
-                  <ul className="absolute left-full top-0 ml-2 w-40 bg-white shadow-lg rounded-lg opacity-0 group-hover/sub:opacity-100 transform translate-y-2 group-hover/sub:translate-y-0 transition-all duration-300">
-                    <li className="px-4 py-2 hover:bg-gray-100">
-                      <Link to="/nu/quan-dai">Quần dài</Link>
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-100">
-                      <Link to="/nu/chan-vay">Chân váy</Link>
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-100">
-                      <Link to="/nu/ao-kieu">Áo kiểu</Link>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
+              <MainCategory/>
             </li>
             <li className="relative after:absolute after:h-[1.5px] after:bg-black after:left-0 after:bottom-[-2px] hover:after:scale-x-100 after:scale-x-0 after:w-full after:transition-all after:duration-300">
               <Link to="/product">Sản Phẩm</Link>
