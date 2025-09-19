@@ -34,7 +34,8 @@ export default function Header() {
     } catch (error) {
       console.log(error)
     }
-  }
+  };
+  
   return (
     <header className="bg-white shadow-md sticky top-0 z-50 font-vietnam">
       <div className="max-w-[1400px] mx-auto px-6 py-6">
