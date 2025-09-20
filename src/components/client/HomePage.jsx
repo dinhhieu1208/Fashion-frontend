@@ -127,7 +127,14 @@ export default function HomePage() {
               key={index}
               src={slide}
               alt={`Slide ${index}`}
-              className="w-full h-[500px] object-cover flex-shrink-0"
+              className="
+          w-full flex-shrink-0 object-cover
+          h-[220px]   /* 🔥 Mobile height nhỏ */
+          sm:h-[300px] 
+          md:h-[400px] 
+          lg:h-[500px] /* 🔥 Desktop giữ nguyên */
+          rounded-xl
+        "
             />
           ))}
         </div>

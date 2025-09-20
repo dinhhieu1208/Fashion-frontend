@@ -9,6 +9,7 @@ import PaymentPage from "./../page/client/PaymentPage.jsx";
 import ProductPage from "./../page/client/ProductPage.jsx";
 import ProfilePage from "./../page/client/ProfilePage.jsx";
 import ChangePasswordPage from "@/page/client/ChangePasswordPage.jsx";
+import LocationPage from "@/page/client/LocationPage.jsx";
 import { Dashboard } from "@/page/admin/Dashboard.jsx";
 import { LayoutAdmin } from "@/components/admin/LayoutAdmin.jsx";
 import { LayoutClient } from "@/Layout.jsx";
@@ -35,6 +36,7 @@ const AppRouter = () => {
           <Route path="/confirm/email" element={<ConfirmEmail />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/changePassword" element={<ChangePasswordPage />} />
+          <Route path="/location" element={<LocationPage />} />
           {/* <Route path="/cart" element={<CartPage />} /> */}
         </Route>
       </Routes>

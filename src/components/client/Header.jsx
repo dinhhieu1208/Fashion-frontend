@@ -24,7 +24,7 @@ export default function Header() {
 
   useEffect(() => {
     queryClient.invalidateQueries(["users"]);
-  }, [location.pathname, queryClient])
+  }, [location.pathname, queryClient]);
 
   const handleLogout = async () => {
     try {
@@ -33,7 +33,7 @@ export default function Header() {
       toast.success("Đăng xuất thành công");
       navigate("/login");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -50,13 +50,10 @@ export default function Header() {
 
           {/* Navbar */}
           <ul className="hidden lg:flex items-center space-x-8 text-black text-[18px] font-medium">
-            <li className="relative after:absolute after:h-[1.5px] after:bg-black after:left-0 after:bottom-[-2px] hover:after:scale-x-100 after:scale-x-0 after:w-full after:transition-all after:duration-300">
-              <Link to="/">Trang Chủ</Link>
-            </li>
             <li className="relative group  after:absolute after:h-[1.5px] after:bg-black after:left-0 after:bottom-[-2px] hover:after:scale-x-100 after:scale-x-0 after:w-full after:transition-all after:duration-300">
               <Link to="#">Danh Mục</Link>
               {/* Submenu */}
-              <MainCategory/>
+              <MainCategory />
             </li>
             <li className="relative after:absolute after:h-[1.5px] after:bg-black after:left-0 after:bottom-[-2px] hover:after:scale-x-100 after:scale-x-0 after:w-full after:transition-all after:duration-300">
               <Link to="/product">Sản Phẩm</Link>
@@ -66,6 +63,9 @@ export default function Header() {
             </li>
             <li className="relative after:absolute after:h-[1.5px] after:bg-black after:left-0 after:bottom-[-2px] hover:after:scale-x-100 after:scale-x-0 after:w-full after:transition-all after:duration-300">
               <Link to="/contact">Liên Hệ</Link>
+            </li>
+            <li className="relative after:absolute after:h-[1.5px] after:bg-black after:left-0 after:bottom-[-2px] hover:after:scale-x-100 after:scale-x-0 after:w-full after:transition-all after:duration-300">
+              <Link to="/location">Chi Nhánh </Link>
             </li>
           </ul>
 
@@ -99,7 +99,9 @@ export default function Header() {
                     alt="User"
                     className="w-6 h-6 rounded-full"
                   />
-                  <span className="hidden lg:block text-sm">{data.data.fullName}</span>
+                  <span className="hidden lg:block text-sm">
+                    {data.data.fullName}
+                  </span>
                 </button>
                 <ul className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-50">
                   <li
@@ -181,9 +183,6 @@ export default function Header() {
           <div className="fixed top-0 left-0 w-64 h-full bg-white text-black z-40 p-6 space-y-6 shadow-lg">
             <ul className="space-y-5 text-base text-black divide-y divide-gray-600">
               <li>
-                <Link to="/">Trang Chủ</Link>
-              </li>
-              <li>
                 <Link to="/product">Sản Phẩm</Link>
               </li>
               <li>
@@ -191,6 +190,9 @@ export default function Header() {
               </li>
               <li>
                 <Link to="/contact">Liên Hệ</Link>
+              </li>
+              <li>
+                <Link to="/location">Chi Nhánh</Link>
               </li>
             </ul>
             <button
