@@ -1,47 +1,28 @@
-import React from "react";
-import Spinner from "../../components/Spinner";
+/* eslint-disable no-unused-vars */
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getAllProduct } from "@/services/productService";
+import { useSearchParams } from "react-router-dom";
 // import Pagination from "@/components/Pagination";
 // import banner from "../../assets/images/banner.webp";
 
 const ProductPage = () => {
-  const clothes = [
-    {
-      id: "1",
-      name: "Áo Thun Unisex Basic",
-      image: "/images/clother-1.jpg",
-      originPrice: 199000,
-      currentPrice: 159000,
-      originPriceFormat: "199.000",
-      currentPriceFormat: "159.000",
-    },
-    {
-      id: "2",
-      name: "Quần Jean Nam Rách Gối",
-      image: "/images/clother-2.jpg",
-      originPrice: 349000,
-      // currentPrice: 0,
-      originPriceFormat: "349.000",
-      // currentPriceFormat: "0",
-    },
-    {
-      id: "3",
-      name: "Áo Sơ Mi Trắng Nữ",
-      image: "/images/clother-3.jpg",
-      originPrice: 259000,
-      currentPrice: 220000,
-      originPriceFormat: "259.000",
-      currentPriceFormat: "220.000",
-    },
-    {
-      id: "4",
-      name: "Áo Thun Unisex Basic",
-      image: "/images/clother-4.jpg",
-      originPrice: 199000,
-      currentPrice: 179000,
-      originPriceFormat: "199.000",
-      currentPriceFormat: "179.000",
-    },
-  ];
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [priceFilter, setPriceFilter] = useState("");
+
+  const { data } = useQuery({
+    queryKey: ["products", priceFilter],
+    queryFn: () => getAllProduct(priceFilter),
+    keepPreviousData: true
+  });
+
+  const handleOnChange = (e) => {
+    const priceValue = e.target.value;
+    setSearchParams({
+      priceFiler: priceValue
+    });
+    setPriceFilter(priceValue);
+  }
 
   return (
     <main>
@@ -72,27 +53,27 @@ const ProductPage = () => {
                       Sản phẩm
                     </h2>
                   </div>
-                  <select className="border-2 border-white text-sm px-2 cursor-pointer">
-                    <option value="relavent">
+                  <select className="border-2 border-white text-sm px-2 cursor-pointer" defaultValue={""} onChange={handleOnChange}>
+                    <option value="">
                       Sắp xếp theo giá: Liên quan
                     </option>
-                    <option value="low-high">
+                    <option value="asc">
                       Sắp xếp theo giá: Thấp đến Cao
                     </option>
-                    <option value="high-low">
+                    <option value="desc">
                       Sắp xếp theo giá: Cao đến Thấp
                     </option>
                   </select>
                 </div>
               </div>
 
-              {clothes.length === 0 ? (
+              {data?.data?.data.length === 0 && data?.data.data ? (
                 <div className="text-center text-gray-500 text-lg py-12">
                   Không tìm thấy sản phẩm nào.
                 </div>
               ) : (
                 <ul className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7">
-                  {clothes.map((item) => (
+                  {data?.data?.data.map((item) => (
                     <li
                       key={item.id}
                       className="mt-6 md:mt-0 text-center group relative"
@@ -102,7 +83,7 @@ const ProductPage = () => {
                         <div className="rounded-xl overflow-hidden bg-white lg:h-[385px]">
                           <img
                             className="block size-full object-cover hover:scale-110 duration-500 transition-all w-full h-full"
-                            src={item.avatar}
+                            src={item.image}
                           />
                         </div>
 
