@@ -57,7 +57,7 @@ const ProductPage = () => {
                 </div>
               </div>
 
-              {data?.data?.data?.length === 0 ? (
+              {data?.data?.data?.length === 0 && data?.data.data ? (
                 <div className="text-center text-gray-500 text-lg py-12">
                   Không tìm thấy sản phẩm nào.
                 </div>
