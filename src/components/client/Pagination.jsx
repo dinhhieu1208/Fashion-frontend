@@ -1,62 +1,49 @@
-import { useMemo } from "react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+import { useState } from "react";
 
-export default function Pagination({
-  currentPage = 1,
-  totalPages = 1,
-  onPageChange,
-}) {
-  const visiblePages = useMemo(() => {
-    const delta = 2;
-    const range = [];
-
-    for (
-      let i = Math.max(1, currentPage - delta);
-      i <= Math.min(totalPages, currentPage + delta);
-      i++
-    ) {
-      range.push(i);
-    }
-
-    return range;
-  }, [currentPage, totalPages]);
-
-  const goToPage = (page) => {
-    if (page >= 1 && page <= totalPages && page !== currentPage) {
-      onPageChange?.(page);
-    }
+export default function PaginationComponent(props) {
+  const { pages, onChangePage } = props;
+  const [currentPage, setCurrentPage] = useState(1);
+  const callBack = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    onChangePage(pageNumber);
   };
 
   return (
-    <nav className="flex justify-center items-center gap-2 mt-6">
-      <button
-        onClick={() => goToPage(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="px-3 py-1   hover:bg-gray-200 disabled:opacity-50"
-      >
-        ←
-      </button>
-
-      {visiblePages.map((page) => (
-        <button
-          key={page}
-          onClick={() => goToPage(page)}
-          className={`px-3 py-1 rounded-xl border ${
-            page === currentPage
-              ? "bg-primary text-white"
-              : "bg-white hover:bg-gray-200"
-          }`}
-        >
-          {page}
-        </button>
-      ))}
-
-      <button
-        onClick={() => goToPage(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="px-3 py-1  hover:bg-gray-100 disabled:opacity-50"
-      >
-        →
-      </button>
-    </nav>
-  );
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            onClick={(e) => {
+              e.preventDefault();
+              if (currentPage > 1) callBack(currentPage - 1);
+            }}
+            className={"cursor-pointer"}
+          />
+        </PaginationItem>
+        {Array(pages).fill("").map((item, index) => (
+          <PaginationItem key={index}>
+            <PaginationLink className={"cursor-pointer"} isActive={index + 1 === currentPage} onClick={() => callBack(index + 1)}>{index + 1}</PaginationLink>
+          </PaginationItem>
+        ))}
+        <PaginationItem>
+          <PaginationNext
+            onClick={(e) => {
+              e.preventDefault();
+              if (currentPage >= 1 && currentPage < pages) callBack(currentPage + 1);
+            }}
+            className={"cursor-pointer"}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  )
 }
