@@ -30,90 +30,81 @@ export default function HomePage() {
 
   const products = [
     {
-      _id: "1",
+      id: "1",
       name: "Áo Thun Unisex Basic",
-      price: 199000,
-      avatar: clother1,
-      status: "active",
-      discount: 20,
+      image: clother1,
+      originPrice: 199000,
+      currentPrice: 159000,
+      originPriceFormat: "199.000",
+      currentPriceFormat: "159.000",
     },
     {
-      _id: "2",
+      id: "2",
       name: "Quần Jean Nam Rách Gối",
-      price: 349000,
-      avatar: "/images/clother-2.jpg",
-      status: "inactive",
-      discount: 0,
+      image: "/images/clother-2.jpg",
+      originPrice: 349000,
+      // currentPrice: 0,
+      originPriceFormat: "349.000",
+      // currentPriceFormat: "0",
     },
     {
-      _id: "3",
-      name: "Áo Sơ Mi Trắng ",
-      price: 259000,
-      avatar: clother2,
-      status: "active",
-      discount: 15,
+      id: "3",
+      name: "Áo Sơ Mi Trắng Nam",
+      image: clother2,
+      originPrice: 259000,
+      currentPrice: 220000,
+      originPriceFormat: "259.000",
+      currentPriceFormat: "220.000",
     },
     {
-      _id: "4",
-      name: "Áo Khoác Hoodie",
-      price: 399000,
-      avatar: "/images/clother-4.jpg",
-      status: "active",
-      discount: 0,
+      id: "4",
+      name: "Áo Thun Unisex Basic",
+      image: "/images/clother-4.jpg",
+      originPrice: 199000,
+      currentPrice: 179000,
+      originPriceFormat: "199.000",
+      currentPriceFormat: "179.000",
     },
   ];
   const products1 = [
     {
-      _id: "1",
+      id: "1",
       name: "Áo Polo Nam Cotton",
-      price: 199000,
-      avatar: "/images/clother-1.jpg",
-      status: "active",
-      discount: 20,
+      image: "/images/clother-1.jpg",
+      originPrice: 249000,
+      currentPrice: 199000,
+      originPriceFormat: "249.000",
+      currentPriceFormat: "199.000",
     },
     {
-      _id: "2",
+      id: "2",
       name: "Quần Kaki Nam Dáng Slim",
-      price: 349000,
-      avatar: "/images/clother-2.jpg",
-      status: "inactive",
-      discount: 0,
+      image: "/images/clother-2.jpg",
+      originPrice: 349000,
+      // currentPrice: 0,
+      originPriceFormat: "349.000",
+      // currentPriceFormat: "0",
     },
     {
-      _id: "3",
+      id: "3",
       name: "Áo Len Dệt Kim Unisex",
-      price: 259000,
-      avatar: "/images/clother-3.jpg",
-      status: "active",
-      discount: 15,
+      image: "/images/clother-3.jpg",
+      originPrice: 299000,
+      currentPrice: 259000,
+      originPriceFormat: "299.000",
+      currentPriceFormat: "259.000",
     },
     {
-      _id: "4",
+      id: "4",
       name: "Áo Khoác Bomber Nam",
-      price: 399000,
-      avatar: "/images/clother-4.jpg",
-      status: "active",
-      discount: 0,
+      image: "/images/clother-4.jpg",
+      originPrice: 399000,
+      currentPrice: 349000,
+      originPriceFormat: "399.000",
+      currentPriceFormat: "349.000",
     },
   ];
 
-  const formatPrice = (value) =>
-    value.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
-  const Products = products.map((item) => {
-    const hasDiscount = item.discount > 0;
-    const finalPrice = hasDiscount
-      ? item.price - (item.price * item.discount) / 100
-      : item.price;
-
-    return { ...item, hasDiscount, finalPrice };
-  });
-  const Products1 = products1.map((item) => {
-    const hasDiscount = item.discount > 0;
-    const finalPrice = hasDiscount
-      ? item.price - (item.price * item.discount) / 100
-      : item.price;
-    return { ...item, hasDiscount, finalPrice };
-  });
   return (
     <main className="bg-white">
       <section className="relative w-full max-w-[1400px] mx-auto overflow-hidden rounded-xl">
@@ -164,70 +155,59 @@ export default function HomePage() {
             SẢN PHẨM BÁN CHẠY NHẤT
           </h2>
           <ul className="mt-8 lg:grid grid-cols-4 gap-7">
-            {Products.map((item) => (
+            {products.map((item) => (
               <li
-                key={item._id}
+                key={item.id}
                 className="mt-6 md:mt-0 text-center group relative"
               >
                 <a href="#" className="block">
-                  {/* Hết hàng */}
-                  {item.status === "inactive" && (
-                    <span className="absolute py-1 text-xs px-2 top-3 left-3 bg-red-500 text-white rounded-xl">
-                      Hết hàng
-                    </span>
-                  )}
-
-                  {/* Giảm giá */}
-                  {item.hasDiscount && item.status === "active" && (
-                    <span className="absolute py-1 text-xs px-2 top-3 left-3 bg-red-600 text-white rounded-xl">
-                      -{item.discount}%
-                    </span>
-                  )}
-
                   {/* Ảnh sản phẩm */}
                   <div className="rounded-xl overflow-hidden bg-white lg:h-[385px]">
                     <img
-                      className="block size-full object-cover hover:scale-110 duration-500 transition-all w-full h-full "
-                      src={item.avatar}
+                      className="block size-full object-cover hover:scale-110 duration-500 transition-all w-full h-full"
+                      src={item.image}
                     />
                   </div>
 
                   {/* Tên sản phẩm */}
-                  <h3 className="text-[15px] mt-2">{item.name}</h3>
+                  <h3 className="text-[15px] mt-2 font-semibold">
+                    {item.name}
+                  </h3>
 
                   {/* Giá + Add to cart */}
                   <div className="mt-2 relative h-5 overflow-hidden">
                     <div className="absolute flex flex-col items-center left-1/2 -translate-x-1/2 hover:bottom-0 -bottom-5 transition-all duration-300">
+                      {/* Giá sản phẩm */}
                       <div className="flex items-center justify-center font-bold text-[15px] text-center">
-                        {item.hasDiscount ? (
+                        {item.currentPriceFormat ? (
                           <>
-                            <span className="line-through text-gray-400 text-sm mr-2">
-                              {formatPrice(item.price)}
+                            <span className="text-gray-400 line-through text-sm mr-2">
+                              {item.originPriceFormat} ₫
                             </span>
                             <span className="mx-1">-</span>
                             <span className="text-red-600">
-                              {formatPrice(item.finalPrice)}
+                              {item.currentPriceFormat} ₫
                             </span>
                           </>
                         ) : (
-                          <span>{formatPrice(item.price)}</span>
+                          <span>{item.originPriceFormat} ₫</span>
                         )}
                       </div>
 
-                      {item.status === "active" && (
-                        <a
-                          href="#"
-                          className="mt-1 uppercase text-xs font-medium relative after:absolute after:bottom-0 after:w-0 after:h-[1px] after:bg-black after:left-0 hover:after:w-full after:transition-all after:duration-500"
-                        >
-                          Thêm vào giỏ
-                        </a>
-                      )}
+                      {/* Nút thêm vào giỏ */}
+                      <a
+                        href="#"
+                        className="uppercase text-xs font-medium relative after:absolute after:bottom-0 after:w-0 after:h-[1px] after:bg-black after:left-0 hover:after:w-full after:transition-all after:duration-500"
+                      >
+                        Thêm vào giỏ
+                      </a>
                     </div>
                   </div>
                 </a>
               </li>
             ))}
           </ul>
+
           <div className="flex justify-center mt-8 w-15 h-15">
             <Link
               href="/#"
@@ -242,70 +222,59 @@ export default function HomePage() {
         <div className="max-w-[1400px] mx-auto px-6 py-6">
           <h2 className="text-4xl font-bold text-center">SẢN PHẨM MỚI NHẤT</h2>
           <ul className="mt-8 lg:grid grid-cols-4 gap-7">
-            {Products1.map((item) => (
+            {products1.map((item) => (
               <li
-                key={item._id}
+                key={item.id}
                 className="mt-6 md:mt-0 text-center group relative"
               >
                 <a href="#" className="block">
-                  {/* Hết hàng */}
-                  {item.status === "inactive" && (
-                    <span className="absolute py-1 text-xs px-2 top-3 left-3 bg-red-500 text-white rounded-xl">
-                      Hết hàng
-                    </span>
-                  )}
-
-                  {/* Giảm giá */}
-                  {item.hasDiscount && item.status === "active" && (
-                    <span className="absolute py-1 text-xs px-2 top-3 left-3 bg-red-600 text-white rounded-xl">
-                      -{item.discount}%
-                    </span>
-                  )}
-
                   {/* Ảnh sản phẩm */}
                   <div className="rounded-xl overflow-hidden bg-white lg:h-[385px]">
                     <img
-                      className="block size-full object-cover hover:scale-110 duration-500 transition-all w-full h-full "
-                      src={item.avatar}
+                      className="block size-full object-cover hover:scale-110 duration-500 transition-all w-full h-full"
+                      src={item.image}
                     />
                   </div>
 
                   {/* Tên sản phẩm */}
-                  <h3 className="text-[15px] mt-2">{item.name}</h3>
+                  <h3 className="text-[15px] mt-2 font-semibold">
+                    {item.name}
+                  </h3>
 
                   {/* Giá + Add to cart */}
                   <div className="mt-2 relative h-5 overflow-hidden">
                     <div className="absolute flex flex-col items-center left-1/2 -translate-x-1/2 hover:bottom-0 -bottom-5 transition-all duration-300">
+                      {/* Giá sản phẩm */}
                       <div className="flex items-center justify-center font-bold text-[15px] text-center">
-                        {item.hasDiscount ? (
+                        {item.currentPriceFormat ? (
                           <>
-                            <span className="line-through text-gray-400 text-sm mr-2">
-                              {formatPrice(item.price)}
+                            <span className="text-gray-400 line-through text-sm mr-2">
+                              {item.originPriceFormat} ₫
                             </span>
                             <span className="mx-1">-</span>
                             <span className="text-red-600">
-                              {formatPrice(item.finalPrice)}
+                              {item.currentPriceFormat} ₫
                             </span>
                           </>
                         ) : (
-                          <span>{formatPrice(item.price)}</span>
+                          <span>{item.originPriceFormat} ₫</span>
                         )}
                       </div>
 
-                      {item.status === "active" && (
-                        <a
-                          href="#"
-                          className="mt-1 uppercase text-xs font-medium relative after:absolute after:bottom-0 after:w-0 after:h-[1px] after:bg-black after:left-0 hover:after:w-full after:transition-all after:duration-500"
-                        >
-                          Thêm vào giỏ
-                        </a>
-                      )}
+                      {/* Nút thêm vào giỏ */}
+                      <a
+                        href="#"
+                        className="uppercase text-xs font-medium relative after:absolute after:bottom-0 after:w-0 after:h-[1px] after:bg-black after:left-0 hover:after:w-full after:transition-all after:duration-500"
+                      >
+                        Thêm vào giỏ
+                      </a>
                     </div>
                   </div>
                 </a>
               </li>
             ))}
           </ul>
+
           <div className="flex justify-center mt-8 w-15 h-15">
             <Link
               href="/#"
