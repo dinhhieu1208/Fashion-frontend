@@ -1,31 +1,34 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProduct } from "@/services/productService";
 import { useSearchParams } from "react-router-dom";
-import Pagination from "../client/Pagination";
+import PaginationComponent from "../client/Pagination";
 // import banner from "../../assets/images/banner.webp";
 
 const ProductPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [priceFilter, setPriceFilter] = useState("");
-  const [page, setPage] = useState(1);
 
-  const limit = 4;
+  // lấy từ URL trước, nếu không có thì default rỗng
+  const [priceFilter, setPriceFilter] = useState(searchParams.get("price") || "");
+  const [currentPage, setCurrentPage] = useState(Number(searchParams.get("page")) || 1);
 
   const { data } = useQuery({
-    queryKey: ["products", priceFilter, page],
-    queryFn: () => getAllProduct(priceFilter, page, limit),
+    queryKey: ["products", priceFilter, currentPage],
+    queryFn: () => getAllProduct(priceFilter, currentPage),
     keepPreviousData: true,
   });
 
   const handleOnChange = (e) => {
     const priceValue = e.target.value;
-    setSearchParams({
-      priceFilter: priceValue,
-    });
     setPriceFilter(priceValue);
-    setPage(1);
+    setCurrentPage(1); // reset về trang 1 khi đổi filter
+    setSearchParams({ price: priceValue, page: "1" });
+  };
+
+  const callBack = (page) => {
+    setCurrentPage(page);
+    setSearchParams({ price: priceFilter, page: String(page) });
   };
 
   return (
@@ -119,7 +122,10 @@ const ProductPage = () => {
 
                   {/* Phân trang */}
                   <div className="flex justify-center mt-10">
-                    <Pagination onPageChange={(newPage) => setPage(newPage)} />
+                    <PaginationComponent
+                      pages = {data?.data?.totalPage || 1}
+                      onChangePage = {callBack}
+                    />
                   </div>
                 </>
               )}
