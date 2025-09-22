@@ -1,31 +1,10 @@
-import React from "react";
-import location from "../../assets/images/location.jpg";
-import location1 from "../../assets/images/location1.jpg";
-import location2 from "../../assets/images/location2.jpg";
+import { useQuery } from "@tanstack/react-query";
+import { getAllBranchClient } from "@/services/branchService";
 export default function StoreLocationPage() {
-  const stores = [
-    {
-      id: "1",
-      name: "Shop Quần Áo Quận 1",
-      address: "123 Nguyễn Trãi, Quận 1, TP.HCM",
-      phone: "0901 111 111",
-      image: location,
-    },
-    {
-      id: "2",
-      name: "Shop Quần Áo Quận 3",
-      address: "456 Cách Mạng Tháng 8, Quận 3, TP.HCM",
-      phone: "0902 222 222",
-      image: location1,
-    },
-    {
-      id: "3",
-      name: "Shop Quần Áo Bình Thạnh",
-      address: "789 Điện Biên Phủ, Bình Thạnh, TP.HCM",
-      phone: "0903 333 333",
-      image: location2,
-    },
-  ];
+  const { data } = useQuery({
+    queryKey: ["branch"],
+    queryFn: getAllBranchClient,
+  });
 
   return (
     <main>
@@ -36,7 +15,7 @@ export default function StoreLocationPage() {
           </h3>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {stores.map((store) => (
+            {data?.data.map((store) => (
               <div
                 className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-lg transition"
                 key={store.id}
