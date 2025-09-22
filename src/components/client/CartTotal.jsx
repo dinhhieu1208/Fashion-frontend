@@ -1,12 +1,6 @@
 import React from "react";
 
-const CartTotal = () => {
-  // Dữ liệu mẫu giỏ hàng
-  const cartItems = [
-    { id: 1, name: "Sản phẩm A", price: 100000, quantity: 2 },
-    { id: 2, name: "Sản phẩm B", price: 200000, quantity: 1 },
-  ];
-
+const CartTotal = ({ cartItems }) => {
   const currency = "đ";
   const delivery_fee = 30000;
 
