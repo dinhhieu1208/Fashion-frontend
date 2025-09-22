@@ -24,7 +24,6 @@ const Cart = () => {
         ? {
             ...item,
             quantity: newQuantity,
-            price: newQuantity * (item.price / item.quantity),
           }
         : item
     );
@@ -69,7 +68,7 @@ const Cart = () => {
                   <p className="text-xs sm:text-lg font-medium">{item.name}</p>
                   <div className="flex items-center gap-5 mt-2">
                     <p className="text-[#e8002d]">
-                      {item.price.toLocaleString("vi-VN")}
+                      {item.quantity} x {item.price.toLocaleString("vi-VN")}
                       {currency}
                     </p>
                     <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">

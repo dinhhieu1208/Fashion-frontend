@@ -1,5 +1,4 @@
-import React from "react";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 const ActionDetailProduct = (props) => {
   const handleAddToCart = () => {
     toast.success("Thêm vào giỏ hàng thành công");
@@ -17,23 +16,19 @@ const ActionDetailProduct = (props) => {
     const cartStorage = localStorage.getItem("cart");
     if (cartStorage == null) {
       localStorage.setItem("cart", JSON.stringify(arrayCart));
-      const res = localStorage.getItem("cart");
-      console.log(JSON.parse(res));
     } else {
       const res = JSON.parse(cartStorage);
       const arrayCartUpdate = [];
       let check = false;
       for (const item of res) {
-        if (item.id === product.id) {
-          item.quantity = quantity;
+        if (item.id === product.id && item.size === selectedSize) {
+          item.quantity = item.quantity + quantity;
           item.size = selectedSize || "M";
           check = true;
         }
 
         arrayCartUpdate.push(item);
       }
-
-      console.log(arrayCart.length);
       if (arrayCart.length > 0 && check === false) {
         arrayCartUpdate.push(arrayCart[0]);
       }
