@@ -8,6 +8,7 @@ import CartPage from "./../page/client/CartPage.jsx";
 import PaymentPage from "./../page/client/PaymentPage.jsx";
 import ProductPage from "./../page/client/ProductPage.jsx";
 import ProfilePage from "./../page/client/ProfilePage.jsx";
+import ProductDetailPage from "./../page/client/ProductDetailPage.jsx";
 import ChangePasswordPage from "@/page/client/ChangePasswordPage.jsx";
 import LocationPage from "@/page/client/LocationPage.jsx";
 import { Dashboard } from "@/page/admin/Dashboard.jsx";
@@ -37,6 +38,7 @@ const AppRouter = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/changePassword" element={<ChangePasswordPage />} />
           <Route path="/location" element={<LocationPage />} />
+          <Route path="/product/:id" element={<ProductDetailPage />} />
           {/* <Route path="/cart" element={<CartPage />} /> */}
         </Route>
       </Routes>

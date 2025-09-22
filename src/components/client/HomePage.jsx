@@ -160,7 +160,7 @@ export default function HomePage() {
                 key={item.id}
                 className="mt-6 md:mt-0 text-center group relative"
               >
-                <a href="#" className="block">
+                <Link to={`/product/${item.id}`} className="block">
                   {/* Ảnh sản phẩm */}
                   <div className="rounded-xl overflow-hidden bg-white lg:h-[385px]">
                     <img
@@ -203,7 +203,7 @@ export default function HomePage() {
                       </a>
                     </div>
                   </div>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -227,7 +227,7 @@ export default function HomePage() {
                 key={item.id}
                 className="mt-6 md:mt-0 text-center group relative"
               >
-                <a href="#" className="block">
+                <Link to={`/product/${item.id}`} className="block">
                   {/* Ảnh sản phẩm */}
                   <div className="rounded-xl overflow-hidden bg-white lg:h-[385px]">
                     <img
@@ -270,7 +270,7 @@ export default function HomePage() {
                       </a>
                     </div>
                   </div>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

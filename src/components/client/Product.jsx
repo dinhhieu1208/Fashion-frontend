@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProduct } from "@/services/productService";
 import { useSearchParams } from "react-router-dom";
@@ -10,8 +11,12 @@ const ProductPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // lấy từ URL trước, nếu không có thì default rỗng
-  const [priceFilter, setPriceFilter] = useState(searchParams.get("price") || "");
-  const [currentPage, setCurrentPage] = useState(Number(searchParams.get("page")) || 1);
+  const [priceFilter, setPriceFilter] = useState(
+    searchParams.get("price") || ""
+  );
+  const [currentPage, setCurrentPage] = useState(
+    Number(searchParams.get("page")) || 1
+  );
 
   const { data } = useQuery({
     queryKey: ["products", priceFilter, currentPage],
@@ -72,7 +77,7 @@ const ProductPage = () => {
                         key={item.id}
                         className="mt-6 md:mt-0 text-center group relative"
                       >
-                        <a href="#" className="block">
+                        <Link to={`/product/${item.id}`} className="block">
                           {/* Ảnh sản phẩm */}
                           <div className="rounded-xl overflow-hidden bg-white lg:h-[385px]">
                             <img
@@ -115,7 +120,7 @@ const ProductPage = () => {
                               </a>
                             </div>
                           </div>
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -123,8 +128,8 @@ const ProductPage = () => {
                   {/* Phân trang */}
                   <div className="flex justify-center mt-10">
                     <PaginationComponent
-                      pages = {data?.data?.totalPage || 1}
-                      onChangePage = {callBack}
+                      pages={data?.data?.totalPage || 1}
+                      onChangePage={callBack}
                     />
                   </div>
                 </>
