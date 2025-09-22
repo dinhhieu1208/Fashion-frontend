@@ -1,18 +1,14 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { BoxProduct } from "./BoxProduct";
+import { useState } from "react";
+import { getOneProduct } from "@/services/productService";
 import ActionDetailProduct from "./ActionDetailProductAddToCart";
 import clother_1 from "../../assets/images/clother-1.jpg";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 const products = {
   id: "68c11de372c265eb9b62fd",
   name: "Quan ao 01",
-  images: [
-    clother_1,
-    "/images/clother-2.jpg",
-    "/images/clother-3.jpg",
-    "/images/clother-1.jpg",
-  ],
+  images: clother_1,
   categoryIds: [
     { id: "68c11d0c72c265eb9b62fd95", name: "Áo sơ mi" },
     { id: "68c11ca272c265eb9b62fd7a", name: "Thời trang nam" },
@@ -28,10 +24,15 @@ const products = {
 };
 
 const ProductDetailPage = () => {
-  const { id } = useParams();
-  const [selectedImage, setSelectedImage] = useState(products.images[0]);
   const [selectedSize, setSelectedSize] = useState(products.size[0]);
   const [quantity, setQuantity] = useState(1);
+
+  const { id } = useParams();
+
+  const { data } = useQuery({
+    queryKey: ["productDetail", id],
+    queryFn: () => getOneProduct(id)
+  });
 
   return (
     <div className="max-w-[1200px] mx-auto px-6 py-8">
@@ -42,37 +43,25 @@ const ProductDetailPage = () => {
             Home /
           </a>
         </li>
-        {products.categoryIds.map((cat, idx) => (
+        {data?.data.categoryIds.map((cat, idx) => (
           <li key={cat.id}>
             <a href="#none" className="hover:underline">
               {cat.name}
-              {idx < products.categoryIds.length - 1 ? " / " : " / "}
+              {idx < data?.data?.categoryIds.length - 1 ? " / " : " / "}
             </a>
           </li>
         ))}
-        <li>{products.name}</li>
+        <li>{data?.data.name}</li>
       </ul>
 
       {/* Main content */}
       <div className="lg:grid grid-cols-5 gap-10">
         {/* Left images */}
         <div className="col-span-3 flex gap-4">
-          <div className="flex flex-col gap-3 w-24">
-            {products.images.map((img, idx) => (
-              <img
-                key={idx}
-                src={img}
-                onClick={() => setSelectedImage(img)}
-                className={`border rounded-lg cursor-pointer ${
-                  selectedImage === img ? "border-black" : "border-gray-200"
-                }`}
-              />
-            ))}
-          </div>
           <div className="flex-1 rounded-xl overflow-hidden">
             <img
-              src={selectedImage}
-              alt={products.name}
+              src={data?.data.image}
+              alt={data?.data.name}
               className="w-full h-auto object-cover"
             />
           </div>
@@ -80,15 +69,15 @@ const ProductDetailPage = () => {
 
         {/* Right info */}
         <div className="col-span-2 mt-6 lg:mt-0">
-          <h1 className="text-2xl font-semibold">{products.name}</h1>
+          <h1 className="text-2xl font-semibold">{data?.data.name}</h1>
 
           {/* Price */}
           <div className="mt-3 flex items-center gap-3">
             <p className="text-2xl font-bold text-black">
-              {products.currentPriceFormat}đ
+              {data?.data.currentPriceFormat}đ
             </p>
             <p className="line-through text-gray-400">
-              {products.originPriceFormat}đ
+              {data?.data.originPriceFormat}đ
             </p>
           </div>
 
@@ -96,15 +85,14 @@ const ProductDetailPage = () => {
           <div className="mt-6">
             <p className="font-medium mb-2">Chọn Size</p>
             <div className="flex gap-2 flex-wrap">
-              {products.size.map((s) => (
+              {data?.data.size.map((s) => (
                 <button
                   key={s}
                   onClick={() => setSelectedSize(s)}
-                  className={`px-4 py-2 border rounded-full ${
-                    selectedSize === s
+                  className={`px-4 py-2 border rounded-full ${selectedSize === s
                       ? "border-gray-300 text-white bg-black font-semibold"
                       : "border-gray-300"
-                  }`}
+                    }`}
                 >
                   {s}
                 </button>
@@ -115,19 +103,19 @@ const ProductDetailPage = () => {
           {/* Giới tính */}
           <div className="mt-6">
             <p className="font-medium mb-2">Giới tính</p>
-            <div className="flex gap-2 flex-wrap">{products.sex}</div>
+            <div className="flex gap-2 flex-wrap">{data?.data.sex}</div>
           </div>
 
           {/* Phong cách */}
           <div className="mt-6">
             <p className="font-medium mb-2">Phong cách</p>
-            <div className="flex gap-2 flex-wrap">{products.styleName}</div>
+            <div className="flex gap-2 flex-wrap">{data?.data.styleName}</div>
           </div>
 
           {/* Mùa */}
           <div className="mt-6">
             <p className="font-medium mb-2">Mùa</p>
-            <div className="flex gap-2 flex-wrap">{products.season}</div>
+            <div className="flex gap-2 flex-wrap">{data?.data.season}</div>
           </div>
 
           {/* Quantity */}
@@ -158,7 +146,7 @@ const ProductDetailPage = () => {
           {/* Buttons */}
           <div className="mt-6 flex gap-4">
             <ActionDetailProduct
-              product={products}
+              product={data?.data}
               selectedSize={selectedSize}
               quantity={quantity}
             />
