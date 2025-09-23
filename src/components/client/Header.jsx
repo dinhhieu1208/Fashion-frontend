@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import user from "../../assets/icons/user.png";
 import carts from "../../assets/icons/shopping-bag.svg";
 import icon_search from "../../assets/images/icon_search.png";
+import logo from "../../assets/images/logo.jpg";
 import icon_nav_menu from "../../assets/images/nav menu.png";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { logoutClient, profileUser } from "@/services/authService";
@@ -39,13 +40,17 @@ export default function Header() {
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50 font-vietnam">
-      <div className="max-w-[1400px] mx-auto px-6 py-6">
+      <div className="max-w-[1400px] mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           <div
             onClick={() => navigate("/")}
-            className="cursor-pointer flex items-center gap-2"
+            className="w-[70px] lg:w-[110px] block flex-shrink-0"
           >
-            <span className="text-2xl font-bold text-black">28.Shop</span>
+            <img
+              src={logo}
+              alt="Shop Clothes Logo"
+              className="block max-w-full object-contain"
+            />
           </div>
 
           {/* Navbar */}

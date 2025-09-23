@@ -9,58 +9,92 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible"
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "@/components/ui/collapsible";
 
-import { Calendar, Home, Inbox, Search, Settings, User, Bell, ChevronDown, Shirt, ChartColumnStacked, Pen, ClipboardList, LayoutDashboard, Gem, UserStar, UserCheck, UserRoundPen, ShieldCheck, Box } from "lucide-react"
-import { Link } from "react-router-dom"
+import {
+  Settings,
+  User,
+  Bell,
+  ChevronDown,
+  ChartColumnStacked,
+  Pen,
+  ClipboardList,
+  LayoutDashboard,
+  UserStar,
+  UserCheck,
+  UserRoundPen,
+  ShieldCheck,
+  Box,
+  LogOut,
+} from "lucide-react";
+
+import { Link, useNavigate } from "react-router-dom";
 
 export function AppSidebar() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("isLogin");
+    navigate("/admin/login");
+  };
   return (
-    <Sidebar>
+    <Sidebar className="bg-white border-r shadow-sm">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-lg font-semibold mb-[10px]">
+          <SidebarGroupLabel className="text-lg font-semibold mb-[10px] text-gray-700">
             Admin Page
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-
               {/* Dashboard */}
-              <SidebarMenuItem className={"mb-[5px]"}>
-                <SidebarMenuButton>
-                  <LayoutDashboard className="w-4 h-4" />
+              <SidebarMenuItem className="mb-[5px]">
+                <SidebarMenuButton className="flex items-center gap-2 rounded-md hover:bg-gray-100 transition-colors duration-200">
+                  <LayoutDashboard className="w-4 h-4 text-blue-600" />
                   <span className="text-[18px]">Trang tổng quan</span>
-                  <ChevronDown className="ml-auto" size={64} />
+                  <ChevronDown className="ml-auto opacity-50" size={20} />
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
-              {/* Collapsible category */}
-              <Collapsible asChild className={"mb-[5px]"}>
+              {/* Quản lý danh mục */}
+              <Collapsible asChild className="mb-[5px]">
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton className={"flex items-center"}>
-                      <ChartColumnStacked className="w-4 h-4" />
+                    <SidebarMenuButton className="flex items-center gap-2 rounded-md hover:bg-gray-100 transition-colors duration-200 group">
+                      <ChartColumnStacked className="w-4 h-4 text-purple-600" />
                       <span className="text-[18px]">Quản lý danh mục</span>
-                      <ChevronDown className="ml-auto" size={64} />
+                      <ChevronDown className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-180" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
-                  <CollapsibleContent>
+                  <CollapsibleContent className="overflow-hidden data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
                     <SidebarMenuSub>
                       <SidebarMenuSubItem>
-                        <SidebarMenuButton asChild className={"mt-[5px]"}>
-                          <Link to="/admin/category/list" className="flex items-center">
-                            <ClipboardList className="w-4 h-4"/>
-                            <span className="text-[18px] h-6">Danh sách danh mục</span>
+                        <SidebarMenuButton
+                          asChild
+                          className="mt-[5px] flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
+                          <Link to="/admin/category/list">
+                            <ClipboardList className="w-4 h-4" />
+                            <span className="text-[18px] h-6">
+                              Danh sách danh mục
+                            </span>
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuSubItem>
                       <SidebarMenuSubItem>
-                        <SidebarMenuButton asChild>
+                        <SidebarMenuButton
+                          asChild
+                          className="flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
                           <a href="/settings/notifications">
                             <Pen className="w-4 h-4" />
-                            <span className="text-[18px] h-6">Tạo danh mục</span>
+                            <span className="text-[18px] h-6">
+                              Tạo danh mục
+                            </span>
                           </a>
                         </SidebarMenuButton>
                       </SidebarMenuSubItem>
@@ -69,31 +103,41 @@ export function AppSidebar() {
                 </SidebarMenuItem>
               </Collapsible>
 
-              {/* Collapsible order */}
-              <Collapsible asChild className={"mb-[5px]"}>
+              {/* Quản lý sản phẩm */}
+              <Collapsible asChild className="mb-[5px]">
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton className={"flex items-center"}>
-                      <Box className="w-4 h-4" />
+                    <SidebarMenuButton className="flex items-center gap-2 rounded-md hover:bg-gray-100 transition-colors duration-200 group">
+                      <Box className="w-4 h-4 text-green-600" />
                       <span className="text-[18px]">Quản lý sản phẩm</span>
-                      <ChevronDown className="ml-auto" size={64} />
+                      <ChevronDown className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-180" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
-                  <CollapsibleContent>
+                  <CollapsibleContent className="overflow-hidden data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
                     <SidebarMenuSub>
                       <SidebarMenuSubItem>
-                        <SidebarMenuButton asChild className={"mt-[5px]"}>
+                        <SidebarMenuButton
+                          asChild
+                          className="mt-[5px] flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
                           <a href="/settings/profile">
                             <ClipboardList className="w-4 h-4" />
-                            <span className="text-[18px] h-6">Danh sách sản phẩm</span>
+                            <span className="text-[18px] h-6">
+                              Danh sách sản phẩm
+                            </span>
                           </a>
                         </SidebarMenuButton>
                       </SidebarMenuSubItem>
                       <SidebarMenuSubItem>
-                        <SidebarMenuButton asChild>
+                        <SidebarMenuButton
+                          asChild
+                          className="flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
                           <a href="/settings/notifications">
                             <Pen className="w-4 h-4" />
-                            <span className="text-[18px] h-6">Tạo sản phẩm</span>
+                            <span className="text-[18px] h-6">
+                              Tạo sản phẩm
+                            </span>
                           </a>
                         </SidebarMenuButton>
                       </SidebarMenuSubItem>
@@ -102,23 +146,28 @@ export function AppSidebar() {
                 </SidebarMenuItem>
               </Collapsible>
 
-              {/* Collapsible role */}
-              <Collapsible asChild className={"mb-[5px]"}>
+              {/* Quản lý đơn đặt hàng */}
+              <Collapsible asChild className="mb-[5px]">
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton className={"flex items-center"}>
-                      <ShieldCheck className="w-4 h-4" />
-                      <span className="text-[18px]">Quản lý đơn đăt hàng</span>
-                      <ChevronDown className="ml-auto" size={64} />
+                    <SidebarMenuButton className="flex items-center gap-2 rounded-md hover:bg-gray-100 transition-colors duration-200 group">
+                      <ShieldCheck className="w-4 h-4 text-red-600" />
+                      <span className="text-[18px]">Quản lý đơn đặt hàng</span>
+                      <ChevronDown className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-180" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
-                  <CollapsibleContent>
+                  <CollapsibleContent className="overflow-hidden data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
                     <SidebarMenuSub>
                       <SidebarMenuSubItem>
-                        <SidebarMenuButton asChild className={"mt-[5px]"}>
+                        <SidebarMenuButton
+                          asChild
+                          className="mt-[5px] flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
                           <a href="/settings/profile">
                             <ClipboardList className="w-4 h-4" />
-                            <span className="text-[18px] h-6">Danh sách đơn đặt hàng</span>
+                            <span className="text-[18px] h-6">
+                              Danh sách đơn đặt hàng
+                            </span>
                           </a>
                         </SidebarMenuButton>
                       </SidebarMenuSubItem>
@@ -127,23 +176,30 @@ export function AppSidebar() {
                 </SidebarMenuItem>
               </Collapsible>
 
-              {/* Collapsible user */}
-              <Collapsible asChild className={"mb-[5px]"}>
+              {/* Quản lý tài khoản khách hàng */}
+              <Collapsible asChild className="mb-[5px]">
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton className={"flex items-center"}>
-                      <UserStar className="w-4 h-4" />
-                      <span className="text-[18px]">Quản lý tài khoản khách hàng</span>
-                      <ChevronDown className="ml-auto" size={64} />
+                    <SidebarMenuButton className="flex items-center gap-2 rounded-md hover:bg-gray-100 transition-colors duration-200 group">
+                      <UserStar className="w-4 h-4 text-orange-600" />
+                      <span className="text-[18px]">
+                        Quản lý tài khoản khách hàng
+                      </span>
+                      <ChevronDown className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-180" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
-                  <CollapsibleContent>
+                  <CollapsibleContent className="overflow-hidden data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
                     <SidebarMenuSub>
                       <SidebarMenuSubItem>
-                        <SidebarMenuButton asChild className={"mt-[5px]"}>
+                        <SidebarMenuButton
+                          asChild
+                          className="mt-[5px] flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
                           <a href="/settings/profile">
                             <ClipboardList className="w-4 h-4" />
-                            <span className="text-[18px] h-6">Danh sách tài khoản khách hàng</span>
+                            <span className="text-[18px] h-6">
+                              Danh sách tài khoản khách hàng
+                            </span>
                           </a>
                         </SidebarMenuButton>
                       </SidebarMenuSubItem>
@@ -152,31 +208,43 @@ export function AppSidebar() {
                 </SidebarMenuItem>
               </Collapsible>
 
-              {/* Collapsible admin */}
-              <Collapsible asChild className={"mb-[5px]"}>
+              {/* Quản lý tài khoản quản trị */}
+              <Collapsible asChild className="mb-[5px]">
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton className={"flex items-center"}>
-                      <UserCheck className="w-4 h-4" />
-                      <span className="text-[18px]">Quản lý tài khoản quản trị</span>
-                      <ChevronDown className="ml-auto" size={64} />
+                    <SidebarMenuButton className="flex items-center gap-2 rounded-md hover:bg-gray-100 transition-colors duration-200 group">
+                      <UserCheck className="w-4 h-4 text-indigo-600" />
+                      <span className="text-[18px]">
+                        Quản lý tài khoản quản trị
+                      </span>
+                      <ChevronDown className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-180" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
-                  <CollapsibleContent>
+                  <CollapsibleContent className="overflow-hidden data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
                     <SidebarMenuSub>
                       <SidebarMenuSubItem>
-                        <SidebarMenuButton asChild className={"mt-[5px]"}>
+                        <SidebarMenuButton
+                          asChild
+                          className="mt-[5px] flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
                           <a href="/settings/profile">
                             <ClipboardList className="w-4 h-4" />
-                            <span className="text-[18px] h-6">Danh sách tài khoản quản trị</span>
+                            <span className="text-[18px] h-6">
+                              Danh sách tài khoản quản trị
+                            </span>
                           </a>
                         </SidebarMenuButton>
                       </SidebarMenuSubItem>
                       <SidebarMenuSubItem>
-                        <SidebarMenuButton asChild>
+                        <SidebarMenuButton
+                          asChild
+                          className="flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
                           <a href="/settings/notifications">
                             <UserRoundPen className="w-4 h-4" />
-                            <span className="text-[18px] h-6">Tạo tài khoản quản trị</span>
+                            <span className="text-[18px] h-6">
+                              Tạo tài khoản quản trị
+                            </span>
                           </a>
                         </SidebarMenuButton>
                       </SidebarMenuSubItem>
@@ -185,28 +253,36 @@ export function AppSidebar() {
                 </SidebarMenuItem>
               </Collapsible>
 
-              {/* Collapsible role */}
-              <Collapsible asChild className={"mb-[5px]"}>
+              {/* Quản lý nhóm quyền */}
+              <Collapsible asChild className="mb-[5px]">
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton className={"flex items-center"}>
-                      <ShieldCheck className="w-4 h-4" />
+                    <SidebarMenuButton className="flex items-center gap-2 rounded-md hover:bg-gray-100 transition-colors duration-200 group">
+                      <ShieldCheck className="w-4 h-4 text-pink-600" />
                       <span className="text-[18px]">Quản lý nhóm quyền</span>
-                      <ChevronDown className="ml-auto" size={64} />
+                      <ChevronDown className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-180" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
-                  <CollapsibleContent>
+                  <CollapsibleContent className="overflow-hidden data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
                     <SidebarMenuSub>
                       <SidebarMenuSubItem>
-                        <SidebarMenuButton asChild className={"mt-[5px]"}>
+                        <SidebarMenuButton
+                          asChild
+                          className="mt-[5px] flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
                           <a href="/settings/profile">
                             <ClipboardList className="w-4 h-4" />
-                            <span className="text-[18px] h-6">Danh sách nhóm quyền</span>
+                            <span className="text-[18px] h-6">
+                              Danh sách nhóm quyền
+                            </span>
                           </a>
                         </SidebarMenuButton>
                       </SidebarMenuSubItem>
                       <SidebarMenuSubItem>
-                        <SidebarMenuButton asChild>
+                        <SidebarMenuButton
+                          asChild
+                          className="flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
                           <a href="/settings/notifications">
                             <Pen className="w-4 h-4" />
                             <span className="text-[18px]">Tạo nhóm quyền</span>
@@ -218,28 +294,36 @@ export function AppSidebar() {
                 </SidebarMenuItem>
               </Collapsible>
 
-              {/* Collapsible Settings */}
-              <Collapsible asChild className={"mb-[5px]"}>
+              {/* Cài đặt */}
+              <Collapsible asChild className="mb-[5px]">
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton className={"flex items-center"}>
-                      <Settings className="w-4 h-4" />
+                    <SidebarMenuButton className="flex items-center gap-2 rounded-md hover:bg-gray-100 transition-colors duration-200 group">
+                      <Settings className="w-4 h-4 text-gray-600" />
                       <span className="text-[18px]">Cài đặt</span>
-                      <ChevronDown className="ml-auto" />
+                      <ChevronDown className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-180" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
-                  <CollapsibleContent>
+                  <CollapsibleContent className="overflow-hidden data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
                     <SidebarMenuSub>
                       <SidebarMenuSubItem>
-                        <SidebarMenuButton asChild className={"mt-[5px]"}>
+                        <SidebarMenuButton
+                          asChild
+                          className="mt-[5px] flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
                           <a href="/settings/profile">
                             <User className="w-4 h-4" />
-                            <span className="text-[18px] h-6">Thông tin tài khoản</span>
+                            <span className="text-[18px] h-6">
+                              Thông tin tài khoản
+                            </span>
                           </a>
                         </SidebarMenuButton>
                       </SidebarMenuSubItem>
                       <SidebarMenuSubItem>
-                        <SidebarMenuButton asChild>
+                        <SidebarMenuButton
+                          asChild
+                          className="flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
                           <a href="/settings/notifications">
                             <Bell className="w-4 h-4" />
                             <span className="text-[18px] h-6">Thông báo</span>
@@ -248,13 +332,21 @@ export function AppSidebar() {
                       </SidebarMenuSubItem>
                     </SidebarMenuSub>
                   </CollapsibleContent>
+                  <SidebarMenuItem className="mt-4">
+                    <SidebarMenuButton
+                      onClick={handleLogout}
+                      className="flex items-center gap-2 text-red-600 rounded-md hover:bg-red-50 transition-colors duration-200"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span className="text-[18px]">Đăng xuất</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
                 </SidebarMenuItem>
               </Collapsible>
-
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }

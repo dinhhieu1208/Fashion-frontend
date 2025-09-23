@@ -4,7 +4,6 @@ const CartTotal = ({ cartItems }) => {
   const currency = "đ";
   const delivery_fee = 30000;
 
-  // Hàm tính tổng tiền hàng
   const getCartAmount = () => {
     return cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
