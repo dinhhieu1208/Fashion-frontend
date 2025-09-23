@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CartTotal from "./CartTotal";
 import { useNavigate } from "react-router-dom";
+import { profileUser } from "@/services/authService";
+import { toast } from "sonner";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -22,9 +24,9 @@ const Cart = () => {
     const updated = cartData.map((item) =>
       item.id === id && item.size === size
         ? {
-            ...item,
-            quantity: newQuantity,
-          }
+          ...item,
+          quantity: newQuantity,
+        }
         : item
     );
     setCartData(updated);
@@ -39,6 +41,17 @@ const Cart = () => {
     setCartData(updated);
     localStorage.setItem("cart", JSON.stringify(updated));
   };
+
+  const handlePayment = async () => {
+    try {
+      await profileUser();
+      toast.success("Thanh toán thành công");
+    // eslint-disable-next-line no-unused-vars
+    } catch (error) {
+      toast.error("Vui lòng đăng nhập để thực hiện thanh toán");
+      navigate("/login");
+    }
+  }
 
   return (
     <div className="max-w-[1200px] mx-auto px-4 py-4">
@@ -109,9 +122,7 @@ const Cart = () => {
           <CartTotal />
           <div className="w-full text-end">
             <button
-              onClick={() => {
-                navigate("/payment");
-              }}
+              onClick={handlePayment}
               className="bg-black text-white text-sm my-8 px-8 py-3"
             >
               Thanh toán
