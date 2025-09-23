@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import CartTotal from "./CartTotal";
-// import { useNavigate } from "react-router-dom";
 import momo from "../../assets/images/momo.webp";
 import bank1 from "../../assets/images/bank-2.png";
+import { profileUser } from "@/services/authService";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const currency = "₫";
 
   const [cartData, setCartData] = useState([]);
@@ -22,9 +24,9 @@ const Cart = () => {
     const updated = cartData.map((item) =>
       item.id === id && item.size === size
         ? {
-            ...item,
-            quantity: newQuantity,
-          }
+          ...item,
+          quantity: newQuantity,
+        }
         : item
     );
     setCartData(updated);
@@ -38,7 +40,7 @@ const Cart = () => {
     setCartData(updated);
     localStorage.setItem("cart", JSON.stringify(updated));
   };
-  const handleOrder = () => {
+  const handleOrder = async () => {
     const orderData = {
       items: cartData,
       total: cartData.reduce(
@@ -47,23 +49,31 @@ const Cart = () => {
       ),
       paymentMethod: method,
     };
-
-    if (method === "momo") {
-      alert(
-        "Chuyển hướng đến Momo để thanh toán...\n" +
+    try {
+      await profileUser();
+      toast.success("Thanh toán thành công");
+      if (method === "momo") {
+        alert(
+          "Chuyển hướng đến Momo để thanh toán...\n" +
           JSON.stringify(orderData, null, 2)
-      );
-    } else if (method === "bank") {
-      alert(
-        "Chuyển hướng đến trang thanh toán ngân hàng...\n" +
+        );
+      } else if (method === "bank") {
+        alert(
+          "Chuyển hướng đến trang thanh toán ngân hàng...\n" +
           JSON.stringify(orderData, null, 2)
-      );
-    } else {
-      alert(
-        "Đặt hàng thành công - Thanh toán khi nhận hàng (COD)\n" +
+        );
+      } else {
+        alert(
+          "Đặt hàng thành công - Thanh toán khi nhận hàng (COD)\n" +
           JSON.stringify(orderData, null, 2)
-      );
+        );
+      }
+      // eslint-disable-next-line no-unused-vars
+    } catch (error) {
+      toast.error("Vui lòng đăng nhập để thực hiện thanh toán");
+      navigate("/login");
     }
+
   };
 
   return (
@@ -142,11 +152,10 @@ const Cart = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <label
                 onClick={() => setMethod("momo")}
-                className={`flex flex-col items-center justify-center gap-2 border rounded-xl p-4 cursor-pointer transition hover:shadow-md ${
-                  method === "momo"
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-300"
-                }`}
+                className={`flex flex-col items-center justify-center gap-2 border rounded-xl p-4 cursor-pointer transition hover:shadow-md ${method === "momo"
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-300"
+                  }`}
               >
                 <img src={momo} className="w-10 h-10 object-contain" />
                 <span className="text-center text-sm font-medium">
@@ -156,11 +165,10 @@ const Cart = () => {
 
               <label
                 onClick={() => setMethod("bank")}
-                className={`flex flex-col items-center justify-center gap-2 border rounded-xl p-4 cursor-pointer transition hover:shadow-md ${
-                  method === "bank"
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-300"
-                }`}
+                className={`flex flex-col items-center justify-center gap-2 border rounded-xl p-4 cursor-pointer transition hover:shadow-md ${method === "bank"
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-300"
+                  }`}
               >
                 <img src={bank1} className="w-10 h-10 object-contain" />
                 <span className="text-center text-sm font-medium">
@@ -170,11 +178,10 @@ const Cart = () => {
 
               <label
                 onClick={() => setMethod("cod")}
-                className={`flex flex-col items-center justify-center gap-2 border rounded-xl p-4 cursor-pointer transition hover:shadow-md ${
-                  method === "cod"
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-300"
-                }`}
+                className={`flex flex-col items-center justify-center gap-2 border rounded-xl p-4 cursor-pointer transition hover:shadow-md ${method === "cod"
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-300"
+                  }`}
               >
                 <span className="text-center text-sm font-medium">
                   Thanh toán khi nhận hàng (COD)
