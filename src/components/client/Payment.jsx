@@ -65,10 +65,7 @@ const Payment = () => {
           JSON.stringify(orderData, null, 2)
       );
     } else {
-      alert(
-        "Đặt hàng thành công - Thanh toán khi nhận hàng (COD)\n" +
-          JSON.stringify(orderData, null, 2)
-      );
+      console.log(orderData);
     }
   };
 
