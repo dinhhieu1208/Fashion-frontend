@@ -1,124 +1,170 @@
-// src/components/admin/AdminHeader.jsx
-import React, { useState } from "react";
-import { MoreVertical, Search } from "lucide-react";
+import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileAdmin() {
-  const [popupOpen, setPopupOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    full_name: "Nguyễn Văn A",
-    email: "admin@shopclothes.com",
-    avatar: "/default-avatar.png",
-  });
+  const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
-  const handleSave = (e) => {
+  const adminData = {
+    fullName: "admin01",
+    email: "admin01@gmail.com",
+    image:
+      "https://res.cloudinary.com/dculf3koq/image/upload/v1756288054/igbz2lgjehl0pwt328mt.jpg",
+    phone: "0987654321",
+    address: "Dong Nai",
+    roleName: "admin",
+    status: "active",
+  };
+
+  const [previewImage, setPreviewImage] = useState(adminData.image);
+
+  // Khi chọn file mới
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewImage(imageUrl);
+    }
+  };
+
+  // Submit form
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Đã lưu:", formData);
-    setPopupOpen(false);
+    const data = new FormData(e.target);
+    const formValues = Object.fromEntries(data.entries());
+
+    // lấy file ảnh (nếu có)
+    const file = data.get("image");
+    if (file && file.name) {
+      formValues.image = file;
+    } else {
+      formValues.image = adminData.image;
+    }
+
+    console.log("Cập nhật dữ liệu:", formValues);
   };
 
   return (
-    <header className="w-full bg-white flex items-center justify-between px-6 py-4 shadow-md">
-      {/* Logo / Tên hệ thống */}
-      <div className="text-lg font-bold text-black">Clothes Shop Admin</div>
-
-      {/* Ô tìm kiếm */}
-      <div className="flex items-center bg-gray-200 px-3 py-1 rounded-lg w-full max-w-md border border-gray-300">
-        <Search className="w-4 h-4 text-gray-400" />
-        <input
-          type="text"
-          placeholder="Search"
-          className="bg-transparent px-2 w-full text-sm outline-none"
-        />
+    <main className="max-w-4xl mx-auto mt-8 bg-white rounded-xl shadow-md overflow-hidden border">
+      {/* Header */}
+      <div className="bg-gray-100 px-4 py-2 font-semibold text-gray-800 border-b">
+        Thông tin quản trị viên
       </div>
 
-      {/* Avatar + Tên + Menu */}
-      <div className="relative flex items-center gap-3">
-        <img
-          src={formData.avatar || "/default-avatar.png"}
-          alt="admin"
-          className="w-9 h-9 rounded-full cursor-pointer border"
-          onClick={() => setPopupOpen(!popupOpen)}
-        />
-        <div className="flex items-center gap-2 whitespace-nowrap">
-          <span className="font-medium text-gray-700">
-            {formData.full_name}
-          </span>
-          <button
-            type="button"
-            className="p-1 rounded hover:bg-gray-100"
-            onClick={() => setPopupOpen(!popupOpen)}
-          >
-            <MoreVertical className="w-5 h-5 text-gray-600" />
-          </button>
+      {/* Nội dung */}
+      <div className="flex p-6 gap-6">
+        {/* Ảnh trái */}
+        <div className="flex flex-col items-center gap-3">
+          <img
+            src={previewImage}
+            alt="admin"
+            className="w-40 h-48 object-cover border rounded-md cursor-pointer hover:opacity-80"
+            onClick={() => fileInputRef.current.click()} // click ảnh => mở chọn file
+          />
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={handleImageChange}
+            className="hidden"
+          />
+          <p className="text-xs text-gray-500">Click vào ảnh để đổi</p>
         </div>
 
-        {/* Popup Profile */}
-        {popupOpen && (
-          <div className="absolute right-0 top-14 w-96 bg-white rounded-xl shadow-lg z-50 overflow-hidden animate-fadeIn">
-            {/* Header với gradient */}
-            <div className="bg-gradient-to-r from-pink-500 to-red-500 p-4 flex flex-col items-center">
-              <img
-                src={formData.avatar || "/default-avatar.png"}
-                alt="admin"
-                className="w-20 h-20 rounded-full border-4 border-white"
-              />
-              <h3 className="text-white font-semibold mt-2 text-lg">
-                {formData.full_name}
-              </h3>
-              <p className="text-pink-200 text-sm">
-                Quản trị viên - Shop Quần Áo
-              </p>
-            </div>
-
-            {/* Body form */}
-            <form onSubmit={handleSave} className="flex flex-col gap-3 p-4">
-              <input
-                type="text"
-                placeholder="Họ và tên"
-                value={formData.full_name}
-                onChange={(e) =>
-                  setFormData({ ...formData, full_name: e.target.value })
-                }
-                className="border px-3 py-2 rounded-lg text-sm w-full border-gray-300"
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                className="border px-3 py-2 rounded-lg text-sm w-full border-gray-300"
-              />
-              <input
-                type="text"
-                placeholder="Avatar URL"
-                value={formData.avatar}
-                onChange={(e) =>
-                  setFormData({ ...formData, avatar: e.target.value })
-                }
-                className="border px-3 py-2 rounded-lg text-sm w-full border-gray-300"
-              />
-
-              <div className="flex gap-2 mt-3">
-                <button
-                  type="submit"
-                  className="flex-1 bg-pink-500 text-white py-2 rounded-lg hover:bg-pink-600 transition"
-                >
-                  Lưu
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setPopupOpen(false)}
-                  className="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition"
-                >
-                  Đóng
-                </button>
-              </div>
-            </form>
+        {/* Form bên phải */}
+        <form
+          className="grid grid-cols-2 gap-4 text-sm w-full"
+          onSubmit={handleSubmit}
+        >
+          {/* Họ tên */}
+          <div>
+            <label className="font-semibold block mb-1">Họ tên:</label>
+            <input
+              type="text"
+              name="fullName"
+              defaultValue={adminData.fullName}
+              className="w-full border rounded px-3 py-2"
+            />
           </div>
-        )}
+
+          {/* Email */}
+          <div>
+            <label className="font-semibold block mb-1">Email:</label>
+            <input
+              type="email"
+              name="email"
+              defaultValue={adminData.email}
+              className="w-full border rounded px-3 py-2"
+            />
+          </div>
+
+          {/* Số điện thoại */}
+          <div>
+            <label className="font-semibold block mb-1">Số điện thoại:</label>
+            <input
+              type="text"
+              name="phone"
+              defaultValue={adminData.phone}
+              className="w-full border rounded px-3 py-2"
+            />
+          </div>
+
+          {/* Địa chỉ */}
+          <div>
+            <label className="font-semibold block mb-1">Địa chỉ:</label>
+            <input
+              type="text"
+              name="address"
+              defaultValue={adminData.address}
+              className="w-full border rounded px-3 py-2"
+            />
+          </div>
+
+          {/* Chức vụ */}
+          <div>
+            <label className="font-semibold block mb-1">Chức vụ:</label>
+            <select
+              name="roleName"
+              defaultValue={adminData.roleName}
+              className="w-full border rounded px-3 py-2"
+            >
+              <option value="admin">Admin</option>
+              <option value="staff">Nhân viên</option>
+            </select>
+          </div>
+
+          {/* Trạng thái */}
+          <div>
+            <label className="font-semibold block mb-1">Trạng thái:</label>
+            <select
+              name="status"
+              defaultValue={adminData.status}
+              className="w-full border rounded px-3 py-2"
+            >
+              <option value="active">Đang hoạt động</option>
+              <option value="inactive">Ngưng hoạt động</option>
+            </select>
+          </div>
+
+          {/* Footer */}
+          <div className="col-span-2 flex justify-end gap-2 mt-4">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+            >
+              Cập nhật
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/admin/dashboard")}
+              className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition"
+            >
+              Đóng
+            </button>
+          </div>
+        </form>
       </div>
-    </header>
+    </main>
   );
 }

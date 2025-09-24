@@ -26,9 +26,9 @@ const Cart = () => {
     const updated = cartData.map((item) =>
       item.id === id && item.size === size
         ? {
-          ...item,
-          quantity: newQuantity,
-        }
+            ...item,
+            quantity: newQuantity,
+          }
         : item
     );
     setCartData(updated);
@@ -47,19 +47,19 @@ const Cart = () => {
     mutationFn: createOrder,
     onSuccess: (res) => {
       const paymentMethod = res.data.data;
-      if(paymentMethod === "offline") {
+      if (paymentMethod === "offline") {
         toast.success("Thanh toán thành công");
         localStorage.removeItem("cart");
         navigate("/order/success");
-      };
+      }
     },
     onError: (error) => {
       toast.error(error.response.data.message);
       console.log(error.response.data.message);
     },
-    retry: false
+    retry: false,
   });
-  
+
   const handleOrder = async () => {
     const orderData = {
       items: cartData,
@@ -74,8 +74,8 @@ const Cart = () => {
       mutation.mutate({
         arrayOrder: cartData,
         coupon: "",
-        paymentMethod: method
-      })
+        paymentMethod: method,
+      });
       // eslint-disable-next-line no-unused-vars
     } catch (error) {
       toast.error("Vui lòng đăng nhập để thực hiện thanh toán");
@@ -159,10 +159,11 @@ const Cart = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <label
                 onClick={() => setMethod("momo")}
-                className={`flex flex-col items-center justify-center gap-2 border rounded-xl p-4 cursor-pointer transition hover:shadow-md ${method === "momo"
-                  ? "border-blue-500 bg-blue-50"
-                  : "border-gray-300"
-                  }`}
+                className={`flex flex-col items-center justify-center gap-2 border rounded-xl p-4 cursor-pointer transition hover:shadow-md ${
+                  method === "momo"
+                    ? "border-blue-500 bg-blue-50"
+                    : "border-gray-300"
+                }`}
               >
                 <img src={momo} className="w-10 h-10 object-contain" />
                 <span className="text-center text-sm font-medium">
@@ -172,10 +173,11 @@ const Cart = () => {
 
               <label
                 onClick={() => setMethod("bank")}
-                className={`flex flex-col items-center justify-center gap-2 border rounded-xl p-4 cursor-pointer transition hover:shadow-md ${method === "bank"
-                  ? "border-blue-500 bg-blue-50"
-                  : "border-gray-300"
-                  }`}
+                className={`flex flex-col items-center justify-center gap-2 border rounded-xl p-4 cursor-pointer transition hover:shadow-md ${
+                  method === "bank"
+                    ? "border-blue-500 bg-blue-50"
+                    : "border-gray-300"
+                }`}
               >
                 <img src={bank1} className="w-10 h-10 object-contain" />
                 <span className="text-center text-sm font-medium">
@@ -185,10 +187,11 @@ const Cart = () => {
 
               <label
                 onClick={() => setMethod("offline")}
-                className={`flex flex-col items-center justify-center gap-2 border rounded-xl p-4 cursor-pointer transition hover:shadow-md ${method === "cod"
-                  ? "border-blue-500 bg-blue-50"
-                  : "border-gray-300"
-                  }`}
+                className={`flex flex-col items-center justify-center gap-2 border rounded-xl p-4 cursor-pointer transition hover:shadow-md ${
+                  method === "cod"
+                    ? "border-blue-500 bg-blue-50"
+                    : "border-gray-300"
+                }`}
               >
                 <span className="text-center text-sm font-medium">
                   Thanh toán khi nhận hàng (COD)

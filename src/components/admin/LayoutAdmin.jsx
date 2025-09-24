@@ -1,7 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "../app-siderbar";
 import { Outlet } from "react-router-dom";
-import ProfileAdminPage from "@/page/admin/ProfileAdminPage";
+import HeaderProfileAdminPage from "@/page/admin/HeaderProfile";
 
 export const LayoutAdmin = () => {
   return (
@@ -28,7 +28,7 @@ export const LayoutAdmin = () => {
           <div className="flex-1 flex flex-col">
             {/* Header (ProfileAdminPage nằm trên đầu) */}
             <header className="w-full">
-              <ProfileAdminPage />
+              <HeaderProfileAdminPage />
             </header>
 
             {/* Nội dung */}

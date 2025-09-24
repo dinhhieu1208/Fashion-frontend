@@ -19,6 +19,7 @@ import { Toaster } from "sonner";
 import { ConfirmEmail } from "@/page/client/ConfirmEmail.jsx";
 import { Login } from "@/page/admin/auth/Login.jsx";
 import { ProtectedRoute } from "./ProtectedRoute.jsx";
+import ProfileAdminPage from "./../page/admin/ProfileAdminPage.jsx";
 
 const AppRouter = () => {
   return (
@@ -51,6 +52,7 @@ const AppRouter = () => {
           <Route element={<LayoutAdmin />}>
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/category/list" element={<CategoryList />} />
+            <Route path="/admin/profile" element={<ProfileAdminPage />} />
           </Route>
         </Route>
       </Routes>
