@@ -5,13 +5,15 @@ import bank1 from "../../assets/images/bank-2.png";
 import { profileUser } from "@/services/authService";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { createOrder } from "@/services/orderService";
 
 const Cart = () => {
   const navigate = useNavigate();
   const currency = "₫";
 
   const [cartData, setCartData] = useState([]);
-  const [method, setMethod] = useState("cod");
+  const [method, setMethod] = useState("offline");
 
   useEffect(() => {
     const cartStorage = localStorage.getItem("cart");
@@ -40,6 +42,24 @@ const Cart = () => {
     setCartData(updated);
     localStorage.setItem("cart", JSON.stringify(updated));
   };
+
+  const mutation = useMutation({
+    mutationFn: createOrder,
+    onSuccess: (res) => {
+      const paymentMethod = res.data.data;
+      if(paymentMethod === "offline") {
+        toast.success("Thanh toán thành công");
+        localStorage.removeItem("cart");
+        navigate("/order/success");
+      };
+    },
+    onError: (error) => {
+      toast.error(error.response.data.message);
+      console.log(error.response.data.message);
+    },
+    retry: false
+  });
+  
   const handleOrder = async () => {
     const orderData = {
       items: cartData,
@@ -51,29 +71,16 @@ const Cart = () => {
     };
     try {
       await profileUser();
-      toast.success("Thanh toán thành công");
-      if (method === "momo") {
-        alert(
-          "Chuyển hướng đến Momo để thanh toán...\n" +
-          JSON.stringify(orderData, null, 2)
-        );
-      } else if (method === "bank") {
-        alert(
-          "Chuyển hướng đến trang thanh toán ngân hàng...\n" +
-          JSON.stringify(orderData, null, 2)
-        );
-      } else {
-        alert(
-          "Đặt hàng thành công - Thanh toán khi nhận hàng (COD)\n" +
-          JSON.stringify(orderData, null, 2)
-        );
-      }
+      mutation.mutate({
+        arrayOrder: cartData,
+        coupon: "",
+        paymentMethod: method
+      })
       // eslint-disable-next-line no-unused-vars
     } catch (error) {
       toast.error("Vui lòng đăng nhập để thực hiện thanh toán");
       navigate("/login");
     }
-
   };
 
   return (
@@ -177,7 +184,7 @@ const Cart = () => {
               </label>
 
               <label
-                onClick={() => setMethod("cod")}
+                onClick={() => setMethod("offline")}
                 className={`flex flex-col items-center justify-center gap-2 border rounded-xl p-4 cursor-pointer transition hover:shadow-md ${method === "cod"
                   ? "border-blue-500 bg-blue-50"
                   : "border-gray-300"
