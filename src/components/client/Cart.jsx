@@ -61,14 +61,6 @@ const Cart = () => {
   });
 
   const handleOrder = async () => {
-    const orderData = {
-      items: cartData,
-      total: cartData.reduce(
-        (sum, item) => sum + item.price * item.quantity,
-        0
-      ),
-      paymentMethod: method,
-    };
     try {
       await profileUser();
       mutation.mutate({

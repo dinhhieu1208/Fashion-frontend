@@ -9,7 +9,7 @@ import PaginationComponent from "../client/Pagination";
 
 const ProductPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [keyword, setKeyword] = useState("");
   // lấy từ URL trước, nếu không có thì default rỗng
   const [priceFilter, setPriceFilter] = useState(
     searchParams.get("price") || ""
@@ -18,9 +18,15 @@ const ProductPage = () => {
     Number(searchParams.get("page")) || 1
   );
 
+  useEffect(() => {
+    const result = searchParams.get("search") || "";
+
+    setKeyword(result);
+  }, [searchParams]);
+
   const { data } = useQuery({
-    queryKey: ["products", priceFilter, currentPage],
-    queryFn: () => getAllProduct(priceFilter, currentPage),
+    queryKey: ["products", keyword, priceFilter, currentPage],
+    queryFn: () => getAllProduct(keyword, priceFilter, currentPage),
     keepPreviousData: true,
   });
 
