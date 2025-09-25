@@ -11,7 +11,7 @@ import ProfilePage from "./../page/client/ProfilePage.jsx";
 import ProductDetailPage from "./../page/client/ProductDetailPage.jsx";
 import ChangePasswordPage from "@/page/client/ChangePasswordPage.jsx";
 import LocationPage from "@/page/client/LocationPage.jsx";
-import { Dashboard } from "@/page/admin/Dashboard.jsx";
+import AdminDashboard from "@/page/admin/Dashboard.jsx";
 import { LayoutAdmin } from "@/components/admin/LayoutAdmin.jsx";
 import { LayoutClient } from "@/Layout.jsx";
 import { CategoryList } from "@/page/admin/category/CategoryList.jsx";
@@ -50,7 +50,7 @@ const AppRouter = () => {
         <Route path="/admin/login" element={<Login />} />
         <Route element={<ProtectedRoute />}>
           <Route element={<LayoutAdmin />}>
-            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/category/list" element={<CategoryList />} />
             <Route path="/admin/profile" element={<ProfileAdminPage />} />
           </Route>
