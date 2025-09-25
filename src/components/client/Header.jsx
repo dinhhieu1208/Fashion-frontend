@@ -9,6 +9,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { logoutClient, profileUser } from "@/services/authService";
 import { toast } from "sonner";
 import { MainCategory } from "./MainCategory";
+import { SearchProduct } from "./SearchProduct";
 
 export default function Header() {
   const queryClient = useQueryClient();
@@ -76,18 +77,7 @@ export default function Header() {
 
           {/* Search + User + Cart */}
           <div className="flex items-center gap-4">
-            <form className="relative hidden lg:flex items-center border border-gray-300 rounded-full px-3 h-10 w-72">
-              <img
-                src={icon_search}
-                alt="Search"
-                className="w-4 h-4 absolute left-4"
-              />
-              <input
-                type="text"
-                placeholder="Tìm kiếm sản phẩm..."
-                className="bg-transparent w-full pl-10 pr-4 text-sm focus:outline-none"
-              />
-            </form>
+            <SearchProduct/>
             {/* Mobile Search */}
             <button
               onClick={() => setIsMobileSearchOpen(true)}
