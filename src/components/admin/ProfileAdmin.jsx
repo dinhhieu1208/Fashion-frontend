@@ -21,35 +21,23 @@ export default function ProfileAdmin() {
   const { data } = useQuery({
     queryKey: ["profileAdmin"],
     queryFn: profileAdmin,
-    retry: false
+    retry: false,
   });
-
 
   const [previewImage, setPreviewImage] = useState("");
 
   useEffect(() => {
-    if(data.data) {
+    if (data.data) {
       setPreviewImage(data?.data?.image);
     }
-  }, [data])
+  }, [data]);
 
-  // Khi chọn file mới
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setPreviewImage(imageUrl);
-    }
-  };
-
-  // Submit form
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = new FormData(e.target);
-    const formValues = Object.fromEntries(data.entries());
+    const form = new FormData(e.target);
+    const formValues = Object.fromEntries(form.entries());
 
-    // lấy file ảnh (nếu có)
-    const file = data.get("image");
+    const file = form.get("image");
     if (file && file.name) {
       formValues.image = file;
     } else {
@@ -59,42 +47,39 @@ export default function ProfileAdmin() {
     console.log("Cập nhật dữ liệu:", formValues);
   };
 
-  console.log(data?.data?.image);
-
   return (
-    <main className="max-w-4xl mx-auto mt-8 bg-white rounded-xl shadow-md overflow-hidden border">
-      {/* Header */}
+    <main className="max-w-7xl mx-auto mt-8 bg-white rounded-xl shadow-md overflow-hidden border">
       <div className="bg-gray-100 px-4 py-2 font-semibold text-gray-800 border-b">
         Thông tin quản trị viên
       </div>
 
-      {/* Nội dung */}
-      <div className="flex p-6 gap-6">
+      <form className="flex p-6 gap-6" onSubmit={handleSubmit}>
         {/* Ảnh trái */}
         <div className="flex flex-col items-center gap-3">
           <img
-            src={previewImage}
+            src={previewImage || adminData.image}
             alt="admin"
             className="w-40 h-48 object-cover border rounded-md cursor-pointer hover:opacity-80"
-            onClick={() => fileInputRef.current.click()} // click ảnh => mở chọn file
+            onClick={() => fileInputRef.current.click()}
           />
           <input
             type="file"
             name="image"
             accept="image/*"
             ref={fileInputRef}
-            onChange={handleImageChange}
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                setPreviewImage(URL.createObjectURL(file));
+              }
+            }}
             className="hidden"
           />
           <p className="text-xs text-gray-500">Click vào ảnh để đổi</p>
         </div>
 
         {/* Form bên phải */}
-        <form
-          className="grid grid-cols-2 gap-4 text-sm w-full"
-          onSubmit={handleSubmit}
-        >
-          {/* Họ tên */}
+        <div className="grid grid-cols-2 gap-4 text-sm w-full">
           <div>
             <label className="font-semibold block mb-1">Họ tên:</label>
             <input
@@ -105,7 +90,6 @@ export default function ProfileAdmin() {
             />
           </div>
 
-          {/* Email */}
           <div>
             <label className="font-semibold block mb-1">Email:</label>
             <input
@@ -116,7 +100,6 @@ export default function ProfileAdmin() {
             />
           </div>
 
-          {/* Số điện thoại */}
           <div>
             <label className="font-semibold block mb-1">Số điện thoại:</label>
             <input
@@ -127,7 +110,6 @@ export default function ProfileAdmin() {
             />
           </div>
 
-          {/* Địa chỉ */}
           <div>
             <label className="font-semibold block mb-1">Địa chỉ:</label>
             <input
@@ -138,19 +120,17 @@ export default function ProfileAdmin() {
             />
           </div>
 
-          {/* Chức vụ */}
           <div>
             <label className="font-semibold block mb-1">Chức vụ:</label>
-            <div
+            <select
               name="roleName"
               defaultValue={data?.data?.roleName}
               className="w-full border rounded px-3 py-2"
             >
               <option value="admin">Admin</option>
-            </div>
+            </select>
           </div>
 
-          {/* Trạng thái */}
           <div>
             <label className="font-semibold block mb-1">Trạng thái:</label>
             <select
@@ -163,7 +143,6 @@ export default function ProfileAdmin() {
             </select>
           </div>
 
-          {/* Footer */}
           <div className="col-span-2 flex justify-end gap-2 mt-4">
             <button
               type="submit"
@@ -179,8 +158,8 @@ export default function ProfileAdmin() {
               Đóng
             </button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </main>
   );
 }

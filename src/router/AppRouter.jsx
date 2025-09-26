@@ -12,6 +12,7 @@ import ProductDetailPage from "./../page/client/ProductDetailPage.jsx";
 import ChangePasswordPage from "@/page/client/ChangePasswordPage.jsx";
 import LocationPage from "@/page/client/LocationPage.jsx";
 import AdminDashboard from "@/page/admin/Dashboard.jsx";
+import OrderPage from "@/page/client/OrderPage.jsx";
 import { LayoutAdmin } from "@/components/admin/LayoutAdmin.jsx";
 import { LayoutClient } from "@/Layout.jsx";
 import { CategoryList } from "@/page/admin/category/CategoryList.jsx";
@@ -40,6 +41,7 @@ const AppRouter = () => {
           <Route path="/changePassword" element={<ChangePasswordPage />} />
           <Route path="/location" element={<LocationPage />} />
           <Route path="/product/:id" element={<ProductDetailPage />} />
+          <Route path="/orders" element={<OrderPage />} />
           {/* <Route path="/cart" element={<CartPage />} /> */}
         </Route>
       </Routes>
