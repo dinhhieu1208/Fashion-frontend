@@ -34,10 +34,10 @@ export default function ProfileAdmin() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const form = new FormData(e.target);
-    const formValues = Object.fromEntries(form.entries());
+    const data = new FormData(e.target);
+    const formValues = Object.fromEntries(data.entries());
 
-    const file = form.get("image");
+    const file = data.get("image");
     if (file && file.name) {
       formValues.image = file;
     } else {
