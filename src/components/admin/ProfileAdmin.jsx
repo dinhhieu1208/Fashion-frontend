@@ -59,7 +59,6 @@ export default function ProfileAdmin() {
     console.log("Cập nhật dữ liệu:", formValues);
   };
 
-  console.log(data?.data?.image);
 
   return (
     <main className="max-w-4xl mx-auto mt-8 bg-white rounded-xl shadow-md overflow-hidden border">
