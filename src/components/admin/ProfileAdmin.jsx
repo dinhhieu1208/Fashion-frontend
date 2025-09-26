@@ -1,4 +1,6 @@
-import React, { useState, useRef } from "react";
+import { profileAdmin } from "@/services/authService";
+import { useQuery } from "@tanstack/react-query";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function ProfileAdmin() {
@@ -16,7 +18,20 @@ export default function ProfileAdmin() {
     status: "active",
   };
 
-  const [previewImage, setPreviewImage] = useState(adminData.image);
+  const { data } = useQuery({
+    queryKey: ["profileAdmin"],
+    queryFn: profileAdmin,
+    retry: false
+  });
+
+
+  const [previewImage, setPreviewImage] = useState("");
+
+  useEffect(() => {
+    if(data.data) {
+      setPreviewImage(data?.data?.image);
+    }
+  }, [data])
 
   // Khi chọn file mới
   const handleImageChange = (e) => {
@@ -43,6 +58,8 @@ export default function ProfileAdmin() {
 
     console.log("Cập nhật dữ liệu:", formValues);
   };
+
+  console.log(data?.data?.image);
 
   return (
     <main className="max-w-4xl mx-auto mt-8 bg-white rounded-xl shadow-md overflow-hidden border">
@@ -83,7 +100,7 @@ export default function ProfileAdmin() {
             <input
               type="text"
               name="fullName"
-              defaultValue={adminData.fullName}
+              defaultValue={data?.data?.fullName}
               className="w-full border rounded px-3 py-2"
             />
           </div>
@@ -94,7 +111,7 @@ export default function ProfileAdmin() {
             <input
               type="email"
               name="email"
-              defaultValue={adminData.email}
+              defaultValue={data?.data?.email}
               className="w-full border rounded px-3 py-2"
             />
           </div>
@@ -105,7 +122,7 @@ export default function ProfileAdmin() {
             <input
               type="text"
               name="phone"
-              defaultValue={adminData.phone}
+              defaultValue={data?.data?.phone}
               className="w-full border rounded px-3 py-2"
             />
           </div>
@@ -116,7 +133,7 @@ export default function ProfileAdmin() {
             <input
               type="text"
               name="address"
-              defaultValue={adminData.address}
+              defaultValue={data?.data?.address}
               className="w-full border rounded px-3 py-2"
             />
           </div>
@@ -124,14 +141,13 @@ export default function ProfileAdmin() {
           {/* Chức vụ */}
           <div>
             <label className="font-semibold block mb-1">Chức vụ:</label>
-            <select
+            <div
               name="roleName"
-              defaultValue={adminData.roleName}
+              defaultValue={data?.data?.roleName}
               className="w-full border rounded px-3 py-2"
             >
               <option value="admin">Admin</option>
-              <option value="staff">Nhân viên</option>
-            </select>
+            </div>
           </div>
 
           {/* Trạng thái */}
@@ -139,7 +155,7 @@ export default function ProfileAdmin() {
             <label className="font-semibold block mb-1">Trạng thái:</label>
             <select
               name="status"
-              defaultValue={adminData.status}
+              defaultValue={data?.data?.status}
               className="w-full border rounded px-3 py-2"
             >
               <option value="active">Đang hoạt động</option>
