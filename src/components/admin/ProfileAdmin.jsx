@@ -1,22 +1,11 @@
 import { profileAdmin } from "@/services/authService";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function ProfileAdmin() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
-
-  const adminData = {
-    fullName: "admin01",
-    email: "admin01@gmail.com",
-    image:
-      "https://res.cloudinary.com/dculf3koq/image/upload/v1756288054/igbz2lgjehl0pwt328mt.jpg",
-    phone: "0987654321",
-    address: "Dong Nai",
-    roleName: "admin",
-    status: "active",
-  };
 
   const { data } = useQuery({
     queryKey: ["profileAdmin"],
@@ -26,11 +15,6 @@ export default function ProfileAdmin() {
 
   const [previewImage, setPreviewImage] = useState("");
 
-  useEffect(() => {
-    if (data.data) {
-      setPreviewImage(data?.data?.image);
-    }
-  }, [data]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,7 +25,7 @@ export default function ProfileAdmin() {
     if (file && file.name) {
       formValues.image = file;
     } else {
-      formValues.image = adminData.image;
+      formValues.image = previewImage
     }
 
     console.log("Cập nhật dữ liệu:", formValues);
@@ -57,7 +41,7 @@ export default function ProfileAdmin() {
         {/* Ảnh trái */}
         <div className="flex flex-col items-center gap-3">
           <img
-            src={previewImage || adminData.image}
+            src={previewImage || data?.data?.image}
             alt="admin"
             className="w-40 h-48 object-cover border rounded-md cursor-pointer hover:opacity-80"
             onClick={() => fileInputRef.current.click()}
@@ -122,25 +106,24 @@ export default function ProfileAdmin() {
 
           <div>
             <label className="font-semibold block mb-1">Chức vụ:</label>
-            <select
+            <div
               name="roleName"
               defaultValue={data?.data?.roleName}
               className="w-full border rounded px-3 py-2"
             >
               <option value="admin">Admin</option>
-            </select>
+            </div>
           </div>
 
           <div>
             <label className="font-semibold block mb-1">Trạng thái:</label>
-            <select
+            <div
               name="status"
               defaultValue={data?.data?.status}
               className="w-full border rounded px-3 py-2"
             >
-              <option value="active">Đang hoạt động</option>
-              <option value="inactive">Ngưng hoạt động</option>
-            </select>
+              <option value={data?.data?.status}>Đang hoạt động</option>
+            </div>
           </div>
 
           <div className="col-span-2 flex justify-end gap-2 mt-4">

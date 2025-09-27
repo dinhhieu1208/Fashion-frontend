@@ -5,11 +5,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllProduct } from "@/services/productService";
 import { useSearchParams } from "react-router-dom";
 import PaginationComponent from "../client/Pagination";
+import { CategorySearch } from "./CategorySearch";
 // import banner from "../../assets/images/banner.webp";
 
 const ProductPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [keyword, setKeyword] = useState("");
+  const [category, setCategory] = useState("");
   // lấy từ URL trước, nếu không có thì default rỗng
   const [priceFilter, setPriceFilter] = useState(
     searchParams.get("price") || ""
@@ -25,8 +27,8 @@ const ProductPage = () => {
   }, [searchParams]);
 
   const { data } = useQuery({
-    queryKey: ["products", keyword, priceFilter, currentPage],
-    queryFn: () => getAllProduct(keyword, priceFilter, currentPage),
+    queryKey: ["products", keyword, priceFilter, category, currentPage],
+    queryFn: () => getAllProduct(keyword, priceFilter, category, currentPage),
     keepPreviousData: true,
   });
 
@@ -41,6 +43,13 @@ const ProductPage = () => {
     setCurrentPage(page);
     setSearchParams({ price: priceFilter, page: String(page) });
   };
+
+  const handleChangeCategory = (e) => {
+    const categoryId = e.target.value;
+    setCategory(categoryId);
+    setCurrentPage(1);
+    setSearchParams({ price: priceFilter, categoryId: categoryId, page: 1});
+  }
 
   return (
     <main>
@@ -59,15 +68,21 @@ const ProductPage = () => {
                       Sản phẩm
                     </h2>
                   </div>
-                  <select
-                    className="border-2 bg-gray-500 border-white text-sm px-2 cursor-pointer"
-                    defaultValue={""}
-                    onChange={handleOnChange}
-                  >
-                    <option value="">Sắp xếp theo giá: Liên quan</option>
-                    <option value="asc">Sắp xếp theo giá: Thấp đến Cao</option>
-                    <option value="desc">Sắp xếp theo giá: Cao đến Thấp</option>
-                  </select>
+                  <div className="">
+                    <select
+                      className="h-full border-2 bg-white text-sm px-2 cursor-pointer rounded-[10px] mr-[10px]"
+                      defaultValue={""}
+                      onChange={handleOnChange}
+                    >
+                      <option value="" disabled>Sắp xếp theo giá</option>
+                      <option value="asc">Sắp xếp theo giá: Thấp đến Cao</option>
+                      <option value="desc">Sắp xếp theo giá: Cao đến Thấp</option>
+                    </select>
+
+                    <CategorySearch
+                      callBack = {handleChangeCategory}
+                    />
+                  </div>
                 </div>
               </div>
 
