@@ -1,21 +1,18 @@
 import React, { useState } from "react";
 import { ChevronDown, User, Lock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { profileAdmin } from "@/services/authService";
 
 export default function ProfileAdmin() {
   const [popupOpen, setPopupOpen] = useState(false);
   const navigate = useNavigate();
 
-  const adminData = {
-    fullName: "admin01",
-    email: "admin01@gmail.com",
-    image:
-      "https://res.cloudinary.com/dculf3koq/image/upload/v1756288054/igbz2lgjehl0pwt328mt.jpg",
-    phone: "0987654321",
-    address: "Dong Nai",
-    roleName: "admin",
-    status: "active",
-  };
+  const { data } = useQuery({
+    queryKey: ["adminProfile"],
+    queryFn: profileAdmin,
+  });
+  console.log("data", data);
 
   return (
     <header className="w-full bg-white flex items-center justify-between px-6 py-4 shadow-md">
@@ -28,12 +25,12 @@ export default function ProfileAdmin() {
           onClick={() => setPopupOpen(!popupOpen)}
         >
           <img
-            src={adminData.image}
+            src={data.data.image}
             alt="avatar"
             className="w-8 h-8 rounded-full border"
           />
           <span className="font-medium text-gray-800">
-            {adminData.fullName}
+            {data.data.fullName}
           </span>
 
           <ChevronDown
