@@ -1,16 +1,24 @@
+import { useState } from "react";
 import { CategoryTable } from "./CategoryTable"
 import { Search } from 'lucide-react';
 export const CategoryList = () => {
+  const [keyword, setKeyword] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setKeyword(e.target.search.value);
+  };
+
   return (
     <>
       <div className="p-0 sm:p-4 min-w-screen">
         <div className="mb-[20px] text-[44px] font-[700]">Danh sánh danh mục</div>
         <div className="mb-[20px] sm:flex">
-          <form action="" className="w-[360px] h-[44px] flex items-center">
+
+          <form action="" className="w-[360px] h-[44px] flex items-center" onSubmit={handleSubmit}>
             <div className="flex relative left-[27px]">
               <Search className="w-[20px] h-[20px] opacity-[0.5]" />
             </div>
-            <input type="text" placeholder="Search category name..." className="w-full h-full pr-[30px] pl-[40px] py-[20px] rounded-[10px] shadow-md outline-none" />
+            <input type="text" placeholder="Search category name..." className="w-full h-full pr-[30px] pl-[40px] py-[20px] rounded-[10px] shadow-md outline-none" name="search"/>
           </form>
 
           <div className="ml-[20px] sm:mt-0 mt-[10px]">
@@ -21,7 +29,9 @@ export const CategoryList = () => {
             </select>
           </div>
         </div>
-        <CategoryTable />
+        <CategoryTable 
+          keyword = {keyword}
+        />
       </div>
     </>
   )

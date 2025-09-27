@@ -1,37 +1,14 @@
-import React from "react";
 import { Edit3, Trash2 } from "lucide-react";
-// import clother1 from "../../../assets/images/clother-1.jpg";
 import { useQuery } from "@tanstack/react-query";
 import { categoriesAdmin } from "@/services/categoryService";
-export const CategoryTable = () => {
-  // const data1 = [
-  //   {
-  //     id: "68c124d5603d86a76074b257",
-  //     name: "Áo sơ mi nam",
-  //     image: clother1,
-  //     status: "active",
-  //     createdAtFormat: "14:12 10/09/2025",
-  //     updatedAtFormat: "14:12 10/09/2025",
-  //     createdBy: "admin01",
-  //     updatedBy: "admin01",
-  //   },
-  //   {
-  //     id: "68c11d0c72c265eb9b62fd95",
-  //     name: "Áo sơ mi",
-  //     image: "",
-  //     status: "active",
-  //     createdAtFormat: "13:39 10/09/2025",
-  //     updatedAtFormat: "13:39 10/09/2025",
-  //     createdBy: "admin01",
-  //     updatedBy: "admin01",
-  //   },
-  // ];
+export const CategoryTable = (props) => {
+  const { keyword } = props;
+
   const { data } = useQuery({
-    queryKey: ["categoriesAdmin"],
-    queryFn: categoriesAdmin,
+    queryKey: ["categoriesAdmin", keyword],
+    queryFn: () => categoriesAdmin(keyword),
     retry: false,
   });
-  console.log(data?.data?.data);
 
   return (
     <div className="overflow-x-auto ">
