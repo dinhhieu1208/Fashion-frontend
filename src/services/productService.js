@@ -1,7 +1,7 @@
 import { axiosClient } from "./axiosClient";
 
-export const getAllProduct = async (keyword = "", price = "", page = 1) => {
-  const res = await axiosClient.get(`/client/product/list?search=${keyword}&price=${price}&quantity=&page=${page}`);
+export const getAllProduct = async (keyword = "", price = "", categoryId = "", page = 1) => {
+  const res = await axiosClient.get(`/client/product/list?search=${keyword}&price=${price}&categoryId=${categoryId}&page=${page}`);
   return res;
 }
 

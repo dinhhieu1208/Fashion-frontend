@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CartTotal from "./CartTotal";
 import momo from "../../assets/images/momo.webp";
 import bank1 from "../../assets/images/bank-2.png";
+import { Trash2 } from "lucide-react";
 import { profileUser } from "@/services/authService";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -131,7 +132,7 @@ const Cart = () => {
                 onClick={() => removeItem(item.id, item.size)}
                 className="text-red-500 font-bold"
               >
-                X
+                <Trash2 className="text-red-500 w-5 h-5" />
               </button>
             </div>
           ))
