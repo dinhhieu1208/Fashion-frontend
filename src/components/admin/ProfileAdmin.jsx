@@ -16,7 +16,6 @@ export default function ProfileAdmin() {
 
   const [previewImage, setPreviewImage] = useState("");
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
@@ -26,7 +25,7 @@ export default function ProfileAdmin() {
     if (file && file.name) {
       formValues.image = file;
     } else {
-      formValues.image = previewImage
+      formValues.image = previewImage;
     }
 
     console.log("Cập nhật dữ liệu:", formValues);
