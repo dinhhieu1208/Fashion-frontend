@@ -36,7 +36,7 @@ export const CategoryTable = () => {
   return (
     <div className="overflow-x-auto ">
       <table className="min-w-full border bg-white  border-gray-200 rounded-lg overflow-hidden shadow-md text-2xl cursor-pointer">
-        <thead className="bg-neutral-200 text-gray-700">
+        <thead className="bg-black text-white">
           <tr>
             <th className="px-4 py-2 text-left text-xl font-semibold w-64">
               Name

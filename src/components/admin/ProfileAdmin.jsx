@@ -32,10 +32,6 @@ export default function ProfileAdmin() {
     console.log("Cập nhật dữ liệu:", formValues);
   };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 2fe083c34a47d48ca446769831cefc7de6c52098
   return (
     <main className="max-w-7xl mx-auto mt-8 bg-white rounded-xl shadow-md overflow-hidden border">
       <div className="bg-gray-100 px-4 py-2 font-semibold text-gray-800 border-b">
