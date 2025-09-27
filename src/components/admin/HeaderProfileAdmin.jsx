@@ -7,11 +7,12 @@ import { profileAdmin } from "@/services/authService";
 export default function ProfileAdmin() {
   const [popupOpen, setPopupOpen] = useState(false);
   const navigate = useNavigate();
-
   const { data } = useQuery({
-    queryKey: ["adminProfile"],
+    queryKey: ["profileAdmin"],
     queryFn: profileAdmin,
+    retry: false,
   });
+
   console.log("data", data);
 
   return (
@@ -25,12 +26,12 @@ export default function ProfileAdmin() {
           onClick={() => setPopupOpen(!popupOpen)}
         >
           <img
-            src={data.data.image}
+            src={data?.data?.image}
             alt="avatar"
             className="w-8 h-8 rounded-full border"
           />
           <span className="font-medium text-gray-800">
-            {data.data.fullName}
+            {data?.data.fullName}
           </span>
 
           <ChevronDown
