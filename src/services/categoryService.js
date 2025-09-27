@@ -12,7 +12,6 @@ export const getAllCategoriesClient = async () => {
   return res;
 }
 
-};
 export const categoriesAdmin = async () => {
   const res = await axiosAdmin.get("/admin/category/list");
   return res;
