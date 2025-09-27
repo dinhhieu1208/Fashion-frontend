@@ -2,6 +2,7 @@ import { profileAdmin } from "@/services/authService";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { Save, X } from "lucide-react";
 
 export default function ProfileAdmin() {
   const navigate = useNavigate();
@@ -129,15 +130,18 @@ export default function ProfileAdmin() {
           <div className="col-span-2 flex justify-end gap-2 mt-4">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+              className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
             >
+              <Save size={18} />
               Cập nhật
             </button>
+
             <button
               type="button"
               onClick={() => navigate("/admin/dashboard")}
-              className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition"
+              className="flex items-center gap-2 bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition"
             >
+              <X size={18} />
               Đóng
             </button>
           </div>

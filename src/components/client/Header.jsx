@@ -40,7 +40,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50 font-vietnam mb-3">
+    <header className="bg-white shadow-md sticky top-0 z-50 font-vietnam ">
       <div className="max-w-[1400px] mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           <div
