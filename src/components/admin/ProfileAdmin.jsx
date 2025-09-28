@@ -1,8 +1,9 @@
-import { profileAdmin } from "@/services/authService";
-import { useQuery } from "@tanstack/react-query";
+import { profileAdmin, profileAdminEdit } from "@/services/authService";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Save, X } from "lucide-react";
+import { toast } from "sonner";
 
 export default function ProfileAdmin() {
   const navigate = useNavigate();
@@ -13,6 +14,17 @@ export default function ProfileAdmin() {
     queryFn: profileAdmin,
     retry: false,
   });
+
+  const mutation = useMutation({
+    mutationFn: profileAdminEdit,
+    onSuccess: () => {
+      toast.success("Hồ sơ đã được chỉnh sửa");
+    },
+    onError: () => {
+      toast.error("Lỗi");
+    },
+    retry: false
+  })
 
   const [previewImage, setPreviewImage] = useState("");
 
@@ -27,8 +39,7 @@ export default function ProfileAdmin() {
     } else {
       formValues.image = previewImage;
     }
-
-    console.log("Cập nhật dữ liệu:", formValues);
+    mutation.mutate(formValues);
   };
 
   return (
@@ -106,13 +117,13 @@ export default function ProfileAdmin() {
 
           <div>
             <label className="font-semibold block mb-1">Chức vụ:</label>
-            <div
-              name="roleName"
-              defaultValue={data?.data?.roleName}
+            <input
+              type="text"
+              name="role"
+              defaultValue={data?.data?.role?.roleName}
               className="w-full border rounded px-3 py-2"
-            >
-              <option value="admin">Admin</option>
-            </div>
+              disabled
+            />
           </div>
 
           <div>
