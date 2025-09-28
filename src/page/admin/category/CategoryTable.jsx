@@ -2,9 +2,11 @@ import { Edit3, Trash2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { categoriesAdmin } from "@/services/categoryService";
 import PaginationComponent from "@/components/client/Pagination";
+import { useSearchParams } from "react-router-dom";
 export const CategoryTable = (props) => {
   const { keyword, status } = props;
-
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
   const { data } = useQuery({
     queryKey: ["categoriesAdmin", keyword, status],
     queryFn: () => categoriesAdmin(keyword, status),
@@ -12,7 +14,7 @@ export const CategoryTable = (props) => {
   });
 
   const onChangePage = (pageNumber) => {
-    console.log(pageNumber);
+    setSearchParams({ search: keyword, status: status, page: pageNumber});
   }
 
   return (
