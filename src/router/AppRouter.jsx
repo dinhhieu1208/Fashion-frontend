@@ -16,6 +16,7 @@ import OrderPage from "@/page/client/OrderPage.jsx";
 import { LayoutAdmin } from "@/components/admin/LayoutAdmin.jsx";
 import { LayoutClient } from "@/Layout.jsx";
 import { CategoryList } from "@/page/admin/category/CategoryList.jsx";
+import AddCategory from "@/page/admin/category/CategoryAdd.jsx";
 import { Toaster } from "sonner";
 import { ConfirmEmail } from "@/page/client/ConfirmEmail.jsx";
 import { Login } from "@/page/admin/auth/Login.jsx";
@@ -54,6 +55,7 @@ const AppRouter = () => {
           <Route element={<LayoutAdmin />}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/category/list" element={<CategoryList />} />
+            <Route path="/admin/category/add" element={<AddCategory />} />
             <Route path="/admin/profile" element={<ProfileAdminPage />} />
           </Route>
         </Route>
