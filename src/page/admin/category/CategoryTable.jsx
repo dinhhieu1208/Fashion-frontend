@@ -2,11 +2,11 @@ import { Edit3, Trash2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { categoriesAdmin } from "@/services/categoryService";
 export const CategoryTable = (props) => {
-  const { keyword } = props;
+  const { keyword, status } = props;
 
   const { data } = useQuery({
-    queryKey: ["categoriesAdmin", keyword],
-    queryFn: () => categoriesAdmin(keyword),
+    queryKey: ["categoriesAdmin", keyword, status],
+    queryFn: () => categoriesAdmin(keyword, status),
     retry: false,
   });
 

@@ -11,7 +11,7 @@ export const getAllCategoriesClient = async () => {
   return res;
 };
 
-export const categoriesAdmin = async (search = "") => {
-  const res = await axiosAdmin.get(`/admin/category/list?search=${search}`);
+export const categoriesAdmin = async (search = "", status = "") => {
+  const res = await axiosAdmin.get(`/admin/category/list?search=${search}&status=${status}`);
   return res;
 };

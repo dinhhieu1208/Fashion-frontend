@@ -13,8 +13,6 @@ export default function ProfileAdmin() {
     retry: false,
   });
 
-  console.log("data", data);
-
   return (
     <header className="w-full bg-white flex items-center justify-between px-6 py-4 shadow-md">
       <div className="text-lg font-bold text-black">Clothes Shop Admin</div>
