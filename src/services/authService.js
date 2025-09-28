@@ -39,4 +39,9 @@ export const loginAdmin = async (data) => {
 export const profileAdmin = async () => {
   const res = await axiosAdmin.get("/admin/account/profile");
   return res.data;
+};
+
+export const profileAdminEdit = async (data) => {
+  const res = await axiosAdmin.patch("/admin/account/profile/edit", data)
+  return res.data;
 }
