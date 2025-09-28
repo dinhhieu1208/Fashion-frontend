@@ -1,11 +1,23 @@
 import { useState } from "react";
 import { CategoryTable } from "./CategoryTable";
 import { Search } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 export const CategoryList = () => {
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
   const [keyword, setKeyword] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setKeyword(e.target.search.value);
+    setSearchParams({ search: e.target.search.value, status: statusFilter })
+  };
+
+  const handleOnChange = (e) => {
+    e.preventDefault();
+    setStatusFilter(e.target.value);
+    setSearchParams({ search: keyword, status: e.target.value});
   };
   return (
     <>
@@ -34,22 +46,29 @@ export const CategoryList = () => {
             <select
               name=""
               id=""
-              defaultValue={"filter"}
-              className="w-[130px] h-[44px] p-2 bg-white rounded-[10px] shadow-md  "
+              defaultValue={statusFilter}
+              className="w-[200px] h-[44px] p-2 bg-white rounded-[10px] shadow-md"
+              onChange={handleOnChange}
             >
-              <option value="filter" disabled className="">
-                Status filter
+              <option disabled className="">
+                Lọc trạng thái
               </option>
-              <option value="filter" className="">
-                Status active
+              <option value="">
+                Lọc tất cả trạng thái
               </option>
-              <option value="filter" className="">
-                Status inactive
+              <option value="active" className="">
+                Hoạt động
+              </option>
+              <option value="inactive" className="">
+                Dừng hoạt động
               </option>
             </select>
           </div>
         </div>
-        <CategoryTable keyword={keyword} />
+        <CategoryTable 
+          keyword={keyword} 
+          status={statusFilter}
+        />
       </div>
     </>
   );
