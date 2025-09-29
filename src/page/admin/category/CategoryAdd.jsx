@@ -17,8 +17,8 @@ export default function AddCategory() {
     onError: (error) => {
       console.log(error);
       toast.error(error?.response?.data?.message);
-    }
-  })
+    },
+  });
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];

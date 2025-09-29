@@ -22,6 +22,7 @@ import { ConfirmEmail } from "@/page/client/ConfirmEmail.jsx";
 import { Login } from "@/page/admin/auth/Login.jsx";
 import { ProtectedRoute } from "./ProtectedRoute.jsx";
 import ProfileAdminPage from "./../page/admin/ProfileAdminPage.jsx";
+import { ProductList } from "@/page/admin/product/ProductList.jsx";
 
 const AppRouter = () => {
   return (
@@ -57,6 +58,7 @@ const AppRouter = () => {
             <Route path="/admin/category/list" element={<CategoryList />} />
             <Route path="/admin/category/add" element={<AddCategory />} />
             <Route path="/admin/profile" element={<ProfileAdminPage />} />
+            <Route path="/admin/product/list" element={<ProductList />} />
           </Route>
         </Route>
       </Routes>
