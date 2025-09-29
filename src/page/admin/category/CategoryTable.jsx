@@ -3,18 +3,21 @@ import { useQuery } from "@tanstack/react-query";
 import { categoriesAdmin } from "@/services/categoryService";
 import PaginationComponent from "@/components/client/Pagination";
 import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
 export const CategoryTable = (props) => {
   const { keyword, status } = props;
+  const [page, setPage] = useState(1);
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
   const { data } = useQuery({
-    queryKey: ["categoriesAdmin", keyword, status],
-    queryFn: () => categoriesAdmin(keyword, status),
+    queryKey: ["categoriesAdmin", keyword, status, page],
+    queryFn: () => categoriesAdmin(keyword, status, page),
     retry: false,
   });
 
   const onChangePage = (pageNumber) => {
     setSearchParams({ search: keyword, status: status, page: pageNumber});
+    setPage(pageNumber)
   }
 
   return (
