@@ -1,25 +1,48 @@
+import { createCategory } from "@/services/categoryService";
+import { useMutation } from "@tanstack/react-query";
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function AddCategory() {
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState("");
+  const naviage = useNavigate();
+  const mutation = useMutation({
+    mutationFn: createCategory,
+    onSuccess: () => {
+      toast.success("Tạo danh mục thành công");
+      naviage("/admin/category/list");
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error(error?.response?.data?.message);
+    }
+  })
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreviewImage(URL.createObjectURL(file)); // hiển thị preview
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const formData = new FormData(e.target);
 
+    // lấy nhiều giá trị
     const parentCategoryIds = formData.getAll("parentCategoryId");
+    formData.delete("parentCategoryId");
+    formData.append("parentCategoryId", JSON.stringify(parentCategoryIds));
 
-    const data = {
-      name: formData.get("name"),
-      parentCategoryId: parentCategoryIds,
-      status: formData.get("status"),
-      position: formData.get("position"),
-      image: formData.get("image") ? formData.get("image").name : null,
-    };
+    // Lấy file thật từ input (không dùng previewImage)
+    if (fileInputRef.current && fileInputRef.current.files[0]) {
+      formData.set("image", fileInputRef.current.files[0]);
+    }
 
-    console.log("Category data:", data);
-    alert("Xem console để thấy dữ liệu đã nhập!");
+    mutation.mutate(formData);
   };
 
   return (
@@ -56,7 +79,7 @@ export default function AddCategory() {
               <input
                 type="checkbox"
                 name="parentCategoryId"
-                value="68c11d0c72c265eb9b62fd96"
+                value="68c11cb472c265eb9b62fd82"
               />
               <span className="ml-2">Thời trang nữ</span>
             </label>
@@ -112,12 +135,7 @@ export default function AddCategory() {
                 name="image"
                 accept="image/*"
                 ref={fileInputRef}
-                onChange={(e) => {
-                  const file = e.target.files[0];
-                  if (file) {
-                    setPreviewImage(URL.createObjectURL(file));
-                  }
-                }}
+                onChange={handleFileChange}
                 className="hidden"
               />
             </div>

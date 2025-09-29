@@ -1,4 +1,4 @@
-import axiosAdmin from "./axiosAdmin";
+import axiosAdmin, { axiosAdminFormData } from "./axiosAdmin";
 import { axiosClient } from "./axiosClient";
 
 export const categoriesClient = async () => {
@@ -15,3 +15,8 @@ export const categoriesAdmin = async (search = "", status = "", page="1") => {
   const res = await axiosAdmin.get(`/admin/category/list?search=${search}&status=${status}&page=${page}`);
   return res;
 };
+
+export const createCategory = async (data) => {
+  const res = await axiosAdminFormData.post("/admin/category/create", data);
+  return res;
+}
