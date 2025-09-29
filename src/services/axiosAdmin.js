@@ -9,3 +9,8 @@ const axiosAdmin = axios.create({
 });
 
 export default axiosAdmin;
+
+export const axiosAdminFormData = axios.create({
+  baseURL: "http://localhost:4000/api", // backend API URL: no header
+  withCredentials: true,
+});

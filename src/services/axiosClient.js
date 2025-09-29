@@ -9,6 +9,6 @@ export const axiosClient = axios.create({
 });
 
 export const axiosClientFormData = axios.create({
-  baseURL: "http://localhost:4000/api", // backend API URL
+  baseURL: "http://localhost:4000/api", // backend API URL: no header
   withCredentials: true,
 });
