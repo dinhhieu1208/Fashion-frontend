@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CategoryTable } from "./CategoryTable";
 import { Search } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
+import PaginationComponent from "@/components/client/Pagination";
 export const CategoryList = () => {
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
@@ -11,13 +12,13 @@ export const CategoryList = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setKeyword(e.target.search.value);
-    setSearchParams({ search: e.target.search.value, status: statusFilter })
+    setSearchParams({ search: e.target.search.value, status: statusFilter });
   };
 
   const handleOnChange = (e) => {
     e.preventDefault();
     setStatusFilter(e.target.value);
-    setSearchParams({ search: keyword, status: e.target.value});
+    setSearchParams({ search: keyword, status: e.target.value });
   };
   return (
     <>
@@ -53,9 +54,7 @@ export const CategoryList = () => {
               <option disabled className="">
                 Lọc trạng thái
               </option>
-              <option value="">
-                Lọc tất cả trạng thái
-              </option>
+              <option value="">Lọc tất cả trạng thái</option>
               <option value="active" className="">
                 Hoạt động
               </option>
@@ -65,10 +64,7 @@ export const CategoryList = () => {
             </select>
           </div>
         </div>
-        <CategoryTable 
-          keyword={keyword} 
-          status={statusFilter}
-        />
+        <CategoryTable keyword={keyword} status={statusFilter} />
       </div>
     </>
   );
