@@ -22,8 +22,9 @@ const ProductPage = () => {
 
   useEffect(() => {
     const result = searchParams.get("search") || "";
-
+    const categoryId = searchParams.get("categoryId") || "";
     setKeyword(result);
+    setCategory(categoryId);
   }, [searchParams]);
 
   const { data } = useQuery({
