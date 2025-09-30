@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 
-export default function AddProductUI() {
+export default function ProductAdd() {
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState("");
 
@@ -16,12 +16,10 @@ export default function AddProductUI() {
 
     const formData = new FormData(e.target);
 
-    // categoryIds (checkbox nhiều lựa chọn)
     const categoryIds = formData.getAll("categoryIds");
     formData.delete("categoryIds");
     formData.append("categoryIds", JSON.stringify(categoryIds));
 
-    // size (checkbox nhiều lựa chọn)
     const sizes = formData.getAll("size");
     formData.delete("size");
     formData.append("size", JSON.stringify(sizes));
@@ -199,7 +197,6 @@ export default function AddProductUI() {
           </div>
         </div>
 
-        {/* Submit */}
         <button
           type="submit"
           className="px-4 py-2 bg-black text-white rounded hover:bg-gray-400"
