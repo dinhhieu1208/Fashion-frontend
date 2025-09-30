@@ -23,6 +23,7 @@ import { Login } from "@/page/admin/auth/Login.jsx";
 import { ProtectedRoute } from "./ProtectedRoute.jsx";
 import ProfileAdminPage from "./../page/admin/ProfileAdminPage.jsx";
 import { ProductList } from "@/page/admin/product/ProductList.jsx";
+import ProductAdd from "@/page/admin/product/ProductAdd.jsx";
 
 const AppRouter = () => {
   return (
@@ -59,6 +60,7 @@ const AppRouter = () => {
             <Route path="/admin/category/add" element={<AddCategory />} />
             <Route path="/admin/profile" element={<ProfileAdminPage />} />
             <Route path="/admin/product/list" element={<ProductList />} />
+            <Route path="/admin/product/add" element={<ProductAdd />} />
           </Route>
         </Route>
       </Routes>
