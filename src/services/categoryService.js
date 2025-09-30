@@ -16,7 +16,18 @@ export const categoriesAdmin = async (search = "", status = "", page="1") => {
   return res;
 };
 
+
+export const getCategoryAdminStatusActive = async () => {
+  const res = await axiosAdmin.get(`/admin/category/list?search=&status=active&page=`);
+  return res;
+}
+
 export const createCategory = async (data) => {
   const res = await axiosAdminFormData.post("/admin/category/create", data);
+  return res;
+}
+
+export const deleteCategory = async (data) => {
+  const res = await axiosAdmin.delete(`/admin/category/delete/${data}`);
   return res;
 }

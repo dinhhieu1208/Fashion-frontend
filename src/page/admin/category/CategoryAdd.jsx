@@ -1,5 +1,5 @@
-import { createCategory } from "@/services/categoryService";
-import { useMutation } from "@tanstack/react-query";
+import { createCategory, getCategoryAdminStatusActive } from "@/services/categoryService";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -8,6 +8,14 @@ export default function AddCategory() {
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState("");
   const naviage = useNavigate();
+
+  const { data } = useQuery({
+    queryKey: ["category"],
+    queryFn: getCategoryAdminStatusActive,
+    retry: false
+  })
+
+
   const mutation = useMutation({
     mutationFn: createCategory,
     onSuccess: () => {
@@ -45,6 +53,7 @@ export default function AddCategory() {
     mutation.mutate(formData);
   };
 
+  console.log(data?.data);
   return (
     <>
       <h1 className="p-4 sm:p-6 mb-4 text-3xl font-bold">Thêm danh mục mới</h1>
@@ -66,32 +75,23 @@ export default function AddCategory() {
         {/* Category */}
         <div>
           <label className="block mb-1 font-medium">Chọn Category</label>
-          <div className="flex flex-wrap gap-4">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                name="parentCategoryId"
-                value="68c11d0c72c265eb9b62fd95"
-              />
-              <span className="ml-2">Thời trang nam</span>
-            </label>
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                name="parentCategoryId"
-                value="68c11cb472c265eb9b62fd82"
-              />
-              <span className="ml-2">Thời trang nữ</span>
-            </label>
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                name="parentCategoryId"
-                value="68c11d0c72c265eb9b62fd97"
-              />
-              <span className="ml-2">Phụ kiện</span>
-            </label>
-          </div>
+          {data?.data && (
+            <>
+
+              <div className="flex flex-wrap gap-4">
+                {data?.data?.data.map((item) => (
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="parentCategoryId"
+                      value={item.id}
+                    />
+                    <span className="ml-2">{item.name}</span>
+                  </label>
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         {/* Trạng thái */}
