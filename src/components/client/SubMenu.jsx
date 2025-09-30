@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export const DropdownItem = ({ category }) => {
   return (
     <li className="px-4 py-2 hover:bg-gray-100 relative group/sub">
-      <Link to={`/category/${category.id}`}>{category.name}</Link>
+      <Link to={`/product/?categoryId=${category.id}`}>{category.name}</Link>
 
       {/* Nếu có children thì render tiếp */}
       {category.children?.length > 0 && (

@@ -52,8 +52,7 @@ export default function AddCategory() {
 
     mutation.mutate(formData);
   };
-
-  console.log(data?.data);
+  
   return (
     <>
       <h1 className="p-4 sm:p-6 mb-4 text-3xl font-bold">Thêm danh mục mới</h1>
