@@ -1,3 +1,6 @@
+import { getCategoryAdminStatusActive } from "@/services/categoryService";
+import { getAllStyleStatusActive } from "@/services/styleService";
+import { useQuery } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 
 export default function ProductAdd() {
@@ -10,6 +13,16 @@ export default function ProductAdd() {
       setPreviewImage(URL.createObjectURL(file));
     }
   };
+
+  const { data } = useQuery({
+    queryKey: ["category"],
+    queryFn: getCategoryAdminStatusActive,
+  });
+
+  const { data: styleData } = useQuery({
+    queryKey: ["style"],
+    queryFn: getAllStyleStatusActive,
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,6 +50,7 @@ export default function ProductAdd() {
     console.log("Form data:", obj);
   };
 
+
   return (
     <>
       <h1 className="p-4 sm:p-6 mb-4 text-3xl font-bold">Thêm sản phẩm mới</h1>
@@ -51,6 +65,7 @@ export default function ProductAdd() {
             type="text"
             name="name"
             className="w-full border rounded-md p-2"
+            required
           />
         </div>
 
@@ -58,10 +73,10 @@ export default function ProductAdd() {
         <div>
           <label className="block mb-1 font-medium">Danh mục</label>
           <div className="flex flex-wrap gap-4">
-            {["Quần áo", "Giày dép", "Phụ kiện"].map((cat) => (
-              <label key={cat} className="flex items-center">
-                <input type="checkbox" name="categoryIds" value={cat} />
-                <span className="ml-2">{cat}</span>
+            {data?.data?.data.map((item) => (
+              <label key={item.id} className="flex items-center">
+                <input type="checkbox" name="categoryIds" value={item.id} />
+                <span className="ml-2">{item.name}</span>
               </label>
             ))}
           </div>
@@ -80,11 +95,15 @@ export default function ProductAdd() {
         {/* Style */}
         <div>
           <label className="block mb-1 font-medium">Kiểu dáng</label>
-          <select name="styleId" className="w-full border rounded-md p-2">
-            <option value="classic">Classic</option>
-            <option value="modern">Modern</option>
-            <option value="sport">Sport</option>
-          </select>
+          {styleData && styleData?.data?.length > 0 && (
+            <select name="styleId" className="w-full border rounded-md p-2">
+              {styleData?.data.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
 
         {/* Season */}
@@ -118,6 +137,7 @@ export default function ProductAdd() {
             type="text"
             name="material"
             className="w-full border rounded-md p-2"
+            required
           />
         </div>
 
@@ -128,6 +148,7 @@ export default function ProductAdd() {
             type="number"
             name="quantity"
             className="w-full border rounded-md p-2"
+            required
           />
         </div>
 
@@ -138,6 +159,7 @@ export default function ProductAdd() {
             type="number"
             name="originPrice"
             className="w-full border rounded-md p-2"
+            required
           />
         </div>
 
@@ -148,6 +170,7 @@ export default function ProductAdd() {
             type="number"
             name="currentPrice"
             className="w-full border rounded-md p-2"
+            required
           />
         </div>
 
@@ -158,6 +181,7 @@ export default function ProductAdd() {
             type="text"
             name="originOfProduction"
             className="w-full border rounded-md p-2"
+            required
           />
         </div>
 
