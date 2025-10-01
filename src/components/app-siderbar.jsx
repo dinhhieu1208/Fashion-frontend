@@ -98,6 +98,32 @@ export function AppSidebar() {
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuSubItem>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuButton
+                          asChild
+                          className="flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
+                          <Link to="/admin/category/style">
+                            <ClipboardList className="w-4 h-4" />
+                            <span className="text-[18px] h-6">
+                              Danh sách kiểu dáng
+                            </span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuSubItem>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuButton
+                          asChild
+                          className="flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
+                          <Link to="/admin/category/styleAdd">
+                            <Pen className="w-4 h-4" />
+                            <span className="text-[18px] h-6">
+                              Tạo danh kiểu dáng
+                            </span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuSubItem>
                     </SidebarMenuSub>
                   </CollapsibleContent>
                 </SidebarMenuItem>
