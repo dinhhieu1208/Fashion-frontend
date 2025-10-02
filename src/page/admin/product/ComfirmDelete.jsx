@@ -45,16 +45,16 @@ export default function DeleteComfirm() {
 
             <div className="flex justify-center gap-4 mt-6">
               <button
-                onClick={() => setOpen(false)}
-                className="px-5 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300"
-              >
-                Hủy
-              </button>
-              <button
                 onClick={handleDelete}
                 className="px-5 py-2 rounded-md bg-red-500 text-white hover:bg-red-600"
               >
                 Xóa
+              </button>
+              <button
+                onClick={() => setOpen(false)}
+                className="px-5 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300"
+              >
+                Hủy
               </button>
             </div>
           </div>
