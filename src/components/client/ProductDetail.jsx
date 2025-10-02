@@ -4,6 +4,7 @@ import ActionDetailProduct from "./ActionDetailProductAddToCart";
 import clother_1 from "../../assets/images/clother-1.jpg";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { Truck } from "lucide-react";
 
 const products = {
   id: "68c11de372c265eb9b62fd",
@@ -31,7 +32,7 @@ const ProductDetailPage = () => {
 
   const { data } = useQuery({
     queryKey: ["productDetail", id],
-    queryFn: () => getOneProduct(id)
+    queryFn: () => getOneProduct(id),
   });
 
   return (
@@ -89,10 +90,11 @@ const ProductDetailPage = () => {
                 <button
                   key={s}
                   onClick={() => setSelectedSize(s)}
-                  className={`px-4 py-2 border rounded-full ${selectedSize === s
+                  className={`px-4 py-2 border rounded-full ${
+                    selectedSize === s
                       ? "border-gray-300 text-white bg-black font-semibold"
                       : "border-gray-300"
-                    }`}
+                  }`}
                 >
                   {s}
                 </button>
@@ -154,6 +156,44 @@ const ProductDetailPage = () => {
               MUA NGAY
             </button> */}
           </div>
+          <span className="text-black font-medium flex items-center gap-2 mt-4">
+            <Truck className="w-5 h-5 text-red-500" />
+            Giao hàng toàn quốc
+          </span>
+        </div>
+      </div>
+      <div className="mt-16 border-t pt-8">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl lg:text-2xl font-semibold border-b-2 border-red-500 inline-block pb-2">
+            Mô tả sản phẩm
+          </h2>
+        </div>
+
+        <div className="mt-6 space-y-4 text-gray-700 leading-relaxed">
+          <p>
+            Bộ đồ {data?.data.name} mang phong cách{" "}
+            <b>trẻ trung – cá tính – thoải mái</b>, lấy cảm hứng từ xu hướng
+            thời trang hiện đại.
+          </p>
+          <ul className="list-disc list-inside space-y-2">
+            <li>
+              <b>Thiết kế nổi bật:</b> Đường may chắc chắn, form dáng ôm vừa
+              vặn, tạo cảm giác năng động và hiện đại.
+            </li>
+            <li>
+              <b>Gam màu:</b> {data?.data.color || "Đen/Trắng/Basic"} – dễ phối
+              đồ, phù hợp nhiều hoàn cảnh sử dụng.
+            </li>
+            <li>
+              <b>Chất liệu:</b>{" "}
+              {data?.data.material || "Vải thun co giãn 4 chiều"} – thoáng mát,
+              thấm hút mồ hôi, thoải mái cả ngày dài.
+            </li>
+            <li>
+              <b>Ý nghĩa:</b> Phù hợp cho các bạn trẻ yêu thích sự năng động, tự
+              tin thể hiện cá tính riêng.
+            </li>
+          </ul>
         </div>
       </div>
 

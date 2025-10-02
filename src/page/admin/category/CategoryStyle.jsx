@@ -21,7 +21,7 @@ export default function StyleTable() {
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full border bg-white border-gray-200 rounded-lg overflow-hidden shadow-md text-xl cursor-pointer">
+      <table className="min-w-full border bg-white border-gray-200 rounded-lg overflow-hidden shadow-md text-xl ">
         <thead className="bg-black text-white">
           <tr>
             <th className="px-4 py-2 text-left font-semibold w-64">

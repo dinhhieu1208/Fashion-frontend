@@ -32,6 +32,7 @@ import {
   ShieldCheck,
   Box,
   LogOut,
+  LayoutGrid,
 } from "lucide-react";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -98,6 +99,21 @@ export function AppSidebar() {
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuSubItem>
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+              <Collapsible asChild className="mb-[5px]">
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton className="flex items-center gap-2 rounded-md hover:bg-gray-100 transition-colors duration-200 group">
+                      <LayoutGrid className="w-4 h-4 text-purple-600" />
+                      <span className="text-[18px]">Quản lý kiểu dáng</span>
+                      <ChevronDown className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="overflow-hidden data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
+                    <SidebarMenuSub>
                       <SidebarMenuSubItem>
                         <SidebarMenuButton
                           asChild

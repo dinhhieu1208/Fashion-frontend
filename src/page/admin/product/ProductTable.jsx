@@ -1,28 +1,31 @@
-import { Edit3, Trash2 } from "lucide-react";
+import { Edit3 } from "lucide-react";
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { productAdmin } from "@/services/productService";
 import PaginationComponent from "@/components/client/Pagination";
 import { useSearchParams } from "react-router-dom";
+import ConfirmDelete from "@/page/admin/product/ComfirmDelete";
+
 export default function ProductTable(props) {
   const { keyword, status } = props;
   const [page, setPage] = useState(1);
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
+
   const { data } = useQuery({
     queryKey: ["productAdmin", keyword, status, page],
     queryFn: () => productAdmin(keyword, status, page),
     retry: false,
   });
+
   const onChangePage = (pageNumber) => {
     setSearchParams({ search: keyword, status: status, page: pageNumber });
     setPage(pageNumber);
   };
-  console.log(data);
 
   return (
     <div className="overflow-x-auto ">
-      <table className="min-w-full border bg-white border-gray-200 rounded-lg overflow-hidden shadow-md text-sm sm:text-lg cursor-pointer">
+      <table className="min-w-full border bg-white border-gray-200 rounded-lg overflow-hidden shadow-md text-sm sm:text-lg ">
         <thead className="bg-black text-white">
           <tr>
             <th className="px-2 sm:px-4 py-2 text-left font-semibold w-64">
@@ -94,9 +97,8 @@ export default function ProductTable(props) {
                   <button className="p-2 rounded-lg border bg-blue-400 border-gray-300 text-white hover:bg-white hover:text-black transition">
                     <Edit3 size={18} />
                   </button>
-                  <button className="ml-2 p-2 rounded-lg border bg-red-400  border-gray-300 text-white hover:bg-white hover:text-black transition">
-                    <Trash2 size={18} />
-                  </button>
+
+                  <ConfirmDelete />
                 </td>
               </tr>
             ))}
