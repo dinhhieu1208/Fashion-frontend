@@ -1,4 +1,4 @@
-import axiosAdmin from "./axiosAdmin";
+import axiosAdmin, { axiosAdminFormData } from "./axiosAdmin";
 import { axiosClient } from "./axiosClient";
 
 export const getAllProduct = async (
@@ -18,9 +18,15 @@ export const getOneProduct = async (id) => {
   console.log(res.data);
   return res.data;
 };
+
 export const productAdmin = async (search = "", status = "", page = "1") => {
   const res = await axiosAdmin.get(
     `/admin/product/list?search=${search}&status=${status}&page=${page}`
   );
   return res;
 };
+
+export const createProduct = async (data) => {
+  const res = await axiosAdminFormData.post("/admin/product/create", data);
+  return res;
+}

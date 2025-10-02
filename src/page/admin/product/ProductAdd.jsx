@@ -1,12 +1,15 @@
 import { getCategoryAdminStatusActive } from "@/services/categoryService";
+import { createProduct } from "@/services/productService";
 import { getAllStyleStatusActive } from "@/services/styleService";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function ProductAdd() {
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState("");
-
+  const navigate = useNavigate();
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -17,12 +20,25 @@ export default function ProductAdd() {
   const { data } = useQuery({
     queryKey: ["category"],
     queryFn: getCategoryAdminStatusActive,
+    retry: false
   });
 
   const { data: styleData } = useQuery({
     queryKey: ["style"],
     queryFn: getAllStyleStatusActive,
+    retry: false
   })
+
+  const mutation = useMutation({
+    mutationFn: createProduct,
+    onSuccess: () => {
+      toast.success("Tạo sản phẩm thành công")
+      navigate("/admin/product/list")
+    },
+    onError: (error) => {
+      console.log(error);
+    }
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,11 +59,7 @@ export default function ProductAdd() {
     }
 
     // Test: log ra object
-    const obj = {};
-    formData.forEach((value, key) => {
-      obj[key] = value;
-    });
-    console.log("Form data:", obj);
+    mutation.mutate(formData);
   };
 
 
