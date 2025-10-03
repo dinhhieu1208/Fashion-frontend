@@ -1,10 +1,10 @@
 import { Edit3, Trash2 } from "lucide-react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { categoriesAdmin, deleteCategory } from "@/services/categoryService";
 import PaginationComponent from "@/components/client/Pagination";
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
-import { toast } from "sonner";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 export const CategoryTable = (props) => {
   const { keyword, status } = props;
   const [page, setPage] = useState(1);
@@ -17,26 +17,16 @@ export const CategoryTable = (props) => {
     retry: false,
   });
 
-  const mutation = useMutation({
-    mutationFn: deleteCategory,
-    onSuccess: () => {
-      toast.success("Bạn đã xóa một danh mục");
-      queryClient.invalidateQueries({
-        queryKey: ["categoriesAdmin"]
-      })
-    },
-    onError: (error) => {
-      console.log(error)
-    }
-  })
 
   const onChangePage = (pageNumber) => {
     setSearchParams({ search: keyword, status: status, page: pageNumber});
     setPage(pageNumber)
   }
 
-  const handleDelete = (id) => {
-    mutation.mutate(id);
+  const resetApi = () => {
+    queryClient.invalidateQueries({
+      queryKey: ["categoriesAdmin"],
+    });
   }
 
   return (
@@ -103,9 +93,11 @@ export const CategoryTable = (props) => {
                   </button>
 
                   {/* Delete button */}
-                  <button className="ml-2 p-2 rounded-lg border bg-red-400  border-gray-300 text-white hover:bg-white hover:text-black transition" onClick={() => handleDelete(data.id)}>
-                    <Trash2 size={18} />
-                  </button>
+                  <DeleteButton
+                    itemId = {data.id}
+                    funcApi = {deleteCategory}
+                    callBack = {resetApi}
+                  />
                 </td>
               </tr>
             ))}
