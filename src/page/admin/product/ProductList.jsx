@@ -13,14 +13,12 @@ export const ProductList = () => {
     setKeyword(e.target.search.value);
     setSearchParams({ search: e.target.search.value, status: statusFilter });
   };
-  console.log(keyword);
 
   const handleOnChange = (e) => {
     e.preventDefault();
     setStatusFilter(e.target.value);
     setSearchParams({ search: keyword, status: e.target.value });
   };
-  console.log(statusFilter);
 
   return (
     <div className="p-0 sm:p-4 min-w-screen">

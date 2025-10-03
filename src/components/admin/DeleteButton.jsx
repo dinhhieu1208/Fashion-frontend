@@ -1,11 +1,26 @@
 import { useState } from "react";
 import { Trash2, X } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
-export default function DeleteComfirm() {
+export const DeleteButton = (props) => {
+  const { itemId, funcApi, callBack} = props;
   const [open, setOpen] = useState(false);
 
+  const mutation = useMutation({
+    mutationFn: funcApi,
+    onSuccess: () => {
+      callBack();
+      toast.success("Xóa thành công");
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error("Xóa thất bạn");
+    }
+  });
+
   const handleDelete = () => {
-    console.log("Sản phẩm đã được xóa thành công!");
+    mutation.mutate(itemId)
     setOpen(false);
   };
 
@@ -14,7 +29,7 @@ export default function DeleteComfirm() {
       {/* Nút xóa */}
       <button
         onClick={() => setOpen(true)}
-        className="ml-2 p-2 rounded-lg border bg-red-500 border-gray-300 text-white hover:bg-red-600 transition"
+        className="ml-2 p-2 rounded-lg border bg-red-500 border-gray-300 text-white transition hover:bg-white hover:text-black"
       >
         <Trash2 size={18} />
       </button>
