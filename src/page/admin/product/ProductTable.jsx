@@ -1,14 +1,16 @@
 import { Edit3 } from "lucide-react";
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { productAdmin } from "@/services/productService";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteProduct, productAdmin } from "@/services/productService";
 import PaginationComponent from "@/components/client/Pagination";
 import { useSearchParams } from "react-router-dom";
-import ConfirmDelete from "@/page/admin/product/ComfirmDelete";
+import { DeleteButton } from "@/components/admin/DeleteButton";
+
 
 export default function ProductTable(props) {
   const { keyword, status } = props;
   const [page, setPage] = useState(1);
+  const queryClient = useQueryClient();
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -22,6 +24,14 @@ export default function ProductTable(props) {
     setSearchParams({ search: keyword, status: status, page: pageNumber });
     setPage(pageNumber);
   };
+
+  const resetApi = () => {
+    queryClient.invalidateQueries({
+      queryKey: ["productAdmin"]
+    });
+  }
+
+
 
   return (
     <div className="overflow-x-auto ">
@@ -98,7 +108,11 @@ export default function ProductTable(props) {
                     <Edit3 size={18} />
                   </button>
 
-                  <ConfirmDelete />
+                  <DeleteButton
+                    itemId = {item.id}
+                    funcApi = {deleteProduct}
+                    callBack = {resetApi}
+                  />
                 </td>
               </tr>
             ))}
