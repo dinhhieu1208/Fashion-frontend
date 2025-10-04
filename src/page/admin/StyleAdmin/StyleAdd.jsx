@@ -2,15 +2,15 @@ import React from "react";
 export default function AddStyle() {
   const handleSubmit = (e) => {
     e.preventDefault();
+    const name = e.target.name.value;
+    const status = e.target.status.value;
 
-    const formData = new FormData(e.target);
-    const obj = {};
-    formData.forEach((value, key) => {
-      obj[key] = value;
-    });
+    const data = {
+      name: name,
+      status: status,
+    };
 
-    console.log("Dữ liệu gửi đi:", obj);
-    alert("Thêm kiểu dáng thành công ");
+    console.log(data);
   };
 
   return (
