@@ -1,26 +1,25 @@
+import PaginationComponent from "@/components/client/Pagination";
+import { getAllStyle } from "@/services/styleService";
+import { useQuery } from "@tanstack/react-query";
 import { Edit3, Trash2 } from "lucide-react";
-export default function StyleTable() {
-  const styles = [
-    {
-      id: 1,
-      name: "Classic",
-      status: "active",
-    },
-    {
-      id: 2,
-      name: "Modern",
-      status: "inactive",
-    },
-    {
-      id: 3,
-      name: "Sport",
-      status: "active",
-    },
-  ];
+import { useState } from "react";
+export default function StyleTable(props) {
+  const { keyword, status } = props;
+  const [page, setPage] = useState(1); 
+  const { data } = useQuery({
+    queryKey: ["styleList", keyword, status, page],
+    queryFn: () => getAllStyle(keyword, status, page),
+  });
+
+  const callBack = (pageNumber) => {
+    console.log(pageNumber);
+    console.log(data?.data?.totalPage);
+    setPage(pageNumber)
+  }
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full border bg-white border-gray-200 rounded-lg overflow-hidden shadow-md text-xl ">
+      <table className="min-w-full border bg-white border-gray-200 rounded-lg overflow-hidden shadow-md text-xl mb-[10px]">
         <thead className="bg-black text-white">
           <tr>
             <th className="px-4 py-2 text-left font-semibold w-64">
@@ -37,7 +36,7 @@ export default function StyleTable() {
         </thead>
 
         <tbody className="divide-y divide-gray-200">
-          {styles.map((style) => (
+          {data?.data?.data.map((style) => (
             <tr key={style.id} className="hover:bg-gray-50 transition">
               <td className="px-4 py-2 text-xl">{style.name}</td>
               <td className="px-4 py-2 ">
@@ -67,6 +66,11 @@ export default function StyleTable() {
           ))}
         </tbody>
       </table>
+
+      <PaginationComponent
+        pages = {data?.data?.totalPage || 1}
+        onChangePage = {callBack}
+      />
     </div>
   );
 }

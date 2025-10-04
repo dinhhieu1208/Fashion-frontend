@@ -9,3 +9,8 @@ export const getAllStyleStatusActive = async () => {
     throw error;
   }
 };
+
+export const getAllStyle = async (search = "", status = "", page = 1) => {
+  const res = await axiosAdmin.get(`/admin/style/list/?search=${search}&status=${status}&page=${page}`)
+  return res;
+}
