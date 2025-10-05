@@ -1,5 +1,22 @@
+import { createStyle } from "@/services/styleService";
+import { useMutation } from "@tanstack/react-query";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 export default function AddStyle() {
+  const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationFn: createStyle,
+    onSuccess: () => {
+      toast.success("Tạo kiểu dáng thành công");
+      navigate("/admin/style/list")
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error("Tạo kiểu dáng thất bại");
+    }
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -9,8 +26,7 @@ export default function AddStyle() {
       name: name,
       status: status,
     };
-
-    console.log(data);
+    mutation.mutate(data);
   };
 
   return (

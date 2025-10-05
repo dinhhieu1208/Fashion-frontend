@@ -13,4 +13,14 @@ export const getAllStyleStatusActive = async () => {
 export const getAllStyle = async (search = "", status = "", page = 1) => {
   const res = await axiosAdmin.get(`/admin/style/list/?search=${search}&status=${status}&page=${page}`)
   return res;
+};
+
+export const createStyle = async (data) => {
+  const res = await axiosAdmin.post(`/admin/style/create`, data);
+  return res;
+};
+
+export const deleteStyle = async (id) => {
+  const res = await axiosAdmin.delete(`/admin/style/delete/${id}`);
+  return res
 }
