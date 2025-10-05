@@ -63,8 +63,8 @@ const AppRouter = () => {
             <Route path="/admin/profile" element={<ProfileAdminPage />} />
             <Route path="/admin/product/list" element={<ProductList />} />
             <Route path="/admin/product/add" element={<ProductAdd />} />
-            <Route path="/admin/category/style" element={<StyleList />} />
-            <Route path="/admin/category/styleAdd" element={<AddStyle />} />
+            <Route path="/admin/style/list" element={<StyleList />} />
+            <Route path="/admin/style/add" element={<AddStyle />} />
           </Route>
         </Route>
       </Routes>
