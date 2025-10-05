@@ -1,22 +1,27 @@
+import { DeleteButton } from "@/components/admin/DeleteButton";
 import PaginationComponent from "@/components/client/Pagination";
-import { getAllStyle } from "@/services/styleService";
-import { useQuery } from "@tanstack/react-query";
-import { Edit3, Trash2 } from "lucide-react";
+import { deleteStyle, getAllStyle } from "@/services/styleService";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Edit3 } from "lucide-react";
 import { useState } from "react";
 export default function StyleTable(props) {
   const { keyword, status } = props;
-  const [page, setPage] = useState(1); 
+  const [page, setPage] = useState(1);
+  const queryClient = useQueryClient();
   const { data } = useQuery({
     queryKey: ["styleList", keyword, status, page],
     queryFn: () => getAllStyle(keyword, status, page),
   });
 
   const callBack = (pageNumber) => {
-    console.log(pageNumber);
-    console.log(data?.data?.totalPage);
     setPage(pageNumber)
   }
 
+  const resetApi = () => {
+    queryClient.invalidateQueries({
+      queryKey: ["styleList"]
+    })
+  }
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full border bg-white border-gray-200 rounded-lg overflow-hidden shadow-md text-xl mb-[10px]">
@@ -58,9 +63,11 @@ export default function StyleTable(props) {
                 </button>
 
                 {/* Delete button */}
-                <button className="ml-2 p-2 rounded-lg border bg-red-400 border-gray-300 text-white hover:bg-white hover:text-black transition">
-                  <Trash2 size={18} />
-                </button>
+                <DeleteButton
+                  itemId = {style.id}
+                  funcApi = {deleteStyle}
+                  callBack = {resetApi}
+                />
               </td>
             </tr>
           ))}

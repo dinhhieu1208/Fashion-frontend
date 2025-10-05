@@ -119,7 +119,7 @@ export function AppSidebar() {
                           asChild
                           className="flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
                         >
-                          <Link to="/admin/category/style">
+                          <Link to="/admin/style/list">
                             <ClipboardList className="w-4 h-4" />
                             <span className="text-[18px] h-6">
                               Danh sách kiểu dáng
@@ -132,7 +132,7 @@ export function AppSidebar() {
                           asChild
                           className="flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
                         >
-                          <Link to="/admin/category/styleAdd">
+                          <Link to="/admin/style/add">
                             <Pen className="w-4 h-4" />
                             <span className="text-[18px] h-6">
                               Tạo danh kiểu dáng
