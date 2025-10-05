@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const DeleteButton = (props) => {
-  const { itemId, funcApi, callBack} = props;
+  const { itemId, funcApi, callBack } = props;
   const [open, setOpen] = useState(false);
 
   const mutation = useMutation({
@@ -16,11 +16,11 @@ export const DeleteButton = (props) => {
     onError: (error) => {
       console.log(error);
       toast.error("Xóa thất bạn");
-    }
+    },
   });
 
   const handleDelete = () => {
-    mutation.mutate(itemId)
+    mutation.mutate(itemId);
     setOpen(false);
   };
 
@@ -77,4 +77,4 @@ export const DeleteButton = (props) => {
       )}
     </>
   );
-}
+};

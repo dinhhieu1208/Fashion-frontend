@@ -186,8 +186,12 @@ const Cart = () => {
                     : "border-gray-300"
                 }`}
               >
+                <img
+                  src="	https://mcdn.coolmate.me/image/October2024/mceclip2_42.png"
+                  className="w-10 h-10 object-contain"
+                />
                 <span className="text-center text-sm font-medium">
-                  Thanh toán khi nhận hàng (COD)
+                  Thanh toán khi nhận hàng
                 </span>
               </label>
             </div>
