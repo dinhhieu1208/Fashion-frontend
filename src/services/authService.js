@@ -44,4 +44,9 @@ export const profileAdmin = async () => {
 export const profileAdminEdit = async (data) => {
   const res = await axiosAdmin.patch("/admin/account/profile/edit", data)
   return res.data;
+};
+
+export const adminLogout = async () => {
+  const res = await axiosAdmin.post("/admin/account/logout");
+  return res;
 }
