@@ -17,7 +17,9 @@ export function LoginForm({
     mutationFn: loginAdmin,
     onSuccess: () => {
       toast.success("Đăng nhập thành công");
-      navigate("/admin/dashboard");
+      setTimeout(() => {
+        navigate("/admin/dashboard");
+      }, 300)
     },
     onError: () => {
       toast.error("Tài khoản hoặc mật khẩu không đúng");

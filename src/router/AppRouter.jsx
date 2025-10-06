@@ -31,7 +31,7 @@ const AppRouter = () => {
   return (
     <>
       <Routes>
-        {/* Client Routes */}
+        {/* --- CLIENT --- */}
         <Route element={<LayoutClient />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -41,19 +41,15 @@ const AppRouter = () => {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/product" element={<ProductPage />} />
+          <Route path="/product/:id" element={<ProductDetailPage />} />
           <Route path="/confirm/email" element={<ConfirmEmail />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/changePassword" element={<ChangePasswordPage />} />
           <Route path="/location" element={<LocationPage />} />
-          <Route path="/product/:id" element={<ProductDetailPage />} />
           <Route path="/orders" element={<OrderPage />} />
-          {/* <Route path="/cart" element={<CartPage />} /> */}
         </Route>
-      </Routes>
-      <Toaster position="top-right" richColors />
 
-      {/* admin route */}
-      <Routes>
+        {/* --- ADMIN --- */}
         <Route path="/admin/login" element={<Login />} />
         <Route element={<ProtectedRoute />}>
           <Route element={<LayoutAdmin />}>
@@ -68,6 +64,8 @@ const AppRouter = () => {
           </Route>
         </Route>
       </Routes>
+
+      <Toaster position="top-right" richColors />
     </>
   );
 };

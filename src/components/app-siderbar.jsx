@@ -36,11 +36,23 @@ import {
 } from "lucide-react";
 
 import { Link, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { adminLogout } from "@/services/authService";
+import { toast } from "sonner";
 
 export function AppSidebar() {
+  const mutation = useMutation({
+    mutationFn: adminLogout,
+    onSuccess: () => {
+      toast.success("Đăng xuất thành công");
+    },
+    onError: (error) => {
+      console.log(error)
+    }
+  })
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem("isLogin");
+    mutation.mutate();
     navigate("/admin/login");
   };
   return (
