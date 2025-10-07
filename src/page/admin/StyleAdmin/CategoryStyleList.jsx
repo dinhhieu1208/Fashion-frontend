@@ -1,19 +1,23 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
 import StyleTable from "./CategoryStyle.jsx";
+import { useSearchParams } from "react-router-dom";
 
 export const StyleList = () => {
   const [keyword, setKeyword] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
-
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
   const handleSubmit = (e) => {
     e.preventDefault();
     setKeyword(e.target.search.value);
+    setSearchParams({search: e.target.search.value})
   };
 
   const handleOnChange = (e) => {
     e.preventDefault();
     setStatusFilter(e.target.value);
+    setSearchParams({search: keyword, status: e.target.value})
   };
 
   return (
