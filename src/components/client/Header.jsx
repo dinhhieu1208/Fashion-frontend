@@ -77,7 +77,7 @@ export default function Header() {
 
           {/* Search + User + Cart */}
           <div className="flex items-center gap-4">
-            <SearchProduct/>
+            <SearchProduct />
             {/* Mobile Search */}
             <button
               onClick={() => setIsMobileSearchOpen(true)}

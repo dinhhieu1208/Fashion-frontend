@@ -26,6 +26,7 @@ import { ProductList } from "@/page/admin/product/ProductList.jsx";
 import ProductAdd from "@/page/admin/product/ProductAdd.jsx";
 import { StyleList } from "@/page/admin/StyleAdmin/CategoryStyleList.jsx";
 import AddStyle from "@/page/admin/StyleAdmin/StyleAdd.jsx";
+import { OrderList } from "@/page/admin/orders/orderList.jsx";
 
 const AppRouter = () => {
   return (
@@ -61,6 +62,7 @@ const AppRouter = () => {
             <Route path="/admin/product/add" element={<ProductAdd />} />
             <Route path="/admin/style/list" element={<StyleList />} />
             <Route path="/admin/style/add" element={<AddStyle />} />
+            <Route path="/admin/orders/list" element={<OrderList />} />
           </Route>
         </Route>
       </Routes>

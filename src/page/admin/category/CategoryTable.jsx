@@ -17,17 +17,16 @@ export const CategoryTable = (props) => {
     retry: false,
   });
 
-
   const onChangePage = (pageNumber) => {
-    setSearchParams({ search: keyword, status: status, page: pageNumber});
-    setPage(pageNumber)
-  }
+    setSearchParams({ search: keyword, status: status, page: pageNumber });
+    setPage(pageNumber);
+  };
 
   const resetApi = () => {
     queryClient.invalidateQueries({
       queryKey: ["categoriesAdmin"],
     });
-  }
+  };
 
   return (
     <div className="overflow-x-auto ">
@@ -72,10 +71,11 @@ export const CategoryTable = (props) => {
                 </td>
                 <td className="px-4 py-2 sm:h-16">
                   <span
-                    className={`inline-flex items-center justify-center px-4 py-2 text-lg font-semibold rounded-full ${data.status === "active"
+                    className={`inline-flex items-center justify-center px-4 py-2 text-lg font-semibold rounded-full ${
+                      data.status === "active"
                         ? "bg-green-100 text-green-700"
                         : "bg-red-100 text-red-700"
-                      }`}
+                    }`}
                   >
                     {data.status}
                   </span>
@@ -94,9 +94,9 @@ export const CategoryTable = (props) => {
 
                   {/* Delete button */}
                   <DeleteButton
-                    itemId = {data.id}
-                    funcApi = {deleteCategory}
-                    callBack = {resetApi}
+                    itemId={data.id}
+                    funcApi={deleteCategory}
+                    callBack={resetApi}
                   />
                 </td>
               </tr>
