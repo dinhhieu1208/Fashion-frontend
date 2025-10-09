@@ -249,7 +249,7 @@ export function AppSidebar() {
                           asChild
                           className="mt-[5px] flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
                         >
-                          <a href="/settings/profile">
+                          <a href="/admin/customers/list">
                             <ClipboardList className="w-4 h-4" />
                             <span className="text-[18px] h-6">
                               Danh sách tài khoản khách hàng
