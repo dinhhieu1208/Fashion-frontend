@@ -56,7 +56,10 @@ export default function Header() {
 
           {/* Navbar */}
           <ul className="hidden lg:flex items-center space-x-8 text-black text-[18px] font-medium">
-            <li className="relative group  after:absolute after:h-[1.5px] after:bg-black after:left-0 after:bottom-[-2px] hover:after:scale-x-100 after:scale-x-0 after:w-full after:transition-all after:duration-300">
+            <li
+              className="relative group after:absolute after:h-[1.5px] after:bg-black after:left-0 after:bottom-[-2px]
+                hover:after:scale-x-100 after:scale-x-0 after:w-full after:transition-all after:duration-300"
+            >
               <Link to="#">Danh Mục</Link>
               {/* Submenu */}
               <MainCategory />
