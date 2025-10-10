@@ -7,7 +7,12 @@ export const DropdownItem = ({ category }) => {
 
       {/* Nếu có children thì render tiếp */}
       {category.children?.length > 0 && (
-        <ul className="absolute left-full top-0 ml-2 w-40 bg-white shadow-lg rounded-lg opacity-0 group-hover/sub:opacity-100 transform translate-y-2 group-hover/sub:translate-y-0 transition-all duration-300">
+        <ul
+          className="absolute left-full top-0 ml-1 w-40 bg-white shadow-lg rounded-lg
+                 opacity-0 group-hover/sub:opacity-100
+                 transform translate-y-2 group-hover/sub:translate-y-0
+                 transition-all duration-700 ease-in-out z-50"
+        >
           {category.children.map((child) => (
             <DropdownItem key={child.id} category={child} />
           ))}
