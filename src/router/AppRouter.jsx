@@ -27,7 +27,7 @@ import ProductAdd from "@/page/admin/product/ProductAdd.jsx";
 import { StyleList } from "@/page/admin/StyleAdmin/CategoryStyleList.jsx";
 import AddStyle from "@/page/admin/StyleAdmin/StyleAdd.jsx";
 import { OrderList } from "@/page/admin/orders/orderList.jsx";
-import { CustomerList } from "@/page/customer/customerList.jsx";
+import { CustomerList } from "@/page/admin/customer/customerList.jsx";
 
 const AppRouter = () => {
   return (

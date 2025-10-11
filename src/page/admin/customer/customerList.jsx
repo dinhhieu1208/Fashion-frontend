@@ -1,18 +1,29 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
-import { CustomerTable } from "./customerTable.jsx";
+import { CustomerTable } from "./customerTable";
+import { useSearchParams } from "react-router-dom";
 
 export const CustomerList = () => {
   const [keyword, setKeyword] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSearchParams({
+      search: e.target.search.value,
+      status: typeFilter
+    })
     setKeyword(e.target.search.value);
   };
 
   const handleOnChange = (e) => {
     e.preventDefault();
+    setSearchParams({
+      search: keyword,
+      status: e.target.value
+    });
     setTypeFilter(e.target.value);
   };
 
@@ -60,7 +71,7 @@ export const CustomerList = () => {
       </div>
 
       {/* Bảng danh sách khách hàng */}
-      <CustomerTable keyword={keyword} type={typeFilter} />
+      <CustomerTable keyword={keyword} status={typeFilter}/>
     </div>
   );
 };
