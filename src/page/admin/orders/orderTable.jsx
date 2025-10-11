@@ -25,6 +25,15 @@ export const OrderTable = () => {
           size: "M",
           price: 90000,
         },
+        {
+          id: "68d103c4dc863264dc568adf",
+          name: "Quan ao 03",
+          image:
+            "https://res.cloudinary.com/dculf3koq/image/upload/v1758528452/bjuw5mdalprkoopgfgob.png",
+          quantity: 2,
+          size: "M",
+          price: 90000,
+        },
       ],
       totalAfterDiscount: 360000,
       paymentStatus: {

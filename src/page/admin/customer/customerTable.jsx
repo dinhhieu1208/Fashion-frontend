@@ -1,25 +1,29 @@
 import { Edit3 } from "lucide-react";
-import React from "react";
 import { DeleteButton } from "@/components/admin/DeleteButton";
-export const CustomerTable = () => {
-  const data = [
-    {
-      id: "68c54e226948629b3f5cb74b",
-      fullName: "Nguyễn Đình Hiếu",
-      email: "nguyenhieu96hth@gmail.com",
-      status: "active",
-      createdAt: "17:57 13/09/2025",
-    },
-    {
-      id: "68c512494a1f6ae6d71b0ab5",
-      fullName: "Lam Thanh Duy",
-      email: "test@gmail.com",
-      image:
-        "https://res.cloudinary.com/dculf3koq/image/upload/v1758074112/fxzgy46l5pwvrxjzodam.jpg",
-      status: "active",
-      createdAt: "13:42 13/09/2025",
-    },
-  ];
+import { useQuery } from "@tanstack/react-query";
+import { getAllClientAccount } from "@/services/accountService";
+import PaginationComponent from "@/components/client/Pagination";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+export const CustomerTable = (props) => {
+  const { keyword, status } = props;
+  const [page, setPage] = useState(1);
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { data:customer } = useQuery({
+    queryKey: ["customer", keyword, status, page],
+    queryFn: () => getAllClientAccount(keyword, status, page),
+    retry: false
+  });
+
+  const callBack = (pageNumber) => {
+    setSearchParams({
+      search: keyword,
+      status: status,
+      page: pageNumber
+    })
+    setPage(pageNumber);
+  }
 
   return (
     <div className="overflow-x-auto">
@@ -44,7 +48,7 @@ export const CustomerTable = () => {
         </thead>
 
         <tbody className="divide-y divide-gray-200">
-          {data.map((item) => (
+          {customer?.data?.data.map((item) => (
             <tr key={item.id} className="hover:bg-gray-50 transition">
               <td className="px-4 py-2 text-lg">{item.fullName}</td>
               <td className="px-4 py-2 text-lg">{item.email}</td>
@@ -86,6 +90,8 @@ export const CustomerTable = () => {
           ))}
         </tbody>
       </table>
+
+      <PaginationComponent pages={customer?.data?.totalPage || 1} onChangePage={callBack}/>
     </div>
   );
 };
