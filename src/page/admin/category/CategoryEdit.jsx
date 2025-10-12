@@ -1,6 +1,6 @@
-import { categoryDetail, createCategory, getCategoryAdminStatusActive } from "@/services/categoryService";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import React, { useState, useRef } from "react";
+import { categoryDetail, categoryEdit, getCategoryAdminStatusActive } from "@/services/categoryService";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -8,24 +8,35 @@ export const CategoryEdit = () => {
   const { id } = useParams();
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState("");
-  const naviage = useNavigate();
-
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { data } = useQuery({
     queryKey: ["category"],
     queryFn: getCategoryAdminStatusActive,
-    retry: false
+    retry: false,
+    refetchOnMount: true,
   })
 
   const { data: getOneCategory, isLoading: isCategoryLoading } = useQuery({
     queryKey: ["categoryDetail", id],
     queryFn: () => categoryDetail(id),
+    retry: false,
+    refetchOnMount: true, //refetch mỗi khi vô component
   });
 
+  useEffect(() => {
+    if (getOneCategory?.data?.image) {
+      setPreviewImage(getOneCategory.data.image);
+    }
+  }, [getOneCategory]);
+
   const mutation = useMutation({
-    mutationFn: createCategory,
+    mutationFn: ({ id, data }) => categoryEdit(id, data),
     onSuccess: () => {
-      toast.success("Tạo danh mục thành công");
-      naviage("/admin/category/list");
+      toast.success("Chỉnh sửa thành công");
+      queryClient.invalidateQueries(["category"])
+      queryClient.invalidateQueries(["categoryDetail", id]);
+      navigate("/admin/category/list");
     },
     onError: (error) => {
       console.log(error);
@@ -54,7 +65,10 @@ export const CategoryEdit = () => {
     if (fileInputRef.current && fileInputRef.current.files[0]) {
       formData.set("image", fileInputRef.current.files[0]);
     }
-    console.log(formData);
+    mutation.mutate({
+      id: id,
+      data: formData
+    })
   };
 
   if (isCategoryLoading || !data?.data?.data) {
@@ -84,22 +98,23 @@ export const CategoryEdit = () => {
           <label className="block mb-1 font-medium">Chọn Category</label>
           {data?.data && (
             <>
-
               <div className="flex flex-wrap gap-4">
-                {data?.data?.data.map((item) => (
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      name="parentCategoryId"
-                      value={item.id}
-                      defaultChecked={
-                        Array.isArray(getOneCategory?.data?.parentCategoryId) &&
-                        getOneCategory.data.parentCategoryId.includes(String(item.id))
-                      }
-                    />
-                    <span className="ml-2">{item.name}</span>
-                  </label>
-                ))}
+                {data?.data?.data.map((item) =>
+                  getOneCategory?.data?.id !== item.id && (
+                    <label key={item.id} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        name="parentCategoryId"
+                        value={item.id}
+                        defaultChecked={
+                          Array.isArray(getOneCategory?.data?.parentCategoryId) &&
+                          getOneCategory.data.parentCategoryId.includes(String(item.id))
+                        }
+                      />
+                      <span className="ml-2">{item.name}</span>
+                    </label>
+                  )
+                )}
               </div>
             </>
           )}
@@ -135,9 +150,9 @@ export const CategoryEdit = () => {
               className="flex items-center justify-center border-2 border-dashed rounded-md h-24 w-28 cursor-pointer hover:bg-gray-50 overflow-hidden"
               onClick={() => fileInputRef.current.click()}
             >
-              {getOneCategory?.data?.image ? (
+              {previewImage ? (
                 <img
-                  src={getOneCategory?.data?.image}
+                  src={previewImage}
                   alt="preview"
                   className="h-full w-full object-cover rounded-md"
                 />
@@ -162,7 +177,7 @@ export const CategoryEdit = () => {
           type="submit"
           className="px-4 py-2 bg-black text-white rounded hover:bg-gray-400"
         >
-          Thêm Category
+          Cập nhật danh mục
         </button>
       </form>
     </>
