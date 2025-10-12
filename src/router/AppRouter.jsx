@@ -28,6 +28,7 @@ import { StyleList } from "@/page/admin/StyleAdmin/CategoryStyleList.jsx";
 import AddStyle from "@/page/admin/StyleAdmin/StyleAdd.jsx";
 import { OrderList } from "@/page/admin/orders/orderList.jsx";
 import { CustomerList } from "@/page/admin/customer/customerList.jsx";
+import { CategoryEdit } from "@/page/admin/category/CategoryEdit.jsx";
 
 const AppRouter = () => {
   return (
@@ -57,6 +58,7 @@ const AppRouter = () => {
           <Route element={<LayoutAdmin />}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/category/list" element={<CategoryList />} />
+            <Route path="/admin/category/edit/:id" element={<CategoryEdit/>}/>
             <Route path="/admin/category/add" element={<AddCategory />} />
             <Route path="/admin/profile" element={<ProfileAdminPage />} />
             <Route path="/admin/product/list" element={<ProductList />} />
