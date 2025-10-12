@@ -2,7 +2,7 @@ import { Edit3, Trash2 } from "lucide-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { categoriesAdmin, deleteCategory } from "@/services/categoryService";
 import PaginationComponent from "@/components/client/Pagination";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { DeleteButton } from "@/components/admin/DeleteButton";
 export const CategoryTable = (props) => {
@@ -71,11 +71,10 @@ export const CategoryTable = (props) => {
                 </td>
                 <td className="px-4 py-2 sm:h-16">
                   <span
-                    className={`inline-flex items-center justify-center px-4 py-2 text-lg font-semibold rounded-full ${
-                      data.status === "active"
+                    className={`inline-flex items-center justify-center px-4 py-2 text-lg font-semibold rounded-full ${data.status === "active"
                         ? "bg-green-100 text-green-700"
                         : "bg-red-100 text-red-700"
-                    }`}
+                      }`}
                   >
                     {data.status}
                   </span>
@@ -88,9 +87,11 @@ export const CategoryTable = (props) => {
                 <td className="px-4 py-2 text-xl sm:h-16">{data.updatedBy}</td>
                 <td className="px-4 py-2 text-center">
                   {/* Edit button */}
-                  <button className="p-2 rounded-lg border bg-blue-400 border-gray-300 text-white hover:bg-white hover:text-black transition">
-                    <Edit3 size={18} />
-                  </button>
+                  <Link to={`/admin/category/edit/${data.id}`}>
+                    <button className="p-2 rounded-lg border bg-blue-400 border-gray-300 text-white hover:bg-white hover:text-black transition">
+                      <Edit3 size={18} />
+                    </button>
+                  </Link>
 
                   {/* Delete button */}
                   <DeleteButton

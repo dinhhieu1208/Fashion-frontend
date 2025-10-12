@@ -27,6 +27,11 @@ export const createCategory = async (data) => {
   return res;
 }
 
+export const categoryDetail = async (id) => {
+  const res = await axiosAdmin.get(`/admin/category/detail/${id}`);
+  return res.data;
+}
+
 export const deleteCategory = async (data) => {
   const res = await axiosAdmin.delete(`/admin/category/delete/${data}`);
   return res;
