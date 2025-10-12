@@ -32,6 +32,11 @@ export const categoryDetail = async (id) => {
   return res.data;
 }
 
+export const categoryEdit = async (id, data) => {
+  const res = await axiosAdminFormData.patch(`/admin/category/edit/${id}`, data);
+  return res.data;
+};
+
 export const deleteCategory = async (data) => {
   const res = await axiosAdmin.delete(`/admin/category/delete/${data}`);
   return res;
