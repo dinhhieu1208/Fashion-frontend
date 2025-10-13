@@ -76,7 +76,7 @@ export const CategoryEdit = () => {
   }
   return (
     <>
-      <h1 className="p-4 sm:p-6 mb-4 text-3xl font-bold">Thêm danh mục mới</h1>
+      <h1 className="p-4 sm:p-6 mb-4 text-3xl font-bold">Chỉnh sửa danh mục {getOneCategory?.data?.name}</h1>
       <form
         onSubmit={handleSubmit}
         className="max-w-[1400px] mx-auto space-y-5 p-4 mb-4 bg-white rounded-lg shadow"

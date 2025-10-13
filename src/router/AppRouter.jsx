@@ -29,6 +29,7 @@ import AddStyle from "@/page/admin/StyleAdmin/StyleAdd.jsx";
 import { OrderList } from "@/page/admin/orders/orderList.jsx";
 import { CustomerList } from "@/page/admin/customer/customerList.jsx";
 import { CategoryEdit } from "@/page/admin/category/CategoryEdit.jsx";
+import ProductEdit from "@/page/admin/product/ProductEdit.jsx";
 
 const AppRouter = () => {
   return (
@@ -63,6 +64,7 @@ const AppRouter = () => {
             <Route path="/admin/profile" element={<ProfileAdminPage />} />
             <Route path="/admin/product/list" element={<ProductList />} />
             <Route path="/admin/product/add" element={<ProductAdd />} />
+            <Route path="/admin/product/edit/:id" element={<ProductEdit/>}/>
             <Route path="/admin/style/list" element={<StyleList />} />
             <Route path="/admin/style/add" element={<AddStyle />} />
             <Route path="/admin/orders/list" element={<OrderList />} />
