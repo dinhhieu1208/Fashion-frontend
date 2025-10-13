@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteProduct, productAdmin } from "@/services/productService";
 import PaginationComponent from "@/components/client/Pagination";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { DeleteButton } from "@/components/admin/DeleteButton";
 
 
@@ -104,10 +104,11 @@ export default function ProductTable(props) {
                   {item.updatedByFormat}
                 </td>
                 <td className="px-2 sm:px-4 py-2 text-center">
-                  <button className="p-2 rounded-lg border bg-blue-400 border-gray-300 text-white hover:bg-white hover:text-black transition">
-                    <Edit3 size={18} />
-                  </button>
-
+                  <Link to={`/admin/product/edit/${item.id}`}>
+                    <button className="p-2 rounded-lg border bg-blue-400 border-gray-300 text-white hover:bg-white hover:text-black transition">
+                      <Edit3 size={18} />
+                    </button>
+                  </Link>
                   <DeleteButton
                     itemId = {item.id}
                     funcApi = {deleteProduct}

@@ -31,6 +31,11 @@ export const createProduct = async (data) => {
   return res;
 }
 
+export const productDetail = async (id) => {
+  const res = await axiosAdmin.get(`/admin/product/detail/${id}`);
+  return res.data;
+}
+
 export const deleteProduct = async (id) => {
   const res = await axiosAdmin.delete(`/admin/product/delete/${id}`);
   return res;
