@@ -1,7 +1,7 @@
 import { getCategoryAdminStatusActive } from "@/services/categoryService";
-import { createProduct, productDetail } from "@/services/productService";
+import { productDetail, updateProduct } from "@/services/productService";
 import { getAllStyleStatusActive } from "@/services/styleService";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
@@ -11,6 +11,7 @@ export default function ProductEdit() {
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState("");
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -21,19 +22,22 @@ export default function ProductEdit() {
   const { data } = useQuery({
     queryKey: ["category"],
     queryFn: getCategoryAdminStatusActive,
-    retry: false
+    retry: false,
+    refetchOnMount: true,
   });
 
   const { data: styleData } = useQuery({
     queryKey: ["style"],
     queryFn: getAllStyleStatusActive,
-    retry: false
+    retry: false,
+    refetchOnMount: true,
   });
 
   const { data: productDetailData, isLoading } = useQuery({
     queryKey: ["productDetail", id],
     queryFn: () => productDetail(id),
-    retry: false
+    retry: false,
+    refetchOnMount: true
   });
 
   useEffect(() => {
@@ -43,16 +47,19 @@ export default function ProductEdit() {
   }, [productDetailData]);
 
   const mutation = useMutation({
-    mutationFn: createProduct,
+    mutationFn: ({ id, data }) => updateProduct(id, data),
     onSuccess: () => {
-      toast.success("Tạo sản phẩm thành công")
-      navigate("/admin/product/list")
+      toast.success("Chỉnh sửa thành công");
+      queryClient.invalidateQueries(["category"])
+      queryClient.invalidateQueries(["style"])
+      queryClient.invalidateQueries(["productDetail", id]);
+      navigate("/admin/product/list");
     },
     onError: (error) => {
       console.log(error);
-    }
+      toast.error(error?.response?.data?.message);
+    },
   });
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -70,15 +77,16 @@ export default function ProductEdit() {
     if (fileInputRef.current && fileInputRef.current.files[0]) {
       formData.set("image", fileInputRef.current.files[0]);
     }
-
-    // Test: log ra object
+    
+    mutation.mutate({
+      id: id,
+      data: formData
+    });
   };
 
   if (isLoading) {
     return <div>Đang tải dữ liệu</div>
   }
-
-  console.log(productDetailData?.data);
 
   return (
     <>
@@ -107,7 +115,7 @@ export default function ProductEdit() {
               <label key={item.id} className="flex items-center">
                 <input
                   type="checkbox"
-                  name="parentCategoryId"
+                  name="categoryIds"
                   value={item.id}
                   defaultChecked={
                     Array.isArray(productDetailData?.data?.categoryIds) &&
