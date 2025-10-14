@@ -36,6 +36,11 @@ export const productDetail = async (id) => {
   return res.data;
 }
 
+export const updateProduct = async (id, data) => {
+  const res = await axiosAdminFormData.patch(`/admin/product/edit/${id}`, data);
+  return res;
+}
+
 export const deleteProduct = async (id) => {
   const res = await axiosAdmin.delete(`/admin/product/delete/${id}`);
   return res;
