@@ -6,7 +6,6 @@ import PaginationComponent from "@/components/client/Pagination";
 import { Link, useSearchParams } from "react-router-dom";
 import { DeleteButton } from "@/components/admin/DeleteButton";
 
-
 export default function ProductTable(props) {
   const { keyword, status } = props;
   const [page, setPage] = useState(1);
@@ -27,11 +26,9 @@ export default function ProductTable(props) {
 
   const resetApi = () => {
     queryClient.invalidateQueries({
-      queryKey: ["productAdmin"]
+      queryKey: ["productAdmin"],
     });
-  }
-
-
+  };
 
   return (
     <div className="overflow-x-auto ">
@@ -103,16 +100,16 @@ export default function ProductTable(props) {
                 <td className="hidden lg:table-cell px-2 sm:px-4  text-xl py-2">
                   {item.updatedByFormat}
                 </td>
-                <td className="px-2 sm:px-4 py-2 text-center">
+                <td className="px-2 sm:px-4 flex justify-center py-2 text-center">
                   <Link to={`/admin/product/edit/${item.id}`}>
                     <button className="p-2 rounded-lg border bg-blue-400 border-gray-300 text-white hover:bg-white hover:text-black transition">
                       <Edit3 size={18} />
                     </button>
                   </Link>
                   <DeleteButton
-                    itemId = {item.id}
-                    funcApi = {deleteProduct}
-                    callBack = {resetApi}
+                    itemId={item.id}
+                    funcApi={deleteProduct}
+                    callBack={resetApi}
                   />
                 </td>
               </tr>
