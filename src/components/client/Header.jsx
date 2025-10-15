@@ -41,7 +41,7 @@ export default function Header() {
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50 font-vietnam ">
-      <div className="max-w-[1400px] mx-auto px-6 py-3">
+      <div className="max-w-[1400px] mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div
             onClick={() => navigate("/")}
@@ -101,22 +101,22 @@ export default function Header() {
                     {data.data.fullName}
                   </span>
                 </button>
-                <ul className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-50">
+                <ul className="absolute right-0 mt-3 w-56 bg-white shadow-lg rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-60">
                   <li
                     onClick={() => navigate("/profile")}
-                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    className="px-5 py-2.5 hover:bg-gray-50 cursor-pointer text-lg text-gray-700 "
                   >
                     Thông tin cá nhân
                   </li>
                   <li
                     onClick={() => navigate("/orders")}
-                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    className="px-5 py-2.5 hover:bg-gray-50 cursor-pointer text-lg text-gray-700"
                   >
                     Đơn hàng
                   </li>
                   <li
                     onClick={handleLogout}
-                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    className="px-5 py-2.5 hover:bg-gray-50 cursor-pointer text-lg text-red-500"
                   >
                     Đăng xuất
                   </li>
