@@ -136,7 +136,7 @@ export const OrderTable = () => {
 
                 {/* Sản phẩm */}
                 <td className="px-4 py-3 text-left align-middle">
-                  <div className="flex flex-col gap-2 max-w-full">
+                  <div className="flex flex-col gap-3 max-w-full">
                     {visibleItems.map((item) => (
                       <div
                         key={item.id}
@@ -148,13 +148,13 @@ export const OrderTable = () => {
                           className="w-12 h-12 sm:w-14 sm:h-14 object-cover rounded-md border border-gray-200 flex-shrink-0"
                         />
                         <div className="leading-tight min-w-0">
-                          <div className="font-semibold text-gray-800 text-[15px] truncate">
+                          <div className="font-semibold text-gray-800 text-[15px] truncate ">
                             {item.name}
                           </div>
-                          <div className="text-gray-500 text-[15px] truncate">
+                          <div className="text-gray-500 text-[13px] truncate ">
                             Size: {item.size} | SL: {item.quantity}
                           </div>
-                          <div className="text-gray-600 text-[15px] font-medium truncate">
+                          <div className="text-gray-600 text-[13px] font-medium truncate ">
                             Giá: {item.price.toLocaleString()}₫
                           </div>
                         </div>
