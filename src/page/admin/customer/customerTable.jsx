@@ -10,24 +10,24 @@ export const CustomerTable = (props) => {
   const [page, setPage] = useState(1);
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
-  const { data:customer } = useQuery({
+  const { data: customer } = useQuery({
     queryKey: ["customer", keyword, status, page],
     queryFn: () => getAllClientAccount(keyword, status, page),
-    retry: false
+    retry: false,
   });
 
   const callBack = (pageNumber) => {
     setSearchParams({
       search: keyword,
       status: status,
-      page: pageNumber
-    })
+      page: pageNumber,
+    });
     setPage(pageNumber);
-  }
+  };
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full border bg-white border-gray-200 rounded-lg overflow-hidden shadow-md text-sm sm:text-lg">
+      <table className="min-w-full border bg-white border-gray-200 rounded-lg overflow-hidden shadow-md text-sm sm:text-lg ">
         <thead className="bg-black text-white">
           <tr>
             <th className="px-4 py-2 text-left font-semibold w-64">
@@ -80,7 +80,7 @@ export const CustomerTable = (props) => {
 
               <td className="px-4 py-2 text-lg">{item.createdAt}</td>
 
-              <td className="px-4 py-2 text-center">
+              <td className=" mt-4 px-2 sm:px-4 flex justify-center py-2 text-center">
                 <button className="p-2 rounded-lg border bg-blue-400 border-gray-300 text-white hover:bg-white hover:text-black transition">
                   <Edit3 size={18} />
                 </button>
@@ -91,7 +91,10 @@ export const CustomerTable = (props) => {
         </tbody>
       </table>
 
-      <PaginationComponent pages={customer?.data?.totalPage || 1} onChangePage={callBack}/>
+      <PaginationComponent
+        pages={customer?.data?.totalPage || 1}
+        onChangePage={callBack}
+      />
     </div>
   );
 };
