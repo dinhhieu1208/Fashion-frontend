@@ -132,8 +132,9 @@ export default function ProductEdit() {
         <div>
           <label className="block mb-1 font-medium">Giới tính</label>
           <select name="sex" className="w-full border rounded-md p-2" 
-            defaultValue={productDetailData?.data?.sex}
+            defaultValue={productDetailData?.data?.sex || ""}
           >
+            <option value="" disabled>Chọn giới tính</option>
             <option value="male">Nam</option>
             <option value="female">Nữ</option>
             <option value="unisex">Cả nam & nữ</option>
@@ -145,8 +146,9 @@ export default function ProductEdit() {
           <label className="block mb-1 font-medium">Kiểu dáng</label>
           {styleData && styleData?.data?.length > 0 && (
             <select name="styleId" className="w-full border rounded-md p-2"
-              defaultValue={productDetailData?.data?.styleId}
+              defaultValue={productDetailData?.data?.styleId || ""}
             >
+              <option value="" disabled>Chọn kiểu dáng</option>
               {styleData?.data.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
@@ -160,8 +162,9 @@ export default function ProductEdit() {
         <div>
           <label className="block mb-1 font-medium">Mùa</label>
           <select name="season" className="w-full border rounded-md p-2"
-            defaultValue={productDetailData?.data?.season}
+            defaultValue={productDetailData?.data?.season || ""}
           >
+            <option value="" disabled>Chọn mùa</option>
             <option value="summer">Mùa hè</option>
             <option value="winter">Mùa đông</option>
             <option value="spring">Mùa xuân</option>

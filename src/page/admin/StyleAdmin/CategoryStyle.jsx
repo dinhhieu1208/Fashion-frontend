@@ -4,7 +4,7 @@ import { deleteStyle, getAllStyle } from "@/services/styleService";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Edit3 } from "lucide-react";
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 export default function StyleTable(props) {
   const { keyword, status } = props;
   const [page, setPage] = useState(1);
@@ -62,9 +62,11 @@ export default function StyleTable(props) {
 
               <td className="px-4 py-2 text-center">
                 {/* Edit button */}
-                <button className="p-2 rounded-lg border bg-blue-400 border-gray-300 text-white hover:bg-white hover:text-black transition">
-                  <Edit3 size={18} />
-                </button>
+                <Link to={`/admin/style/edit/${style.id}`}>
+                  <button className="p-2 rounded-lg border bg-blue-400 border-gray-300 text-white hover:bg-white hover:text-black transition">
+                    <Edit3 size={18} />
+                  </button>
+                </Link>
 
                 {/* Delete button */}
                 <DeleteButton
