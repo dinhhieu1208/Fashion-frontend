@@ -20,6 +20,16 @@ export const createStyle = async (data) => {
   return res;
 };
 
+export const styleDetail = async (id) => {
+  const res = await axiosAdmin.get(`/admin/style/detail/${id}`);
+  return res.data;
+}
+
+export const styleEdit = async (id, data) => {
+  const res = await axiosAdmin.patch(`/admin/style/edit/${id}`, data);
+  return res.data;
+}
+
 export const deleteStyle = async (id) => {
   const res = await axiosAdmin.delete(`/admin/style/delete/${id}`);
   return res
