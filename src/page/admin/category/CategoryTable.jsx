@@ -30,7 +30,7 @@ export const CategoryTable = (props) => {
 
   return (
     <div className="overflow-x-auto ">
-      <table className="min-w-full border bg-white  border-gray-200 rounded-lg overflow-hidden shadow-md text-2xl cursor-pointer">
+      <table className="min-w-full border bg-white  border-gray-200 rounded-lg overflow-hidden shadow-md text-2xl ">
         <thead className="bg-black text-white">
           <tr>
             <th className="px-4 py-2 text-left text-xl font-semibold w-64">
@@ -71,10 +71,11 @@ export const CategoryTable = (props) => {
                 </td>
                 <td className="px-4 py-2 sm:h-16">
                   <span
-                    className={`inline-flex items-center justify-center px-4 py-2 text-lg font-semibold rounded-full ${data.status === "active"
+                    className={`inline-flex items-center justify-center px-4 py-2 text-lg font-semibold rounded-full ${
+                      data.status === "active"
                         ? "bg-green-100 text-green-700"
                         : "bg-red-100 text-red-700"
-                      }`}
+                    }`}
                   >
                     {data.status}
                   </span>

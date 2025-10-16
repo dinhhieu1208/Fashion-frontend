@@ -17,28 +17,28 @@ export default function StyleTable(props) {
   });
 
   const callBack = (pageNumber) => {
-    setPage(pageNumber)
-    setSearchParams({search: keyword, page: pageNumber, status: status});
-  }
+    setPage(pageNumber);
+    setSearchParams({ search: keyword, page: pageNumber, status: status });
+  };
 
   const resetApi = () => {
     queryClient.invalidateQueries({
-      queryKey: ["styleList"]
-    })
-  }
+      queryKey: ["styleList"],
+    });
+  };
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full border bg-white border-gray-200 rounded-lg overflow-hidden shadow-md text-xl mb-[10px]">
         <thead className="bg-black text-white">
           <tr>
-            <th className="px-4 py-2 text-left font-semibold w-64">
+            <th className="px-4 py-2 text-left text-xl font-semibold w-64">
               Tên kiểu dáng
             </th>
-            <th className="px-4 py-2 text-left font-semibold w-32">
+            <th className="px-4 py-2 text-left text-xl font-semibold w-32">
               Trạng thái
             </th>
 
-            <th className="px-4 py-2 text-center font-semibold w-40">
+            <th className="px-4 py-2 text-center  text-xl font-semibold w-40">
               Hành động
             </th>
           </tr>
@@ -70,9 +70,9 @@ export default function StyleTable(props) {
 
                 {/* Delete button */}
                 <DeleteButton
-                  itemId = {style.id}
-                  funcApi = {deleteStyle}
-                  callBack = {resetApi}
+                  itemId={style.id}
+                  funcApi={deleteStyle}
+                  callBack={resetApi}
                 />
               </td>
             </tr>
@@ -81,8 +81,8 @@ export default function StyleTable(props) {
       </table>
 
       <PaginationComponent
-        pages = {data?.data?.totalPage || 1}
-        onChangePage = {callBack}
+        pages={data?.data?.totalPage || 1}
+        onChangePage={callBack}
       />
     </div>
   );

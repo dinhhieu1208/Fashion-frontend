@@ -94,25 +94,29 @@ export const OrderTable = () => {
   return (
     <div className="overflow-x-auto p-3 sm:p-4">
       <table className="min-w-full table-fixed border bg-white border-gray-200 rounded-xl overflow-hidden shadow-md text-[15px]">
-        <colgroup>
-          <col style={{ width: "18%" }} /> {/* Khách hàng */}
-          <col style={{ width: "40%" }} /> {/* Sản phẩm */}
-          <col style={{ width: "20%" }} /> {/* Tổng tiền */}
-          <col style={{ width: "15%" }} /> {/* Thanh toán */}
-          <col style={{ width: "20%" }} /> {/* Trạng thái */}
-          <col style={{ width: "6%" }} /> {/* Ngày tạo */}
-          <col style={{ width: "4%" }} /> {/* Hành động */}
-        </colgroup>
-
         <thead className="bg-black text-white">
           <tr>
-            <th className="px-4 py-3 font-semibold text-left">Khách hàng</th>
-            <th className="px-4 py-3 font-semibold text-left">Sản phẩm</th>
-            <th className="px-4 py-3 font-semibold text-right">Tổng tiền</th>
-            <th className="px-4 py-3 font-semibold text-center">Thanh toán</th>
-            <th className="px-4 py-3 font-semibold text-center">Trạng thái</th>
-            <th className="px-4 py-3 font-semibold text-center">Ngày tạo</th>
-            <th className="px-4 py-3 font-semibold text-center">Hành động</th>
+            <th className="px-4 py-3 text-left text-xl font-semibold whitespace-nowrap">
+              Khách hàng
+            </th>
+            <th className="px-4 py-3 text-left text-xl font-semibold whitespace-nowrap">
+              Sản phẩm
+            </th>
+            <th className="px-4 py-3 text-left text-xl font-semibold whitespace-nowrap">
+              Tổng tiền
+            </th>
+            <th className="px-4 py-3 text-left text-xl font-semibold whitespace-nowrap">
+              Thanh toán
+            </th>
+            <th className="px-4 py-3 text-left text-xl font-semibold whitespace-nowrap">
+              Trạng thái
+            </th>
+            <th className="hidden md:table-cell text-xl font-semibold whitespace-nowrap ">
+              Ngày tạo
+            </th>
+            <th className="px-2 sm:px-4 py-2 text-xl text-center font-semibold w-40">
+              Hành động
+            </th>
           </tr>
         </thead>
 
@@ -148,13 +152,10 @@ export const OrderTable = () => {
                           className="w-12 h-12 sm:w-14 sm:h-14 object-cover rounded-md border border-gray-200 flex-shrink-0"
                         />
                         <div className="leading-tight min-w-0">
-                          <div className="font-semibold text-gray-800 text-[15px] truncate ">
+                          <div className="font-semibold text-gray-800 text-[15px]  ">
                             {item.name}
                           </div>
-                          <div className="text-gray-500 text-[13px] truncate ">
-                            Size: {item.size} | SL: {item.quantity}
-                          </div>
-                          <div className="text-gray-600 text-[13px] font-medium truncate ">
+                          <div className="text-gray-600 text-[13px] font-medium ">
                             Giá: {item.price.toLocaleString()}₫
                           </div>
                         </div>
@@ -198,7 +199,7 @@ export const OrderTable = () => {
                 </td>
 
                 {/* Ngày tạo */}
-                <td className="px-4 py-3 text-gray-600 text-[15px] whitespace-nowrap align-middle text-center">
+                <td className="hidden md:table-cell px-2 sm:px-4 text-sm py-2">
                   {order.createdAt}
                 </td>
 

@@ -118,7 +118,7 @@ export default function HomePage() {
               key={index}
               src={slide}
               alt={`Slide ${index}`}
-              className="w-full flex-shrink-0 object-cover h-[220px]  sm:h-[300px] md:h-[400px] lg:h-[500px] rounded-xl"
+              className="w-full flex-shrink-0 object-cover h-[180px]  sm:h-[250px] md:h-[300px] lg:h-[500px] rounded-xl"
             />
           ))}
         </div>
