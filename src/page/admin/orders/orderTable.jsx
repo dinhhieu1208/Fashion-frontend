@@ -88,16 +88,24 @@ export const OrderTable = () => {
       <table className="hidden lg:table min-w-full border-collapse border bg-white rounded-xl shadow-md text-[15px]">
         <thead className="bg-black text-white">
           <tr>
-            <th className="px-4 py-3 text-left text-lg font-semibold">Khách hàng</th>
-            <th className="px-4 py-3 text-left text-lg font-semibold">Sản phẩm</th>
-            <th className="px-4 py-3 text-right text-lg font-semibold">Tổng tiền</th>
+            <th className="px-4 py-3 text-left text-lg font-semibold">
+              Khách hàng
+            </th>
+            <th className="px-4 py-3 text-left text-lg font-semibold">
+              Sản phẩm
+            </th>
+            <th className="px-4 py-3 text-right text-lg font-semibold">
+              Tổng tiền
+            </th>
             <th className="px-4 py-3 text-center text-lg font-semibold max-[1075px]:hidden">
               Thanh toán
             </th>
             <th className="px-4 py-3 text-center text-lg font-semibold max-[1200px]:hidden">
               Ngày tạo
             </th>
-            <th className="px-4 py-3 text-center text-lg font-semibold">Hành động</th>
+            <th className="px-4 py-3 text-center text-lg font-semibold">
+              Hành động
+            </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-gray-50">
@@ -137,7 +145,9 @@ export const OrderTable = () => {
                     {hiddenCount > 0 && (
                       <div
                         className="text-gray-500 text-sm italic truncate"
-                        title={hiddenList.map((i) => `${i.name} (x${i.quantity})`).join(", ")}
+                        title={hiddenList
+                          .map((i) => `${i.name} (x${i.quantity})`)
+                          .join(", ")}
                       >
                         +{hiddenCount} sản phẩm khác
                       </div>
@@ -218,7 +228,8 @@ export const OrderTable = () => {
 
             <div className="flex justify-between items-center text-sm text-gray-700">
               <span>
-                <strong>Tổng:</strong> {order.totalAfterDiscount.toLocaleString()}₫
+                <strong>Tổng:</strong>{" "}
+                {order.totalAfterDiscount.toLocaleString()}₫
               </span>
               <span>{order.createdAt}</span>
             </div>
@@ -227,7 +238,7 @@ export const OrderTable = () => {
               <span className="px-3 py-1 bg-blue-100 text-blue-700 font-semibold rounded-full text-sm">
                 {order.status.value}
               </span>
-              <div className="flex gap-2">
+              <div className="flex ">
                 <button className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600">
                   <Edit3 size={18} />
                 </button>

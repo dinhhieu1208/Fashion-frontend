@@ -6,8 +6,7 @@ import PaginationComponent from "@/components/client/Pagination";
 import { Link, useSearchParams } from "react-router-dom";
 import { DeleteButton } from "@/components/admin/DeleteButton";
 
-export default function ProductTable(props) {
-  const { keyword, status } = props;
+export default function ProductTable({ keyword, status }) {
   const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
   // eslint-disable-next-line no-unused-vars
@@ -25,84 +24,86 @@ export default function ProductTable(props) {
   };
 
   const resetApi = () => {
-    queryClient.invalidateQueries({
-      queryKey: ["productAdmin"],
-    });
+    queryClient.invalidateQueries({ queryKey: ["productAdmin"] });
   };
 
   return (
-    <div className="overflow-x-auto ">
-      <table className="min-w-full border bg-white border-gray-200 rounded-lg overflow-hidden shadow-md text-sm sm:text-lg ">
+    <div className="overflow-x-auto w-full">
+      {/* ✅ Desktop/Table view */}
+      <table className="hidden lg:table min-w-full border-collapse border bg-white rounded-xl shadow-md text-[15px]">
         <thead className="bg-black text-white">
           <tr>
-            <th className="px-2 sm:px-4 py-2 text-left font-semibold w-64">
+            <th className="px-4 py-3 text-left text-lg font-semibold">
               Tên sản phẩm
             </th>
-            <th className="px-2 sm:px-4 py-2 text-left font-semibold w-32">
+            <th className="px-4 py-3 text-left text-lg font-semibold">
               Hình ảnh
             </th>
-            <th className="px-2 sm:px-4 py-2 text-left font-semibold w-24">
+            <th className="px-4 py-3 text-left text-lg font-semibold">
               Số lượng
             </th>
-            <th className="px-2 sm:px-4 py-2 text-left font-semibold w-32">
-              Giá
-            </th>
-            <th className="px-2 sm:px-4 py-2 text-left font-semibold w-32">
+            <th className="px-4 py-3 text-left text-lg font-semibold">Giá</th>
+            <th className="px-4 py-3 text-left text-lg font-semibold">
               Trạng thái
             </th>
-            <th className="hidden md:table-cell px-2 sm:px-4 py-2 text-left font-semibold w-40">
+            <th className="px-4 py-3 text-left text-lg font-semibold max-[1200px]:hidden">
               Ngày tạo
             </th>
-            <th className="hidden md:table-cell px-2 sm:px-4 py-2 text-left font-semibold w-40">
+            <th className="px-4 py-3 text-left text-lg font-semibold max-[1300px]:hidden">
               Người tạo
             </th>
-            <th className="hidden lg:table-cell px-2 sm:px-4 py-2 text-left font-semibold w-40">
+            <th className="px-4 py-3 text-left text-lg font-semibold max-[1400px]:hidden">
               Người sửa
             </th>
-            <th className="px-2 sm:px-4 py-2 text-center font-semibold w-40">
+            <th className="px-4 py-3 text-center text-lg font-semibold">
               Hành động
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200">
-          {data?.data &&
-            data?.data?.data.map((item) => (
-              <tr key={item.id} className="hover:bg-gray-50 transition">
-                <td className="px-2 sm:px-4 text-xl py-2">{item.name}</td>
-                <td className="px-2 sm:px-4 text-xl py-2">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-20 h-20 sm:w-20 sm:h-20 rounded object-cover border"
-                  />
-                </td>
-                <td className="px-2 sm:px-4 text-xl py-2">{item.quantity}</td>
-                <td className="px-2 sm:px-4 text-xl py-2">
-                  {item.currentPrice.toLocaleString("vi-VN")}₫
-                </td>
-                <td className="px-4 py-2 text-xl sm:h-16">
-                  <span
-                    className={`inline-flex items-center justify-center px-4 py-2 text-lg font-semibold rounded-full ${
-                      item.status === "active"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-red-100 text-red-700"
-                    }`}
-                  >
-                    {item.status}
-                  </span>
-                </td>
-                <td className="hidden md:table-cell px-2 sm:px-4 text-sm py-2">
-                  {item.createAtFormat}
-                </td>
-                <td className="hidden md:table-cell px-2 sm:px-4  text-xl py-2">
-                  {item.createdByFormat}
-                </td>
-                <td className="hidden lg:table-cell px-2 sm:px-4  text-xl py-2">
-                  {item.updatedByFormat}
-                </td>
-                <td className=" px-4 py-3 align-middle text-center">
+        <tbody className="divide-y divide-gray-200 bg-gray-50">
+          {data?.data?.data?.map((item, index) => (
+            <tr
+              key={item.id}
+              className={`${
+                index % 2 === 0 ? "bg-white" : "bg-gray-50"
+              } hover:bg-gray-100 transition-all`}
+            >
+              <td className="px-4 py-3 font-medium  text-xl">{item.name}</td>
+              <td className="px-4 py-3">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-16 h-16 object-cover rounded-md border"
+                />
+              </td>
+              <td className="px-4 py-3">{item.quantity}</td>
+              <td className="px-4 py-3 text-green-600 font-semibold text-sm">
+                {item.currentPrice.toLocaleString("vi-VN")}₫
+              </td>
+              <td className="px-4 py-3">
+                <span
+                  className={`inline-block px-3 py-1 rounded-full text-xl font-semibold ${
+                    item.status === "active"
+                      ? "text-green-700 bg-green-100"
+                      : "text-red-700 bg-red-100"
+                  }`}
+                >
+                  {item.status}
+                </span>
+              </td>
+              <td className="px-4 py-3 max-[1200px]:hidden text-sm">
+                {item.createAtFormat}
+              </td>
+              <td className="px-4 py-3 max-[1300px]:hidden text-xl">
+                {item.createdByFormat}
+              </td>
+              <td className="px-4 py-3 max-[1400px]:hidden text-xl">
+                {item.updatedByFormat}
+              </td>
+              <td className="px-4 py-3 text-center">
+                <div className="flex justify-center gap-2">
                   <Link to={`/admin/product/edit/${item.id}`}>
-                    <button className="p-2 rounded-lg border bg-blue-400 border-gray-300 text-white hover:bg-white hover:text-black transition">
+                    <button className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600">
                       <Edit3 size={18} />
                     </button>
                   </Link>
@@ -111,12 +112,83 @@ export default function ProductTable(props) {
                     funcApi={deleteProduct}
                     callBack={resetApi}
                   />
-                </td>
-              </tr>
-            ))}
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
-      <div className="mt-[10px]">
+
+      {/* ✅ Mobile view */}
+      <div className="lg:hidden flex flex-col gap-4 mt-3">
+        {data?.data?.data?.map((item) => (
+          <div
+            key={item.id}
+            className="bg-white shadow-md rounded-xl p-4 border border-gray-200"
+          >
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="font-semibold text-gray-800 text-lg">
+                {item.name}
+              </h3>
+              <span
+                className={`text-sm font-semibold px-3 py-1  rounded-full ${
+                  item.status === "active"
+                    ? "text-green-700 bg-green-100"
+                    : "text-red-700 bg-red-100"
+                }`}
+              >
+                {item.status}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-3 mb-3">
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-16 h-16 rounded-md border object-cover"
+              />
+              <div className="text-sm text-gray-700">
+                <div>
+                  <strong>Giá:</strong>{" "}
+                  {item.currentPrice.toLocaleString("vi-VN")}₫
+                </div>
+                <div>
+                  <strong>Số lượng:</strong> {item.quantity}
+                </div>
+              </div>
+            </div>
+
+            <div className="text-sm text-gray-600 flex flex-col gap-1 mb-2">
+              <span>
+                <strong>Ngày tạo:</strong> {item.createAtFormat}
+              </span>
+              <span>
+                <strong>Người tạo:</strong> {item.createdByFormat}
+              </span>
+              <span>
+                <strong>Người sửa:</strong> {item.updatedByFormat}
+              </span>
+            </div>
+
+            <div className="flex justify-end items-center mt-2">
+              <div className="flex ">
+                <Link to={`/admin/product/edit/${item.id}`}>
+                  <button className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600">
+                    <Edit3 size={18} />
+                  </button>
+                </Link>
+                <DeleteButton
+                  itemId={item.id}
+                  funcApi={deleteProduct}
+                  callBack={resetApi}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4">
         <PaginationComponent
           pages={data?.data?.totalPage || 1}
           onChangePage={onChangePage}
