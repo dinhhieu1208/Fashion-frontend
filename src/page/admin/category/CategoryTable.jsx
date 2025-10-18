@@ -6,7 +6,8 @@ import { Link, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { DeleteButton } from "@/components/admin/DeleteButton";
 
-export const CategoryTable = ({ keyword, status }) => {
+export const CategoryTable = (props) => {
+  const { keyword, status } = props;
   const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
   // eslint-disable-next-line no-unused-vars
