@@ -1,20 +1,26 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
-
 import { OrderTable } from "./orderTable.jsx";
+import { useSearchParams } from "react-router-dom";
+
 
 export const OrderList = () => {
   const [keyword, setKeyword] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setKeyword(e.target.search.value);
+    const searchValue = e.target.search.value.trim();
+    setKeyword(searchValue);
+    setSearchParams({ search: searchValue, status: statusFilter, page: 1});
   };
 
   const handleOnChange = (e) => {
-    e.preventDefault();
-    setStatusFilter(e.target.value);
+    const newStatus = e.target.value;
+    setStatusFilter(newStatus);
+    setSearchParams({ search: keyword, status: newStatus, page: 1});
   };
 
   return (
@@ -33,7 +39,7 @@ export const OrderList = () => {
           </div>
           <input
             type="text"
-            placeholder="Tìm theo mã đơn hàng hoặc tên khách hàng..."
+            placeholder="Tìm kiếm theo email của khách hàng"
             className="w-full h-full pr-[30px] pl-[40px] py-[20px] rounded-[10px] shadow-md outline-none"
             name="search"
           />
@@ -45,13 +51,9 @@ export const OrderList = () => {
             className="w-[220px] h-[44px] p-2 bg-white rounded-[10px] shadow-md"
             onChange={handleOnChange}
           >
-            <option disabled>Lọc trạng thái đơn hàng</option>
-            <option value="">Tất cả trạng thái</option>
-            <option value="pending">Chờ xác nhận</option>
-            <option value="confirmed">Đã xác nhận</option>
-            <option value="shipping">Đang giao</option>
-            <option value="delivered">Đã giao</option>
-            <option value="cancelled">Đã hủy</option>
+            <option disabled>Lọc theo giá đơn hàng</option>
+            <option value="asc">Giá tăng dần</option>
+            <option value="desc">Giá giảm dần</option>
           </select>
         </div>
       </div>
