@@ -1,5 +1,5 @@
 import { Edit3 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteProduct, productAdmin } from "@/services/productService";
 import PaginationComponent from "@/components/client/Pagination";
@@ -8,9 +8,14 @@ import { DeleteButton } from "@/components/admin/DeleteButton";
 
 export default function ProductTable({ keyword, status }) {
   const [page, setPage] = useState(1);
+  
   const queryClient = useQueryClient();
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    setPage(1);
+  }, [keyword, status]);
 
   const { data } = useQuery({
     queryKey: ["productAdmin", keyword, status, page],
@@ -191,6 +196,7 @@ export default function ProductTable({ keyword, status }) {
       <div className="mt-4">
         <PaginationComponent
           pages={data?.data?.totalPage || 1}
+          currentPage={page}
           onChangePage={onChangePage}
         />
       </div>

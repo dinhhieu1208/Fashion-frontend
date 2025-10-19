@@ -5,44 +5,61 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"
-import { useState } from "react";
+} from "@/components/ui/pagination";
 
-export default function PaginationComponent(props) {
-  const { pages, onChangePage } = props;
-  const [currentPage, setCurrentPage] = useState(1);
-  const callBack = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    onChangePage(pageNumber);
+export default function PaginationComponent({ pages, currentPage, onChangePage }) {
+  if (!pages || pages <= 1) return null; // không render nếu chỉ có 1 trang
+
+  const goToPage = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= pages) {
+      onChangePage(pageNumber);
+    }
   };
 
   return (
     <Pagination>
       <PaginationContent>
+        {/* Nút Previous */}
         <PaginationItem>
           <PaginationPrevious
             onClick={(e) => {
               e.preventDefault();
-              if (currentPage > 1) callBack(currentPage - 1);
+              goToPage(currentPage - 1);
             }}
-            className={"cursor-pointer"}
+            className={`cursor-pointer ${
+              currentPage === 1 ? "opacity-50 pointer-events-none" : ""
+            }`}
           />
         </PaginationItem>
-        {Array(pages).fill("").map((item, index) => (
+
+        {/* Danh sách trang */}
+        {Array.from({ length: pages }, (_, index) => (
           <PaginationItem key={index}>
-            <PaginationLink className={"cursor-pointer"} isActive={index + 1 === currentPage} onClick={() => callBack(index + 1)}>{index + 1}</PaginationLink>
+            <PaginationLink
+              onClick={() => goToPage(index + 1)}
+              isActive={index + 1 === currentPage}
+              className={`cursor-pointer ${
+                index + 1 === currentPage ? "bg-black text-white" : ""
+              }`}
+            >
+              {index + 1}
+            </PaginationLink>
           </PaginationItem>
         ))}
+
+        {/* Nút Next */}
         <PaginationItem>
           <PaginationNext
             onClick={(e) => {
               e.preventDefault();
-              if (currentPage >= 1 && currentPage < pages) callBack(currentPage + 1);
+              goToPage(currentPage + 1);
             }}
-            className={"cursor-pointer"}
+            className={`cursor-pointer ${
+              currentPage === pages ? "opacity-50 pointer-events-none" : ""
+            }`}
           />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
-  )
+  );
 }

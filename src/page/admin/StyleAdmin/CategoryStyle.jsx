@@ -3,13 +3,18 @@ import PaginationComponent from "@/components/client/Pagination";
 import { deleteStyle, getAllStyle } from "@/services/styleService";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Edit3 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 export default function StyleTable(props) {
   const { keyword, status } = props;
   const [page, setPage] = useState(1);
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    setPage(1);
+  }, [keyword, status]);
+
   const queryClient = useQueryClient();
   const { data } = useQuery({
     queryKey: ["styleList", keyword, status, page],
@@ -50,11 +55,10 @@ export default function StyleTable(props) {
               <td className="px-4 py-2 text-xl">{style.name}</td>
               <td className="px-4 py-2 ">
                 <span
-                  className={`inline-flex items-center justify-center px-4 py-2 text-lg font-semibold rounded-full ${
-                    style.status === "active"
+                  className={`inline-flex items-center justify-center px-4 py-2 text-lg font-semibold rounded-full ${style.status === "active"
                       ? "bg-green-100 text-green-700"
                       : "bg-red-100 text-red-700"
-                  }`}
+                    }`}
                 >
                   {style.status === "active" ? "active" : "inactive"}
                 </span>
@@ -82,6 +86,7 @@ export default function StyleTable(props) {
 
       <PaginationComponent
         pages={data?.data?.totalPage || 1}
+        currentPage={page}
         onChangePage={callBack}
       />
     </div>

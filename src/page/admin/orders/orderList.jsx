@@ -6,7 +6,7 @@ import { useSearchParams } from "react-router-dom";
 
 export const OrderList = () => {
   const [keyword, setKeyword] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("asc");
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -14,13 +14,13 @@ export const OrderList = () => {
     e.preventDefault();
     const searchValue = e.target.search.value.trim();
     setKeyword(searchValue);
-    setSearchParams({ search: searchValue, status: statusFilter, page: 1});
+    setSearchParams({ search: searchValue, status: statusFilter });
   };
 
   const handleOnChange = (e) => {
     const newStatus = e.target.value;
     setStatusFilter(newStatus);
-    setSearchParams({ search: keyword, status: newStatus, page: 1});
+    setSearchParams({ search: keyword, status: newStatus });
   };
 
   return (
