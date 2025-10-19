@@ -1,87 +1,35 @@
 import { Edit3 } from "lucide-react";
 import { DeleteButton } from "@/components/admin/DeleteButton";
+import { useQuery } from "@tanstack/react-query";
+import { getAllOrder } from "@/services/orderService";
+import PaginationComponent from "@/components/client/Pagination";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
-export const OrderTable = () => {
-  const orders = [
-    {
-      id: "68d3a743306619ccedb3c78a",
-      email: "nguyenvana@gmail.com",
-      orderList: [
-        {
-          id: "68d10375dc863264dc568acb",
-          name: "Quan ao 02",
-          image:
-            "https://res.cloudinary.com/dculf3koq/image/upload/v1758528373/zjggx2alszse5xupdujv.png",
-          quantity: 2,
-          size: "M",
-          price: 90000,
-        },
-        {
-          id: "68d103c4dc863264dc568adf",
-          name: "Quan ao 03",
-          image:
-            "https://res.cloudinary.com/dculf3koq/image/upload/v1758528452/bjuw5mdalprkoopgfgob.png",
-          quantity: 2,
-          size: "M",
-          price: 90000,
-        },
-        {
-          id: "68d103c4dc863264dc568adf",
-          name: "Quan ao 03",
-          image:
-            "https://res.cloudinary.com/dculf3koq/image/upload/v1758528452/bjuw5mdalprkoopgfgob.png",
-          quantity: 2,
-          size: "M",
-          price: 90000,
-        },
-      ],
-      totalAfterDiscount: 360000,
-      paymentStatus: {
-        key: "unpaid",
-        value: "Chưa thanh toán",
-      },
-      status: {
-        key: "init",
-        value: "Đang khởi tạo đơn hàng",
-      },
-      createdAt: "15:09 24/09/2025",
-    },
-    {
-      id: "68d3a66f306619ccedb3c762",
-      email: "nguyenvana@gmail.com",
-      orderList: [
-        {
-          id: "68d10375dc863264dc568acb",
-          name: "Quan ao 02",
-          image:
-            "https://res.cloudinary.com/dculf3koq/image/upload/v1758528373/zjggx2alszse5xupdujv.png",
-          quantity: 1,
-          size: "M",
-          price: 90000,
-        },
-        {
-          id: "68d103c4dc863264dc568adf",
-          name: "Quan ao 03",
-          image:
-            "https://res.cloudinary.com/dculf3koq/image/upload/v1758528452/bjuw5mdalprkoopgfgob.png",
-          quantity: 2,
-          size: "M",
-          price: 90000,
-        },
-      ],
-      totalAfterDiscount: 270000,
-      paymentStatus: {
-        key: "unpaid",
-        value: "Chưa thanh toán",
-      },
-      status: {
-        key: "init",
-        value: "Đang khởi tạo đơn hàng",
-      },
-      createdAt: "15:06 24/09/2025",
-    },
-  ];
+export const OrderTable = (props) => {
+  const { keyword, status } = props;
+  const [page, setPage] = useState(1);
+  // eslint-disable-next-line no-unused-vars
+  const [paymentStatus, setPaymentStatus] = useState("")
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { data, isLoading } = useQuery({
+    queryKey: ["orderList", keyword, status, paymentStatus, page],
+    queryFn: () => getAllOrder(keyword, status, paymentStatus, page),
+    retry: false
+  })
 
+  const onChangePage = (pageNumber) => {
+    setPage(pageNumber)
+    setSearchParams({search: keyword, status: status, page: pageNumber});
+  };
+
+
+  if (isLoading) {
+    return <div>Đang tải dữ liệu</div>
+  };
+
+  console.log(page);
   return (
     <div className="overflow-x-auto w-full">
       {/* ✅ Desktop/Table view (hiện từ 1025px trở lên) */}
@@ -109,7 +57,7 @@ export const OrderTable = () => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-gray-50">
-          {orders.map((order, index) => {
+          {data?.data.map((order, index) => {
             const visibleItems = order.orderList.slice(0, 2);
             const hiddenCount = order.orderList.length - visibleItems.length;
             const hiddenList = order.orderList.slice(2);
@@ -117,9 +65,8 @@ export const OrderTable = () => {
             return (
               <tr
                 key={order.id}
-                className={`${
-                  index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                } hover:bg-gray-100 transition-all`}
+                className={`${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                  } hover:bg-gray-100 transition-all`}
               >
                 <td className="px-4 py-3 font-medium">{order.email}</td>
                 <td className="px-4 py-3">
@@ -159,11 +106,10 @@ export const OrderTable = () => {
                 </td>
                 <td className="px-4 py-3 text-center max-[1075px]:hidden">
                   <span
-                    className={`inline-block px-3 py-1 rounded-full font-semibold ${
-                      order.paymentStatus.key === "unpaid"
+                    className={`inline-block px-3 py-1 rounded-full font-semibold ${order.paymentStatus.key === "unpaid"
                         ? "text-red-700 bg-red-100"
                         : "text-green-700 bg-green-100"
-                    }`}
+                      }`}
                   >
                     {order.paymentStatus.value}
                   </span>
@@ -187,7 +133,7 @@ export const OrderTable = () => {
 
       {/* ✅ Mobile view (hiện khi <= 1024px) */}
       <div className="lg:hidden flex flex-col gap-4 mt-2">
-        {orders.map((order) => (
+        {data?.data.map((order) => (
           <div
             key={order.id}
             className="bg-white shadow-md rounded-xl p-4 border border-gray-200"
@@ -195,11 +141,10 @@ export const OrderTable = () => {
             <div className="flex justify-between items-center mb-2">
               <h3 className="font-semibold text-gray-800">{order.email}</h3>
               <span
-                className={`text-sm font-semibold px-3 py-1 rounded-full ${
-                  order.paymentStatus.key === "unpaid"
+                className={`text-sm font-semibold px-3 py-1 rounded-full ${order.paymentStatus.key === "unpaid"
                     ? "text-red-700 bg-red-100"
                     : "text-green-700 bg-green-100"
-                }`}
+                  }`}
               >
                 {order.paymentStatus.value}
               </span>
@@ -247,6 +192,13 @@ export const OrderTable = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="mt-[10px]">
+        <PaginationComponent
+          pages={data?.totalPage || 1}
+          onChangePage={onChangePage}
+        />
       </div>
     </div>
   );
