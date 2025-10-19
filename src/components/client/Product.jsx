@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -26,6 +25,11 @@ const ProductPage = () => {
     setKeyword(result);
     setCategory(categoryId);
   }, [searchParams]);
+
+  
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [keyword, category, priceFilter]);
 
   const { data } = useQuery({
     queryKey: ["products", keyword, priceFilter, category, currentPage],
@@ -151,6 +155,7 @@ const ProductPage = () => {
                   <div className="flex justify-center mt-10">
                     <PaginationComponent
                       pages={data?.data?.totalPage || 1}
+                      currentPage={currentPage}
                       onChangePage={callBack}
                     />
                   </div>

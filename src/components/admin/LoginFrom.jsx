@@ -6,20 +6,18 @@ import { Label } from "@/components/ui/label"
 import { useMutation } from "@tanstack/react-query"
 import { loginAdmin } from "@/services/authService"
 import { toast } from "sonner"
-import { useNavigate } from "react-router-dom"
 
 export function LoginForm({
   className,
   ...props
 }) {
-  const navigate = useNavigate();
   const mutation = useMutation({
     mutationFn: loginAdmin,
     onSuccess: () => {
       toast.success("Đăng nhập thành công");
-      setTimeout(() => {
-        navigate("/admin/dashboard");
-      }, 300)
+    setTimeout(() => {
+      window.location.href = "/admin/dashboard";
+    }, 500);
     },
     onError: () => {
       toast.error("Tài khoản hoặc mật khẩu không đúng");
