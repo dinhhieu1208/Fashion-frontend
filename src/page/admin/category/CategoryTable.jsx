@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { categoriesAdmin, deleteCategory } from "@/services/categoryService";
 import PaginationComponent from "@/components/client/Pagination";
 import { Link, useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DeleteButton } from "@/components/admin/DeleteButton";
 
 export const CategoryTable = (props) => {
@@ -12,6 +12,10 @@ export const CategoryTable = (props) => {
   const queryClient = useQueryClient();
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
+  
+  useEffect(() => {
+    setPage(1);
+  }, [keyword, status]);
 
   const { data } = useQuery({
     queryKey: ["categoriesAdmin", keyword, status, page],
@@ -178,6 +182,7 @@ export const CategoryTable = (props) => {
       <div className="mt-4">
         <PaginationComponent
           pages={data?.data?.totalPage || 1}
+          currentPage={page}
           onChangePage={onChangePage}
         />
       </div>

@@ -3,7 +3,7 @@ import { DeleteButton } from "@/components/admin/DeleteButton";
 import { useQuery } from "@tanstack/react-query";
 import { getAllClientAccount } from "@/services/accountService";
 import PaginationComponent from "@/components/client/Pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export const CustomerTable = (props) => {
@@ -11,6 +11,11 @@ export const CustomerTable = (props) => {
   const [page, setPage] = useState(1);
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    setPage(1);
+  }, [keyword, status]);
+
   const { data: customer } = useQuery({
     queryKey: ["customer", keyword, status, page],
     queryFn: () => getAllClientAccount(keyword, status, page),
@@ -158,6 +163,7 @@ export const CustomerTable = (props) => {
 
       <PaginationComponent
         pages={customer?.data?.totalPage || 1}
+        currentPage={page}
         onChangePage={callBack}
       />
     </div>

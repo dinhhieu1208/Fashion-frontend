@@ -3,36 +3,43 @@ import { DeleteButton } from "@/components/admin/DeleteButton";
 import { useQuery } from "@tanstack/react-query";
 import { getAllOrder } from "@/services/orderService";
 import PaginationComponent from "@/components/client/Pagination";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
-export const OrderTable = (props) => {
-  const { keyword, status } = props;
+export const OrderTable = ({ keyword, status }) => {
   const [page, setPage] = useState(1);
   // eslint-disable-next-line no-unused-vars
-  const [paymentStatus, setPaymentStatus] = useState("")
-  // eslint-disable-next-line no-unused-vars
+  const [paymentStatus, setPaymentStatus] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
+  
+  useEffect(() => {
+    setPage(1);
+  }, [keyword, status, paymentStatus]);
+
   const { data, isLoading } = useQuery({
     queryKey: ["orderList", keyword, status, paymentStatus, page],
     queryFn: () => getAllOrder(keyword, status, paymentStatus, page),
-    retry: false
-  })
+    retry: false,
+  });
 
   const onChangePage = (pageNumber) => {
-    setPage(pageNumber)
-    setSearchParams({search: keyword, status: status, page: pageNumber});
+    const newPage = Number(pageNumber);
+    setPage(newPage);
+
+    const currentParams = Object.fromEntries(searchParams.entries());
+    setSearchParams({
+      ...currentParams,
+      search: keyword,
+      status: status,
+      page: newPage,
+    });
   };
 
+  if (isLoading) return <div>Đang tải dữ liệu...</div>;
 
-  if (isLoading) {
-    return <div>Đang tải dữ liệu</div>
-  };
-
-  console.log(page);
   return (
     <div className="overflow-x-auto w-full">
-      {/* ✅ Desktop/Table view (hiện từ 1025px trở lên) */}
+      {/* 🖥 Desktop Table */}
       <table className="hidden lg:table min-w-full border-collapse border bg-white rounded-xl shadow-md text-[15px]">
         <thead className="bg-black text-white">
           <tr>
@@ -65,8 +72,9 @@ export const OrderTable = (props) => {
             return (
               <tr
                 key={order.id}
-                className={`${index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  } hover:bg-gray-100 transition-all`}
+                className={`${
+                  index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                } hover:bg-gray-100 transition-all`}
               >
                 <td className="px-4 py-3 font-medium">{order.email}</td>
                 <td className="px-4 py-3">
@@ -106,10 +114,11 @@ export const OrderTable = (props) => {
                 </td>
                 <td className="px-4 py-3 text-center max-[1075px]:hidden">
                   <span
-                    className={`inline-block px-3 py-1 rounded-full font-semibold ${order.paymentStatus.key === "unpaid"
+                    className={`inline-block px-3 py-1 rounded-full font-semibold ${
+                      order.paymentStatus.key === "unpaid"
                         ? "text-red-700 bg-red-100"
                         : "text-green-700 bg-green-100"
-                      }`}
+                    }`}
                   >
                     {order.paymentStatus.value}
                   </span>
@@ -131,7 +140,7 @@ export const OrderTable = (props) => {
         </tbody>
       </table>
 
-      {/* ✅ Mobile view (hiện khi <= 1024px) */}
+      {/* 📱 Mobile Card view */}
       <div className="lg:hidden flex flex-col gap-4 mt-2">
         {data?.data.map((order) => (
           <div
@@ -141,10 +150,11 @@ export const OrderTable = (props) => {
             <div className="flex justify-between items-center mb-2">
               <h3 className="font-semibold text-gray-800">{order.email}</h3>
               <span
-                className={`text-sm font-semibold px-3 py-1 rounded-full ${order.paymentStatus.key === "unpaid"
+                className={`text-sm font-semibold px-3 py-1 rounded-full ${
+                  order.paymentStatus.key === "unpaid"
                     ? "text-red-700 bg-red-100"
                     : "text-green-700 bg-green-100"
-                  }`}
+                }`}
               >
                 {order.paymentStatus.value}
               </span>
@@ -183,7 +193,7 @@ export const OrderTable = (props) => {
               <span className="px-3 py-1 bg-blue-100 text-blue-700 font-semibold rounded-full text-sm">
                 {order.status.value}
               </span>
-              <div className="flex ">
+              <div className="flex">
                 <button className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600">
                   <Edit3 size={18} />
                 </button>
@@ -194,9 +204,11 @@ export const OrderTable = (props) => {
         ))}
       </div>
 
+      {/* 🔢 Pagination */}
       <div className="mt-[10px]">
         <PaginationComponent
           pages={data?.totalPage || 1}
+          currentPage={page}
           onChangePage={onChangePage}
         />
       </div>
