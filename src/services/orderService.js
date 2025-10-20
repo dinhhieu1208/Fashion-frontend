@@ -10,3 +10,8 @@ export const getAllOrder = async (search = "", price = "asc", paymentStatus = ""
   const res = await axiosAdmin.get(`/admin/order/list?search=${search}&price=${price}&paymentStatus=${paymentStatus}&page=${page}`);
   return res.data
 }
+
+export const getAllUserOrder = async (page = 1) => {
+  const res = await axiosClient.get(`/client/order/list?page=${page}`);
+  return res.data;
+}

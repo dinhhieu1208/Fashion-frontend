@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Trash2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { getAllUserOrder } from "@/services/orderService";
+import PaginationComponent from "./Pagination";
 
 const ordersData = [
   {
@@ -69,18 +72,33 @@ const ordersData = [
 
 export default function OrderProduct() {
   const [orders, setOrders] = useState(ordersData);
-
+  const [page, setPage] = useState(1);
   const handleDelete = (id) => {
     setOrders(orders.filter((order) => order.id !== id));
   };
 
+  const { data, isLoading } = useQuery({
+    queryKey: ["orders", page],
+    queryFn: () => getAllUserOrder(page),
+    retry: false
+  });
+
+  const callBack = (pageNumber) => {
+    setPage(pageNumber);
+  };
+
+  if (isLoading) {
+    return <div>Đang tải dữ liệu</div>
+  }
+
+  console.log(page)
   return (
     <div className="p-6">
       <h2 className="text-2xl font-semibold text-black mb-6">
         Đơn hàng của tôi
       </h2>
       <div className="overflow-x-auto">
-        <table className="w-full border border-gray-200 text-sm">
+        <table className="w-full border border-gray-200 text-sm mb-[20px]">
           <thead className="bg-gray-100 text-gray-700 text-left">
             <tr>
               <th className="p-3">Mã</th>
@@ -93,7 +111,7 @@ export default function OrderProduct() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
+            {data?.data.map((order) => (
               <tr key={order.id} className="border-b">
                 {/* Mã đơn */}
                 <td className="p-3 text-blue-600">{order.id}</td>
@@ -136,11 +154,10 @@ export default function OrderProduct() {
                 {/* Trạng thái */}
                 <td className="p-3">
                   <span
-                    className={` rounded text-center text-sm ${
-                      order.status.key === "init"
+                    className={` rounded text-center text-sm ${order.status.key === "init"
                         ? " text-yellow-600"
                         : " text-green-600"
-                    }`}
+                      }`}
                   >
                     {order.status.value}
                   </span>
@@ -162,7 +179,14 @@ export default function OrderProduct() {
             ))}
           </tbody>
         </table>
+
+        <PaginationComponent
+          pages={data?.totalPage || 1}
+          currentPage={page}
+          onChangePage={callBack}
+        />
       </div>
     </div>
+
   );
 }
