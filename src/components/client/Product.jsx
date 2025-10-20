@@ -26,7 +26,6 @@ const ProductPage = () => {
     setCategory(categoryId);
   }, [searchParams]);
 
-  
   useEffect(() => {
     setCurrentPage(1);
   }, [keyword, category, priceFilter]);
@@ -53,8 +52,8 @@ const ProductPage = () => {
     const categoryId = e.target.value;
     setCategory(categoryId);
     setCurrentPage(1);
-    setSearchParams({ price: priceFilter, categoryId: categoryId, page: 1});
-  }
+    setSearchParams({ price: priceFilter, categoryId: categoryId, page: 1 });
+  };
 
   return (
     <main>
@@ -73,20 +72,24 @@ const ProductPage = () => {
                       Sản phẩm
                     </h2>
                   </div>
-                  <div className="">
+                  <div className="flex justify-center">
                     <select
-                      className="h-full border-2 bg-white text-sm px-2 cursor-pointer rounded-[10px] mr-[10px]"
+                      className=" h-full border-2 bg-white text-sm px-2 cursor-pointer rounded-[10px] mr-[10px]"
                       defaultValue={""}
                       onChange={handleOnChange}
                     >
-                      <option value="" disabled>Sắp xếp theo giá</option>
-                      <option value="asc">Sắp xếp theo giá: Thấp đến Cao</option>
-                      <option value="desc">Sắp xếp theo giá: Cao đến Thấp</option>
+                      <option value="" disabled>
+                        Sắp xếp theo giá
+                      </option>
+                      <option value="asc">
+                        Sắp xếp theo giá: Thấp đến Cao
+                      </option>
+                      <option value="desc">
+                        Sắp xếp theo giá: Cao đến Thấp
+                      </option>
                     </select>
 
-                    <CategorySearch
-                      callBack = {handleChangeCategory}
-                    />
+                    <CategorySearch callBack={handleChangeCategory} />
                   </div>
                 </div>
               </div>

@@ -1,27 +1,24 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useMutation } from "@tanstack/react-query"
-import { loginAdmin } from "@/services/authService"
-import { toast } from "sonner"
-
-export function LoginForm({
-  className,
-  ...props
-}) {
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useMutation } from "@tanstack/react-query";
+import { loginAdmin } from "@/services/authService";
+import { toast } from "sonner";
+import banner_admin from "./../../assets/images/banner_admin.jpg";
+export function LoginForm({ className, ...props }) {
   const mutation = useMutation({
     mutationFn: loginAdmin,
     onSuccess: () => {
       toast.success("Đăng nhập thành công");
-    setTimeout(() => {
-      window.location.href = "/admin/dashboard";
-    }, 500);
+      setTimeout(() => {
+        window.location.href = "/admin/dashboard";
+      }, 500);
     },
     onError: () => {
       toast.error("Tài khoản hoặc mật khẩu không đúng");
-    }
+    },
   });
 
   const handleSubmit = (event) => {
@@ -34,12 +31,11 @@ export function LoginForm({
     } else {
       const data = {
         email,
-        password
-      }
+        password,
+      };
       mutation.mutate(data);
     }
-
-  }
+  };
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
@@ -65,7 +61,12 @@ export function LoginForm({
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                 </div>
-                <Input id="password" type="password" required placeholder="Enter your password" />
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  placeholder="Enter your password"
+                />
               </div>
               <Button type="submit" className="w-full">
                 Login
@@ -74,7 +75,7 @@ export function LoginForm({
           </form>
           <div className="bg-muted relative hidden md:block">
             <img
-              src="/placeholder.svg"
+              src={banner_admin}
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
             />
@@ -86,5 +87,5 @@ export function LoginForm({
         and <a href="#">Privacy Policy</a>.
       </div>
     </div>
-  )
+  );
 }
