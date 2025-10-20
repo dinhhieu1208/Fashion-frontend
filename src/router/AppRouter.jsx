@@ -31,6 +31,7 @@ import { CustomerList } from "@/page/admin/customer/customerList.jsx";
 import { CategoryEdit } from "@/page/admin/category/CategoryEdit.jsx";
 import ProductEdit from "@/page/admin/product/ProductEdit.jsx";
 import EditStyle from "@/page/admin/StyleAdmin/styleEdit.jsx";
+import { ProtectedRouterClient } from "./ProtectedRouterClient.jsx";
 
 const AppRouter = () => {
   return (
@@ -51,7 +52,9 @@ const AppRouter = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/changePassword" element={<ChangePasswordPage />} />
           <Route path="/location" element={<LocationPage />} />
-          <Route path="/orders" element={<OrderPage />} />
+          <Route path="/orders" element={<ProtectedRouterClient>
+            <OrderPage />
+          </ProtectedRouterClient>} />
         </Route>
 
         {/* --- ADMIN --- */}
