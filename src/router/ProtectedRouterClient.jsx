@@ -1,7 +1,8 @@
 import { profileUser } from "@/services/authService"
 import { useQuery } from "@tanstack/react-query"
+import { Navigate } from "react-router-dom";
 
-export const ProtectedRouterClient = () => {
+export const ProtectedRouterClient = ({children}) => {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["users"],
@@ -14,8 +15,8 @@ export const ProtectedRouterClient = () => {
   }
 
   if(isError || data.code === "error") {
-    return <Navigate to="/client/account/login" replace />;
+    return <Navigate to="/login" replace />;
   }
 
-  return <Outlet />; // cho phép render các route con
+  return children // cho phép render các route con
 }
