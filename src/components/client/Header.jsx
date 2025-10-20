@@ -101,7 +101,7 @@ export default function Header() {
                     {data.data.fullName}
                   </span>
                 </button>
-                <ul className="absolute right-0 mt-3 w-56 bg-white shadow-lg rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-60">
+                <ul className="absolute right-0 mt-0 w-56 bg-white shadow-lg rounded-lg opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-60">
                   <li
                     onClick={() => navigate("/profile")}
                     className="px-5 py-2.5 hover:bg-gray-50 cursor-pointer text-lg text-gray-700 "
