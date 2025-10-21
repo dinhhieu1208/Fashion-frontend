@@ -26,13 +26,13 @@ export const CategoryList = () => {
         <div className="mb-[20px] text-[44px] font-[700]">
           Danh sánh danh mục
         </div>
-        <div className="mb-[20px] sm:flex">
+        <div className="mb-[20px] flex items-center gap-3">
           <form
             action=""
-            className="w-[360px] h-[44px] flex items-center"
+            className=" h-[44px] flex items-center sm:mt-[10px] md:mb-[10px] "
             onSubmit={handleSubmit}
           >
-            <div className="flex relative left-[27px]">
+            <div className="flex relative left-[27px] ">
               <Search className="w-[20px] h-[20px] opacity-[0.5]" />
             </div>
             <input
@@ -43,7 +43,7 @@ export const CategoryList = () => {
             />
           </form>
 
-          <div className="ml-[20px] sm:mt-0 mt-[10px]">
+          <div className="ml-[20px] sm:mt-0 flex items-center ">
             <select
               name=""
               id=""

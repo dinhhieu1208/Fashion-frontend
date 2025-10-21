@@ -24,11 +24,11 @@ export const ProductList = () => {
     <div className="p-0 sm:p-4 min-w-screen">
       <div className="mb-[20px] text-[44px] font-[700]">Danh sách sản phẩm</div>
 
-      <div className="mb-[20px] sm:flex">
+      <div className="mb-[20px] flex items-center gap-3">
         {/* Ô tìm kiếm */}
         <form
           action=""
-          className="w-[360px] h-[44px] flex items-center"
+          className="flex items-center h-[44px] sm:mt-[10px] md:mb-[10px] "
           onSubmit={handleSubmit}
         >
           <div className="flex relative left-[27px]">
@@ -42,7 +42,8 @@ export const ProductList = () => {
           />
         </form>
 
-        <div className="ml-[20px] sm:mt-0 mt-[10px]">
+        {/* Bộ lọc */}
+        <div className="ml-[20px] sm:mt-0 flex items-center">
           <select
             defaultValue={statusFilter}
             className="w-[200px] h-[44px] p-2 bg-white rounded-[10px] shadow-md"
@@ -55,7 +56,6 @@ export const ProductList = () => {
           </select>
         </div>
       </div>
-
       <ProductTable keyword={keyword} status={statusFilter} />
     </div>
   );

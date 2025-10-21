@@ -11,13 +11,13 @@ export const StyleList = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setKeyword(e.target.search.value);
-    setSearchParams({search: e.target.search.value})
+    setSearchParams({ search: e.target.search.value });
   };
 
   const handleOnChange = (e) => {
     e.preventDefault();
     setStatusFilter(e.target.value);
-    setSearchParams({search: keyword, status: e.target.value})
+    setSearchParams({ search: keyword, status: e.target.value });
   };
 
   return (
@@ -28,10 +28,10 @@ export const StyleList = () => {
         </div>
 
         {/* Search + Filter */}
-        <div className="mb-[20px] sm:flex">
+        <div className="mb-[20px] flex items-center gap-3">
           <form
             action=""
-            className="w-[360px] h-[44px] flex items-center"
+            className=" h-[44px] flex items-center sm:mt-[10px] md:mb-[10px] "
             onSubmit={handleSubmit}
           >
             <div className="flex relative left-[27px]">
@@ -45,7 +45,7 @@ export const StyleList = () => {
             />
           </form>
 
-          <div className="ml-[20px] sm:mt-0 mt-[10px]">
+          <div className="ml-[20px] sm:mt-0 flex items-center">
             <select
               defaultValue={statusFilter}
               className="w-[200px] h-[44px] p-2 bg-white rounded-[10px] shadow-md"

@@ -3,7 +3,6 @@ import { Search } from "lucide-react";
 import { OrderTable } from "./orderTable.jsx";
 import { useSearchParams } from "react-router-dom";
 
-
 export const OrderList = () => {
   const [keyword, setKeyword] = useState("");
   const [statusFilter, setStatusFilter] = useState("asc");
@@ -29,9 +28,9 @@ export const OrderList = () => {
       <div className="mb-[20px] text-[44px] font-[700]">Danh sách đơn hàng</div>
 
       {/* Ô tìm kiếm + lọc */}
-      <div className="mb-[20px] sm:flex">
+      <div className="mb-[20px] flex items-center gap-3">
         <form
-          className="w-[360px] h-[44px] flex items-center"
+          className=" h-[44px] flex items-center sm:mt-[10px] md:mb-[10px] "
           onSubmit={handleSubmit}
         >
           <div className="flex relative left-[27px]">
@@ -45,7 +44,7 @@ export const OrderList = () => {
           />
         </form>
 
-        <div className="ml-[20px] sm:mt-0 mt-[10px]">
+        <div className="ml-[20px] sm:mt-0 flex items-center">
           <select
             defaultValue={statusFilter}
             className="w-[220px] h-[44px] p-2 bg-white rounded-[10px] shadow-md"
