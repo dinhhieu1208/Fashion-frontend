@@ -13,8 +13,8 @@ export const CustomerList = () => {
     e.preventDefault();
     setSearchParams({
       search: e.target.search.value,
-      status: typeFilter
-    })
+      status: typeFilter,
+    });
     setKeyword(e.target.search.value);
   };
 
@@ -22,7 +22,7 @@ export const CustomerList = () => {
     e.preventDefault();
     setSearchParams({
       search: keyword,
-      status: e.target.value
+      status: e.target.value,
     });
     setTypeFilter(e.target.value);
   };
@@ -33,9 +33,10 @@ export const CustomerList = () => {
         Danh sách khách hàng
       </div>
 
-      <div className="mb-[20px] sm:flex">
+      <div className="mb-[20px]  flex items-center gap-3 ">
         <form
-          className="w-[360px] h-[44px] flex items-center"
+          action=""
+          className=" flex items-center h-[44px] sm:mt-[10px] md:mb-[10px] "
           onSubmit={handleSubmit}
         >
           <div className="flex relative left-[27px]">
@@ -50,7 +51,7 @@ export const CustomerList = () => {
         </form>
 
         {/* Bộ lọc loại khách hàng */}
-        <div className="ml-[20px] sm:mt-0 mt-[10px]">
+        <div className="ml-[20px] sm:mt-0 flex items-center">
           <select
             defaultValue={typeFilter}
             className="w-[220px] h-[44px] p-2 bg-white rounded-[10px] shadow-md"
@@ -71,7 +72,7 @@ export const CustomerList = () => {
       </div>
 
       {/* Bảng danh sách khách hàng */}
-      <CustomerTable keyword={keyword} status={typeFilter}/>
+      <CustomerTable keyword={keyword} status={typeFilter} />
     </div>
   );
 };
