@@ -32,6 +32,7 @@ import { CategoryEdit } from "@/page/admin/category/CategoryEdit.jsx";
 import ProductEdit from "@/page/admin/product/ProductEdit.jsx";
 import EditStyle from "@/page/admin/StyleAdmin/styleEdit.jsx";
 import { ProtectedRouterClient } from "./ProtectedRouterClient.jsx";
+import { RoleList } from "@/page/admin/Role/RoleList.jsx";
 
 const AppRouter = () => {
   return (
@@ -52,9 +53,14 @@ const AppRouter = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/changePassword" element={<ChangePasswordPage />} />
           <Route path="/location" element={<LocationPage />} />
-          <Route path="/orders" element={<ProtectedRouterClient>
-            <OrderPage />
-          </ProtectedRouterClient>} />
+          <Route
+            path="/orders"
+            element={
+              <ProtectedRouterClient>
+                <OrderPage />
+              </ProtectedRouterClient>
+            }
+          />
         </Route>
 
         {/* --- ADMIN --- */}
@@ -63,17 +69,18 @@ const AppRouter = () => {
           <Route element={<LayoutAdmin />}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/category/list" element={<CategoryList />} />
-            <Route path="/admin/category/edit/:id" element={<CategoryEdit/>}/>
+            <Route path="/admin/category/edit/:id" element={<CategoryEdit />} />
             <Route path="/admin/category/add" element={<AddCategory />} />
             <Route path="/admin/profile" element={<ProfileAdminPage />} />
             <Route path="/admin/product/list" element={<ProductList />} />
             <Route path="/admin/product/add" element={<ProductAdd />} />
-            <Route path="/admin/product/edit/:id" element={<ProductEdit/>}/>
+            <Route path="/admin/product/edit/:id" element={<ProductEdit />} />
             <Route path="/admin/style/list" element={<StyleList />} />
             <Route path="/admin/style/add" element={<AddStyle />} />
-            <Route path="/admin/style/edit/:id" element={<EditStyle/>}/>
+            <Route path="/admin/style/edit/:id" element={<EditStyle />} />
             <Route path="/admin/orders/list" element={<OrderList />} />
             <Route path="/admin/customers/list" element={<CustomerList />} />
+            <Route path="/admin/role/list" element={<RoleList />} />
           </Route>
         </Route>
       </Routes>
