@@ -34,7 +34,7 @@ export const CustomerTable = (props) => {
   return (
     <div className="overflow-x-auto w-full">
       {/* ✅ Desktop view */}
-      <table className="hidden lg:table min-w-full border bg-white border-gray-200 rounded-lg overflow-hidden shadow-md text-sm sm:text-lg">
+      <table className="hidden lg:table min-w-full border bg-white border-gray-200 rounded-lg overflow-hidden shadow-md text-sm sm:text-lg mb-[15px]">
         <thead className="bg-black text-white">
           <tr>
             <th className="px-4 py-2 text-left font-semibold w-64">

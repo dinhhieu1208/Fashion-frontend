@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/pagination";
 
 export default function PaginationComponent({ pages, currentPage, onChangePage }) {
-  if (!pages || pages <= 1) return null; // không render nếu chỉ có 1 trang
 
   const goToPage = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= pages) {

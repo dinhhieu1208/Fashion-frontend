@@ -33,6 +33,7 @@ import {
   Box,
   LogOut,
   LayoutGrid,
+  LinkIcon,
 } from "lucide-react";
 
 import { Link, useNavigate } from "react-router-dom";

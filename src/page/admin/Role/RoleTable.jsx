@@ -1,34 +1,35 @@
 import { Edit3 } from "lucide-react";
-import React from "react";
 import { DeleteButton } from "@/components/admin/DeleteButton";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { roleList } from "@/services/roleService";
+import { useState } from "react";
+import PaginationComponent from "@/components/client/Pagination";
 
 export default function RoleTable() {
-  const roles = [
-    {
-      id: "68aed93ae7b58d8e1356c091",
-      name: "staff",
-      status: "active",
-      createdByFormat: "admin01",
-      updatedByFormat: "admin01",
-      createdAtFormat: "17:08 27/08/2025",
-      updatedAtFormat: "17:08 27/08/2025",
-    },
-    {
-      id: "68aed93ae7b58d8e1356c092",
-      name: "manager",
-      status: "inactive",
-      createdByFormat: "admin02",
-      updatedByFormat: "admin03",
-      createdAtFormat: "09:12 01/09/2025",
-      updatedAtFormat: "09:15 01/09/2025",
-    },
-  ];
+  const [page, setPage] = useState(1);
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const {data, isLoading} = useQuery({
+    queryKey: ["role"],
+    queryFn: roleList,
+    retry: false
+  });
+
+  const callBack = (pageNumber) => {
+    setSearchParams({page: pageNumber})
+    setPage(pageNumber);
+  }
+
+  if(isLoading) {
+    return <div>Đang tải dữ liệu</div>
+  }
 
   return (
     <div className="overflow-x-auto w-full">
       {/* ✅ Desktop/Table view */}
-      <table className="hidden lg:table min-w-full border-collapse border bg-white rounded-xl shadow-md text-[15px]">
+      <table className="hidden lg:table min-w-full border-collapse border bg-white rounded-xl shadow-md text-[15px] mb-[15px]">
         <thead className="bg-black text-white">
           <tr>
             <th className="px-4 py-3 text-left text-lg font-semibold">
@@ -52,7 +53,7 @@ export default function RoleTable() {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-gray-50">
-          {roles.map((item, index) => (
+          {data?.data.map((item, index) => (
             <tr
               key={item.id}
               className={`${
@@ -97,7 +98,7 @@ export default function RoleTable() {
 
       {/* ✅ Mobile view */}
       <div className="lg:hidden flex flex-col gap-4 mt-3">
-        {roles.map((item) => (
+        {data?.data.map((item) => (
           <div
             key={item.id}
             className="bg-white shadow-md rounded-xl p-4 border border-gray-200"
@@ -142,6 +143,12 @@ export default function RoleTable() {
           </div>
         ))}
       </div>
+
+      <PaginationComponent 
+        pages={data?.totalPage || 1}
+        currentPage={page}
+        onChangePage={callBack}
+      />
     </div>
   );
 }
