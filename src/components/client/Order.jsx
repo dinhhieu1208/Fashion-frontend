@@ -1,81 +1,13 @@
 import React, { useState } from "react";
 import { Trash2 } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { getAllUserOrder } from "@/services/orderService";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteOrder, getAllUserOrder } from "@/services/orderService";
 import PaginationComponent from "./Pagination";
-
-const ordersData = [
-  {
-    id: "68cd04d0bc9683b115d85072",
-    orderList: [
-      {
-        id: "68c11de372c265eb9b62fda7",
-        name: "Quần áo 01",
-        image: "/images/clother-1.jpg",
-        quantity: 1,
-        size: "M",
-        price: 100000,
-      },
-      {
-        id: "68c11e5372c265eb9b62fdb2",
-        name: "Quần áo 02",
-        image: "/images/clother-2.jpg",
-        quantity: 1,
-        size: "L",
-        price: 100000,
-      },
-    ],
-    totalAfterDiscount: 200000,
-    paymentStatus: {
-      key: "unpaid",
-      value: "Chưa thanh toán",
-    },
-    status: {
-      key: "init",
-      value: "Đang khởi tạo đơn hàng",
-    },
-    createdAt: "14:22 19/09/2025",
-  },
-
-  {
-    id: "68cd04aaf93f18de744195cf",
-    orderList: [
-      {
-        id: "68c11de372c265eb9b62fda7",
-        name: "Quần áo 01",
-        image: "/images/clother-1.jpg",
-        quantity: 1,
-        size: "M",
-        price: 100000,
-      },
-      {
-        id: "68c11e5372c265eb9b62fdb2",
-        name: "Quần áo 02",
-        image: "/images/clother-2.jpg",
-        quantity: 1,
-        size: "L",
-        price: 100000,
-      },
-    ],
-    totalAfterDiscount: 200000,
-    paymentStatus: {
-      key: "unpaid",
-      value: "Chưa thanh toán",
-    },
-    status: {
-      key: "init",
-      value: "Đang khởi tạo đơn hàng",
-    },
-    createdAt: "14:22 19/09/2025",
-  },
-];
+import { toast } from "sonner";
 
 export default function OrderProduct() {
-  const [orders, setOrders] = useState(ordersData);
   const [page, setPage] = useState(1);
-  const handleDelete = (id) => {
-    setOrders(orders.filter((order) => order.id !== id));
-  };
+  const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
     queryKey: ["orders", page],
@@ -85,6 +17,22 @@ export default function OrderProduct() {
 
   const callBack = (pageNumber) => {
     setPage(pageNumber);
+  };
+
+  const mutation = useMutation({
+    mutationFn: deleteOrder,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["orders", page]);
+      toast.success("Hủy đơn hàng thành công");
+    },
+    onError: (error) => {
+      console.log(error.response);
+      toast.error(error.response.data.message);
+    }
+  })
+
+  const handleDelete = (id) => {
+    mutation.mutate(id);
   };
 
   if (isLoading) {
@@ -154,11 +102,10 @@ export default function OrderProduct() {
                 {/* Trạng thái */}
                 <td className="p-3">
                   <span
-                    className={`rounded text-center text-sm ${
-                      order.status.key === "init"
+                    className={`rounded text-center text-sm ${order.status.key === "init"
                         ? "text-yellow-600"
                         : "text-green-600"
-                    }`}
+                      }`}
                   >
                     {order.status.value}
                   </span>
@@ -231,11 +178,10 @@ export default function OrderProduct() {
               <p>
                 <strong>Trạng thái:</strong>{" "}
                 <span
-                  className={`${
-                    order.status.key === "init"
+                  className={`${order.status.key === "init"
                       ? "text-yellow-600"
                       : "text-green-600"
-                  }`}
+                    }`}
                 >
                   {order.status.value}
                 </span>

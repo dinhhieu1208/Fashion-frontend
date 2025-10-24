@@ -15,3 +15,8 @@ export const getAllUserOrder = async (page = 1) => {
   const res = await axiosClient.get(`/client/order/list?page=${page}`);
   return res.data;
 }
+
+export const deleteOrder = async (id) => {
+  const res = await axiosClient.delete(`/client/order/delete/${id}`);
+  return res.data
+}
