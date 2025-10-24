@@ -11,19 +11,19 @@ export default function RoleTable() {
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const {data, isLoading} = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["role"],
     queryFn: roleList,
-    retry: false
+    retry: false,
   });
 
   const callBack = (pageNumber) => {
-    setSearchParams({page: pageNumber})
+    setSearchParams({ page: pageNumber });
     setPage(pageNumber);
-  }
+  };
 
-  if(isLoading) {
-    return <div>Đang tải dữ liệu</div>
+  if (isLoading) {
+    return <div>Đang tải dữ liệu</div>;
   }
 
   return (
@@ -84,7 +84,7 @@ export default function RoleTable() {
               <td className="px-4 py-3 text-center">
                 <div className="flex justify-center gap-2">
                   <Link>
-                    <button className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600">
+                    <button className="p-2 rounded-md bg-blue-500 text-white  hover:text-black hover:bg-white">
                       <Edit3 size={18} />
                     </button>
                   </Link>
@@ -133,7 +133,7 @@ export default function RoleTable() {
             <div className="flex justify-end items-center mt-2">
               <div className="flex gap-2">
                 <Link to={`/admin/role/edit/${item.id}`}>
-                  <button className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600">
+                  <button className="p-2 rounded-md bg-blue-500 text-white  hover:text-black hover:bg-white">
                     <Edit3 size={18} />
                   </button>
                 </Link>
@@ -144,7 +144,7 @@ export default function RoleTable() {
         ))}
       </div>
 
-      <PaginationComponent 
+      <PaginationComponent
         pages={data?.totalPage || 1}
         currentPage={page}
         onChangePage={callBack}
