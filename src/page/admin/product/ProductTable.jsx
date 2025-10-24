@@ -8,7 +8,7 @@ import { DeleteButton } from "@/components/admin/DeleteButton";
 
 export default function ProductTable({ keyword, status }) {
   const [page, setPage] = useState(1);
-  
+
   const queryClient = useQueryClient();
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
@@ -108,7 +108,7 @@ export default function ProductTable({ keyword, status }) {
               <td className="px-4 py-3 text-center">
                 <div className="flex justify-center gap-2">
                   <Link to={`/admin/product/edit/${item.id}`}>
-                    <button className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600">
+                    <button className="p-2 rounded-md bg-blue-500 text-white hover:text-black hover:bg-white">
                       <Edit3 size={18} />
                     </button>
                   </Link>
@@ -178,7 +178,7 @@ export default function ProductTable({ keyword, status }) {
             <div className="flex justify-end items-center mt-2">
               <div className="flex ">
                 <Link to={`/admin/product/edit/${item.id}`}>
-                  <button className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600">
+                  <button className="p-2 rounded-md bg-blue-500 text-white  hover:text-black hover:bg-white">
                     <Edit3 size={18} />
                   </button>
                 </Link>
