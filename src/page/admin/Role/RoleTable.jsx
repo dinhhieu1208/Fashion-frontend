@@ -6,19 +6,20 @@ import { roleList } from "@/services/roleService";
 import { useState } from "react";
 import PaginationComponent from "@/components/client/Pagination";
 
-export default function RoleTable() {
+export default function RoleTable(props) {
+  const { keyword, status} = props;
   const [page, setPage] = useState(1);
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
 
   const {data, isLoading} = useQuery({
-    queryKey: ["role"],
-    queryFn: roleList,
+    queryKey: ["role", page, status, keyword],
+    queryFn: () => roleList(page, status, keyword),
     retry: false
   });
 
   const callBack = (pageNumber) => {
-    setSearchParams({page: pageNumber})
+    setSearchParams({ search: keyword, status: status, page: pageNumber })
     setPage(pageNumber);
   }
 

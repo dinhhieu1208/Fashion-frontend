@@ -1,23 +1,26 @@
 import { useState } from "react";
 import RoleTable from "./RoleTable";
 import { Search } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 
 export const RoleList = () => {
   const [keyword, setKeyword] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setKeyword(e.target.search.value);
+    setSearchParams({ search: e.target.search.value, status: statusFilter });
   };
-
-  console.log(keyword);
 
   const handleOnChange = (e) => {
     e.preventDefault();
     setStatusFilter(e.target.value);
+    setSearchParams({ search: keyword, status: e.target.value });
   };
-  console.log(statusFilter);
+
 
   return (
     <div className="p-0 sm:p-4 min-w-screen">
