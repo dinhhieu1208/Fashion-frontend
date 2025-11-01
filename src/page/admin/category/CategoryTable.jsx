@@ -12,7 +12,7 @@ export const CategoryTable = (props) => {
   const queryClient = useQueryClient();
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
-  
+
   useEffect(() => {
     setPage(1);
   }, [keyword, status]);
@@ -103,7 +103,7 @@ export const CategoryTable = (props) => {
               <td className="px-4 py-3 text-center">
                 <div className="flex justify-center gap-2">
                   <Link to={`/admin/category/edit/${item.id}`}>
-                    <button className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600">
+                    <button className="p-2 rounded-md bg-blue-500 text-white  hover:text-black hover:bg-white">
                       <Edit3 size={18} />
                     </button>
                   </Link>
