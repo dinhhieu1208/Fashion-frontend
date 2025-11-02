@@ -194,7 +194,7 @@ export const OrderTable = ({ keyword, status }) => {
                 {order.status.value}
               </span>
               <div className="flex">
-                <button className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600">
+                <button className="p-2 rounded-md bg-blue-500 text-white  hover:text-black hover:bg-white">
                   <Edit3 size={18} />
                 </button>
                 <DeleteButton />
