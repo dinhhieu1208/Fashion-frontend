@@ -163,7 +163,7 @@ export const CategoryTable = (props) => {
             <div className="flex justify-end items-center mt-2">
               <div className="flex ">
                 <Link to={`/admin/category/edit/${item.id}`}>
-                  <button className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600">
+                  <button className="p-2 rounded-md bg-blue-500 text-white  hover:text-black hover:bg-white">
                     <Edit3 size={18} />
                   </button>
                 </Link>
