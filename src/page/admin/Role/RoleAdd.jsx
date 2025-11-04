@@ -1,57 +1,11 @@
+import { PermissionList } from "@/components/admin/PermissonList";
+import { accountAdminPermissionContext, accountClientPermissionContext, categoryPermissionContext, couponPermissionContext, productPermissionContext, rolePermissionContext, stylePermissionContext } from "@/contexts/permission.context";
 import React from "react";
 
 import { toast } from "sonner";
 
 export const RoleAdd = () => {
   // Danh sách quyền (permissions)
-  const permissions = [
-    "category-create",
-    "category-edit",
-    "category-list",
-    "category-delete",
-    "category-detail",
-    "category-trash-list",
-    "category-trash-restore",
-    "category-trash-delete",
-    "role-create",
-    "role-list",
-    "role-detail",
-    "role-edit",
-    "role-delete",
-    "role-trash-list",
-    "role-trash-restore",
-    "role-trash-delete",
-    "style-create",
-    "style-list",
-    "style-detail",
-    "style-edit",
-    "style-delete",
-    "style-trash-list",
-    "style-trash-restore",
-    "style-trash-delete",
-    "coupon-create",
-    "coupon-list",
-    "coupon-detail",
-    "coupon-edit",
-    "coupon-delete",
-    "product-create",
-    "product-list",
-    "product-detail",
-    "product-edit",
-    "product-delete",
-    "product-trash-list",
-    "product-trash-restore",
-    "product-trash-delete",
-    "accountAdmin-create",
-    "accountAdmin-list",
-    "accountAdmin-detail",
-    "accountAdmin-edit",
-    "accountAdmin-delete",
-    "accountAdmin-trash-list",
-    "accountAdmin-trash-restore",
-    "accountAdmin-trash-delete",
-    "accountClient-list",
-  ];
 
   // Hàm xử lý khi submit form
   const handleSubmit = (e) => {
@@ -92,22 +46,34 @@ export const RoleAdd = () => {
         </div>
 
         {/* Danh sách quyền */}
-        <div>
-          <label className="block mb-2 font-medium">Danh sách quyền</label>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-[400px] overflow-y-auto border rounded-md p-3">
-            {permissions.map((perm) => (
-              <label key={perm} className="flex items-center text-sm">
-                <input
-                  type="checkbox"
-                  name="permission"
-                  value={perm}
-                  className="mr-2"
-                />
-                {perm}
-              </label>
-            ))}
-          </div>
-        </div>
+        <PermissionList
+          title = "Danh sach quyền danh mục"
+          arrayList = {categoryPermissionContext}
+        />
+        <PermissionList
+          title = "Danh sach quyền sản phẩm"
+          arrayList = {productPermissionContext}
+        />
+        <PermissionList
+          title = "Danh sach quyền vai trò"
+          arrayList = {rolePermissionContext}
+        />
+        <PermissionList
+          title = "Danh sach quyền phong cách"
+          arrayList = {stylePermissionContext}
+        />
+        <PermissionList
+          title = "Danh sach quyền mã giảm giá"
+          arrayList = {couponPermissionContext}
+        />
+        <PermissionList
+          title = "Danh sach quyền tài khoản quản trị"
+          arrayList = {accountAdminPermissionContext}
+        />
+        <PermissionList
+          title = "Danh sach quyền tài khoản người dùng"
+          arrayList = {accountClientPermissionContext}
+        />
 
         {/* Trạng thái */}
         <div>
