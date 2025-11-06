@@ -23,7 +23,6 @@ export default function Header() {
     queryFn: profileUser,
     retry: false,
   });
-
   useEffect(() => {
     queryClient.invalidateQueries(["users"]);
   }, [location.pathname, queryClient]);
