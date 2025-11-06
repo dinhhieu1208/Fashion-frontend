@@ -1,12 +1,24 @@
 import { PermissionList } from "@/components/admin/PermissonList";
 import { accountAdminPermissionContext, accountClientPermissionContext, categoryPermissionContext, couponPermissionContext, productPermissionContext, rolePermissionContext, stylePermissionContext } from "@/contexts/permission.context";
-import React from "react";
+import { createRole } from "@/services/roleService";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 import { toast } from "sonner";
 
 export const RoleAdd = () => {
-  // Danh sách quyền (permissions)
-
+  const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationFn: createRole,
+    onSuccess: () => {
+      toast.success("Tạo vai trò thành công");
+      navigate("/admin/role/list");
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error("Tạo vai trò thất bại");
+    }
+  })
   // Hàm xử lý khi submit form
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,14 +28,12 @@ export const RoleAdd = () => {
     const status = formData.get("status");
     const permission = formData.getAll("permission");
 
-    const newRole = {
+    const data = {
       name,
       permission,
       status,
     };
-
-    console.log("Role được tạo:", newRole);
-    toast.success("Tạo vai trò thành công!");
+    mutation.mutate(data);
   };
 
   return (
