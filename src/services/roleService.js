@@ -6,7 +6,11 @@ export const roleList = async (page = 1, status = "", keyword = "") => {
 }
 
 export const createRole = async (data) => {
-  console.log(data);
   const res = await axiosAdmin.post("/admin/role/create", data);
   return res;
+}
+
+export const roleDetail = async (id) => {
+  const res = await axiosAdmin.get(`/admin/role/detail/${id}`);
+  return res.data;
 }

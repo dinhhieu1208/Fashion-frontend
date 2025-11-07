@@ -59,30 +59,37 @@ export const RoleAdd = () => {
         <PermissionList
           title = "Danh sach quyền danh mục"
           arrayList = {categoryPermissionContext}
+          arrayCurrent = {[""]}
         />
         <PermissionList
           title = "Danh sach quyền sản phẩm"
           arrayList = {productPermissionContext}
+          arrayCurrent = {[""]}
         />
         <PermissionList
           title = "Danh sach quyền vai trò"
           arrayList = {rolePermissionContext}
+          arrayCurrent = {[""]}
         />
         <PermissionList
           title = "Danh sach quyền phong cách"
           arrayList = {stylePermissionContext}
+          arrayCurrent = {[""]}
         />
         <PermissionList
           title = "Danh sach quyền mã giảm giá"
           arrayList = {couponPermissionContext}
+          arrayCurrent = {[""]}
         />
         <PermissionList
           title = "Danh sach quyền tài khoản quản trị"
           arrayList = {accountAdminPermissionContext}
+          arrayCurrent = {[""]}
         />
         <PermissionList
           title = "Danh sach quyền tài khoản người dùng"
           arrayList = {accountClientPermissionContext}
+          arrayCurrent = {[""]}
         />
 
         {/* Trạng thái */}
