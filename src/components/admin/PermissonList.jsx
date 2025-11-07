@@ -1,5 +1,5 @@
 export const PermissionList = (props) => {
-  const {title, arrayList} = props;
+  const {title, arrayList, arrayCurrent} = props;
   return (
 
     <>
@@ -13,6 +13,7 @@ export const PermissionList = (props) => {
                 name="permission"
                 value={perm.key}
                 className="mr-2"
+                defaultChecked = {arrayCurrent.includes(perm.key) ? true : false}
               />
               {perm.value}
             </label>

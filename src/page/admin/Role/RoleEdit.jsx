@@ -11,6 +11,8 @@ import {
   stylePermissionContext,
 } from "@/contexts/permission.context";
 import { PermissionList } from "@/components/admin/PermissonList";
+import { useQuery } from "@tanstack/react-query";
+import { roleDetail } from "@/services/roleService";
 
 export const RoleEdit = () => {
   const navigate = useNavigate();
@@ -20,6 +22,17 @@ export const RoleEdit = () => {
 
   useEffect(() => {}, [id]);
 
+  const {data, isLoading } = useQuery({
+    queryKey: ["roleDetail", id],
+    queryFn: () => roleDetail(id)
+  });
+
+  if(isLoading) {
+    return <div>Đang tải dữ liệu</div>
+  }
+ 
+
+  console.log(data);
   // Giả lập submit form
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,7 +67,7 @@ export const RoleEdit = () => {
           <input
             type="text"
             name="name"
-            defaultValue=""
+            defaultValue={data?.data?.name}
             className="w-full border rounded-md p-2"
             placeholder="Nhập tên vai trò (VD: admin, staff, ...)"
             required
@@ -65,30 +78,37 @@ export const RoleEdit = () => {
         <PermissionList
           title="Danh sách quyền danh mục"
           arrayList={categoryPermissionContext}
+          arrayCurrent={data?.data?.permission}
         />
         <PermissionList
           title="Danh sách quyền sản phẩm"
           arrayList={productPermissionContext}
+          arrayCurrent={data?.data?.permission}
         />
         <PermissionList
           title="Danh sách quyền vai trò"
           arrayList={rolePermissionContext}
+          arrayCurrent={data?.data?.permission}
         />
         <PermissionList
           title="Danh sách quyền phong cách"
           arrayList={stylePermissionContext}
+          arrayCurrent={data?.data?.permission}
         />
         <PermissionList
           title="Danh sách quyền mã giảm giá"
           arrayList={couponPermissionContext}
+          arrayCurrent={data?.data?.permission}
         />
         <PermissionList
           title="Danh sách quyền tài khoản quản trị"
           arrayList={accountAdminPermissionContext}
+          arrayCurrent={data?.data?.permission}
         />
         <PermissionList
           title="Danh sách quyền tài khoản người dùng"
           arrayList={accountClientPermissionContext}
+          arrayCurrent={data?.data?.permission}
         />
 
         {/* Trạng thái */}
@@ -96,7 +116,7 @@ export const RoleEdit = () => {
           <label className="block mb-1 font-medium">Trạng thái</label>
           <select
             name="status"
-            defaultValue=""
+            defaultValue={data?.data?.status}
             className="w-full border rounded-md p-2"
           >
             <option value="active">Hoạt động</option>
