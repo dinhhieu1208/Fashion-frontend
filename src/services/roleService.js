@@ -14,3 +14,9 @@ export const roleDetail = async (id) => {
   const res = await axiosAdmin.get(`/admin/role/detail/${id}`);
   return res.data;
 }
+
+export const roleEdit = async (id, data) => {
+  console.log(data)
+  const res = await axiosAdmin.patch(`/admin/role/edit/${id}`, data);
+  return res
+}
