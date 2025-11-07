@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import {
@@ -11,47 +10,44 @@ import {
   stylePermissionContext,
 } from "@/contexts/permission.context";
 import { PermissionList } from "@/components/admin/PermissonList";
-import { useQuery } from "@tanstack/react-query";
-import { roleDetail } from "@/services/roleService";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { roleDetail, roleEdit } from "@/services/roleService";
 
 export const RoleEdit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-
-  // Dữ liệu mô phỏng vai trò
-
-  useEffect(() => {}, [id]);
-
-  const {data, isLoading } = useQuery({
+  const queryClient = useQueryClient();
+  const { data, isLoading } = useQuery({
     queryKey: ["roleDetail", id],
-    queryFn: () => roleDetail(id)
+    queryFn: () => roleDetail(id),
   });
 
-  if(isLoading) {
-    return <div>Đang tải dữ liệu</div>
-  }
- 
 
-  console.log(data);
-  // Giả lập submit form
+  const mutation = useMutation({
+    mutationFn: ({ id, data }) => roleEdit(id, data),
+    onSuccess: () => {
+      toast.success("Cập nhật vai trò thành công!");
+      queryClient.invalidateQueries(["roleDetail", id])
+      navigate("/admin/role/list");
+    },
+    onError: () => {
+      toast.error("Cập nhật vai trò thất bại!");
+    },
+  });
+
+  if (isLoading || !data?.data) {
+    return <div>Đang tải dữ liệu...</div>;
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const formData = new FormData(e.target);
     const name = formData.get("name");
     const status = formData.get("status");
     const permission = formData.getAll("permission");
-
-    const updatedRole = {
-      id,
-      name,
-      status,
-      permission,
-    };
-
-    console.log("Vai trò cập nhật:", updatedRole);
-    toast.success("Cập nhật vai trò thành công (demo)");
-    navigate("/admin/role/list");
+    const payload = { name, permission, status };
+    console.log(payload);
+    mutation.mutate({ id, data: payload });
   };
 
   return (
@@ -61,62 +57,31 @@ export const RoleEdit = () => {
         onSubmit={handleSubmit}
         className="w-full space-y-5 p-4 mb-4 bg-white rounded-lg shadow"
       >
-        {/* Tên Role */}
         <div>
           <label className="block mb-1 font-medium">Tên vai trò</label>
           <input
             type="text"
             name="name"
-            defaultValue={data?.data?.name}
+            defaultValue={data.data.name}
             className="w-full border rounded-md p-2"
             placeholder="Nhập tên vai trò (VD: admin, staff, ...)"
             required
           />
         </div>
 
-        {/* Danh sách quyền */}
-        <PermissionList
-          title="Danh sách quyền danh mục"
-          arrayList={categoryPermissionContext}
-          arrayCurrent={data?.data?.permission}
-        />
-        <PermissionList
-          title="Danh sách quyền sản phẩm"
-          arrayList={productPermissionContext}
-          arrayCurrent={data?.data?.permission}
-        />
-        <PermissionList
-          title="Danh sách quyền vai trò"
-          arrayList={rolePermissionContext}
-          arrayCurrent={data?.data?.permission}
-        />
-        <PermissionList
-          title="Danh sách quyền phong cách"
-          arrayList={stylePermissionContext}
-          arrayCurrent={data?.data?.permission}
-        />
-        <PermissionList
-          title="Danh sách quyền mã giảm giá"
-          arrayList={couponPermissionContext}
-          arrayCurrent={data?.data?.permission}
-        />
-        <PermissionList
-          title="Danh sách quyền tài khoản quản trị"
-          arrayList={accountAdminPermissionContext}
-          arrayCurrent={data?.data?.permission}
-        />
-        <PermissionList
-          title="Danh sách quyền tài khoản người dùng"
-          arrayList={accountClientPermissionContext}
-          arrayCurrent={data?.data?.permission}
-        />
+        <PermissionList title="Danh sách quyền danh mục" arrayList={categoryPermissionContext} arrayCurrent={data.data.permission}/>
+        <PermissionList title="Danh sách quyền sản phẩm" arrayList={productPermissionContext} arrayCurrent={data.data.permission}/>
+        <PermissionList title="Danh sách quyền vai trò" arrayList={rolePermissionContext} arrayCurrent={data.data.permission}/>
+        <PermissionList title="Danh sách quyền phong cách" arrayList={stylePermissionContext} arrayCurrent={data.data.permission}/>
+        <PermissionList title="Danh sách quyền mã giảm giá" arrayList={couponPermissionContext} arrayCurrent={data.data.permission}/>
+        <PermissionList title="Danh sách quyền tài khoản quản trị" arrayList={accountAdminPermissionContext} arrayCurrent={data.data.permission}/>
+        <PermissionList title="Danh sách quyền tài khoản người dùng" arrayList={accountClientPermissionContext} arrayCurrent={data.data.permission}/>
 
-        {/* Trạng thái */}
         <div>
           <label className="block mb-1 font-medium">Trạng thái</label>
           <select
             name="status"
-            defaultValue={data?.data?.status}
+            defaultValue={data.data.status}
             className="w-full border rounded-md p-2"
           >
             <option value="active">Hoạt động</option>
@@ -124,11 +89,7 @@ export const RoleEdit = () => {
           </select>
         </div>
 
-        {/* Nút submit */}
-        <button
-          type="submit"
-          className="px-4 py-2 bg-black text-white rounded hover:bg-gray-600"
-        >
+        <button type="submit" className="px-4 py-2 bg-black text-white rounded hover:bg-gray-600">
           Cập nhật vai trò
         </button>
       </form>
