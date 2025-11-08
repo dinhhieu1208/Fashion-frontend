@@ -34,6 +34,7 @@ import {
   LogOut,
   LayoutGrid,
   LinkIcon,
+  TicketSlash,
 } from "lucide-react";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -307,8 +308,6 @@ export function AppSidebar() {
                   </CollapsibleContent>
                 </SidebarMenuItem>
               </Collapsible>
-
-              {/* Quản lý nhóm quyền */}
               <Collapsible asChild className="mb-[5px]">
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
@@ -341,6 +340,47 @@ export function AppSidebar() {
                           <Link to="/admin/role/add">
                             <Pen className="w-4 h-4" />
                             <span className="text-[18px]">Tạo nhóm quyền</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuSubItem>
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+
+              {/* Quản lý nhóm quyền */}
+              <Collapsible asChild className="mb-[5px]">
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton className="flex items-center gap-2 rounded-md hover:bg-gray-100 transition-colors duration-200 group">
+                      <TicketSlash className="w-4 h-4 text-pink-600" />
+                      <span className="text-[18px]">Quản lý Voucher</span>
+                      <ChevronDown className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="overflow-hidden data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
+                    <SidebarMenuSub>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuButton
+                          asChild
+                          className="mt-[5px] flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
+                          <Link to="/admin/role/list">
+                            <ClipboardList className="w-4 h-4" />
+                            <span className="text-[18px] h-6">
+                              Danh sách Voucher
+                            </span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuSubItem>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuButton
+                          asChild
+                          className="flex items-center gap-2 rounded-md hover:bg-gray-50 hover:pl-3 transition-all duration-200"
+                        >
+                          <Link to="/admin/voucher/add">
+                            <Pen className="w-4 h-4" />
+                            <span className="text-[18px]">Tạo Voucher</span>
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuSubItem>
