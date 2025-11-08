@@ -16,7 +16,11 @@ export const roleDetail = async (id) => {
 }
 
 export const roleEdit = async (id, data) => {
-  console.log(data)
   const res = await axiosAdmin.patch(`/admin/role/edit/${id}`, data);
+  return res
+}
+
+export const deleteRole = async (id) => {
+  const res = await axiosAdmin.delete(`/admin/role/delete/${id}`);
   return res
 }

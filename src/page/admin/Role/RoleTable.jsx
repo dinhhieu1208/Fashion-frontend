@@ -1,14 +1,15 @@
 import { Edit3 } from "lucide-react";
 import { DeleteButton } from "@/components/admin/DeleteButton";
 import { Link, useSearchParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { roleList } from "@/services/roleService";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteRole, roleList } from "@/services/roleService";
 import { useState } from "react";
 import PaginationComponent from "@/components/client/Pagination";
 
 export default function RoleTable(props) {
   const { keyword, status } = props;
   const [page, setPage] = useState(1);
+  const queryClient = useQueryClient();
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -26,6 +27,10 @@ export default function RoleTable(props) {
   if (isLoading) {
     return <div>Đang tải dữ liệu...</div>;
   }
+
+  const resetApi = () => {
+    queryClient.invalidateQueries({ queryKey: ["role"] });
+  };
 
   return (
     <div className="overflow-x-auto w-full">
@@ -57,18 +62,16 @@ export default function RoleTable(props) {
           {data?.data?.map((item, index) => (
             <tr
               key={item.id}
-              className={`${
-                index % 2 === 0 ? "bg-white" : "bg-gray-50"
-              } hover:bg-gray-100 transition-all`}
+              className={`${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                } hover:bg-gray-100 transition-all`}
             >
               <td className="px-4 py-3 font-medium text-xl">{item.name}</td>
               <td className="px-4 py-3">
                 <span
-                  className={`inline-block px-3 py-1 rounded-full text-xl font-semibold ${
-                    item.status === "active"
-                      ? "text-green-700 bg-green-100"
-                      : "text-red-700 bg-red-100"
-                  }`}
+                  className={`inline-block px-3 py-1 rounded-full text-xl font-semibold ${item.status === "active"
+                    ? "text-green-700 bg-green-100"
+                    : "text-red-700 bg-red-100"
+                    }`}
                 >
                   {item.status}
                 </span>
@@ -89,7 +92,11 @@ export default function RoleTable(props) {
                       <Edit3 size={18} />
                     </button>
                   </Link>
-                  <DeleteButton />
+                  <DeleteButton
+                    itemId={item.id}
+                    funcApi={deleteRole}
+                    callBack={resetApi}
+                  />
                 </div>
               </td>
             </tr>
@@ -109,11 +116,10 @@ export default function RoleTable(props) {
                 {item.name}
               </h3>
               <span
-                className={`text-sm font-semibold px-3 py-1 rounded-full ${
-                  item.status === "active"
-                    ? "text-green-700 bg-green-100"
-                    : "text-red-700 bg-red-100"
-                }`}
+                className={`text-sm font-semibold px-3 py-1 rounded-full ${item.status === "active"
+                  ? "text-green-700 bg-green-100"
+                  : "text-red-700 bg-red-100"
+                  }`}
               >
                 {item.status}
               </span>
@@ -138,7 +144,11 @@ export default function RoleTable(props) {
                     <Edit3 size={18} />
                   </button>
                 </Link>
-                <DeleteButton />
+                <DeleteButton
+                  itemId={item.id}
+                  funcApi={deleteRole}
+                  callBack={resetApi}
+                />
               </div>
             </div>
           </div>
