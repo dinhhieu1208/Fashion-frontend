@@ -15,7 +15,7 @@ export const DeleteButton = (props) => {
     },
     onError: (error) => {
       console.log(error);
-      toast.error("Xóa thất bạn");
+      toast.error("Xóa thất bại");
     },
   });
 
