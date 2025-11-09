@@ -78,7 +78,9 @@ export const VoucherTable = (props) => {
                 index % 2 === 0 ? "bg-white" : "bg-gray-50"
               } hover:bg-gray-100 transition-all`}
             >
-              <td className="px-4 py-3 font-medium text-xl">{item.name}</td>
+              <td className="px-4 py-3 font-medium text-[16px] ">
+                {item.name}
+              </td>
               <td className="px-4 py-3 text-lg">{item.discount}</td>
               <td className="px-4 py-3 text-sm">{item.startDay}</td>
               <td className="px-4 py-3 text-sm">{item.endDay}</td>
@@ -106,11 +108,7 @@ export const VoucherTable = (props) => {
                       <Edit3 size={18} />
                     </button>
                   </Link>
-                  <DeleteButton
-                    itemId={item.id}
-                    funcApi={() => alert("Xóa giả lập")}
-                    callBack={() => {}}
-                  />
+                  <DeleteButton itemId={item.id} />
                 </div>
               </td>
             </tr>
