@@ -36,6 +36,7 @@ import { RoleList } from "@/page/admin/Role/RoleList.jsx";
 import { RoleAdd } from "@/page/admin/Role/RoleAdd.jsx";
 import { RoleEdit } from "@/page/admin/Role/RoleEdit.jsx";
 import { VoucherAdd } from "@/page/admin/Voucher/VoucherAdd.jsx";
+import { VoucherList } from "@/page/admin/Voucher/VoucherList.jsx";
 
 const AppRouter = () => {
   return (
@@ -87,6 +88,7 @@ const AppRouter = () => {
             <Route path="/admin/role/add" element={<RoleAdd />} />
             <Route path="/admin/role/edit/:id" element={<RoleEdit />} />
             <Route path="/admin/voucher/add" element={<VoucherAdd />} />
+            <Route path="/admin/voucher/list" element={<VoucherList />} />
           </Route>
         </Route>
       </Routes>
