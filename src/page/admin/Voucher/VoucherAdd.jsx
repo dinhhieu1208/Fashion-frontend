@@ -1,6 +1,19 @@
-import React from "react";
+import { voucherAdd } from "@/services/voucherService";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export const VoucherAdd = () => {
+
+  const mutation = useMutation({
+    mutationFn: voucherAdd,
+    onSuccess: () => {
+      toast.success("Thêm mã giảm giá thành công");
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error("Thêm mã giảm giá thất bại")
+    }
+  })
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -20,7 +33,7 @@ export const VoucherAdd = () => {
     };
 
     console.log("Voucher data submitted:", data);
-    // Ở đây bạn có thể call API sau
+    mutation.mutate(data);
   };
 
   return (
