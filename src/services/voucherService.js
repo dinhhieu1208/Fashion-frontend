@@ -5,8 +5,12 @@ export const voucherAdd = async (data) => {
   return res.data
 }
 
-
-export const voucherList = async () => {
-  const res = await axiosAdmin.get("/admin/coupon/list");
+export const voucherList = async (keyword = "", status, page = 1) => {
+  const res = await axiosAdmin.get(`/admin/coupon/list?search=${keyword}&status=${status}&page=${page}`);
   return res.data
+}
+
+export const voucherDelete = async (id) => {
+  const res = await axiosAdmin.delete(`/admin/coupon/delete/${id}`);
+  return res;
 }
