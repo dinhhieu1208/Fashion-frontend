@@ -1,29 +1,50 @@
-import React, { useRef, useState } from "react";
+import { accountAdminCreate } from "@/services/accountAdminService";
+import { useMutation } from "@tanstack/react-query";
+import { useRef, useState } from "react";
+import { toast } from "sonner";
 
 export const AccountAdd = () => {
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState("");
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setPreviewImage(URL.createObjectURL(file));
     }
   };
+
+  const mutation = useMutation({
+    mutationFn: accountAdminCreate,
+    onSuccess: () => {
+      toast.success("Tạo tài khoản thành công")
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error(error?.response?.data?.message);
+    }
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    const form = e.target;
+    const formData = new FormData();
 
-    const data = {
-      fullName: formData.get("fullName"),
-      email: formData.get("email"),
-      password: formData.get("password"),
-      address: formData.get("address"),
-      phone: formData.get("phone"),
-      roleId: formData.get("roleId"),
-      status: formData.get("status"),
-      image: fileInputRef.current?.files?.[0] || null,
-    };
-    console.log(" Data form:", data);
+    formData.append("fullName", form.fullName.value);
+    formData.append("email", form.email.value);
+    formData.append("password", form.password.value);
+    formData.append("address", form.address.value);
+    formData.append("phone", form.phone.value);
+    formData.append("roleId", form.roleId.value);
+    formData.append("status", form.status.value);
+
+    // Thêm file nếu có
+    if (fileInputRef.current?.files?.[0]) {
+      formData.append("image", fileInputRef.current.files[0]);
+    }
+
+    console.log([...formData.entries()]); // Kiểm tra nội dung
+    mutation.mutate(formData);
   };
 
   const roleList = [
