@@ -3,12 +3,13 @@ import { DeleteButton } from "@/components/admin/DeleteButton";
 import { Link, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import PaginationComponent from "@/components/client/Pagination";
-import { useQuery } from "@tanstack/react-query";
-import { voucherList } from "@/services/voucherService";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { voucherDelete, voucherList } from "@/services/voucherService";
 
 export const VoucherTable = (props) => {
   const { keyword, status } = props;
   const [page, setPage] = useState(1);
+  const queryClient = useQueryClient();
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -22,6 +23,7 @@ export const VoucherTable = (props) => {
   }
 
   const callBack = (pageNumber) => {
+    queryClient.invalidateQueries(["voucher"]);
     setSearchParams({ search: keyword, status: status, page: pageNumber });
     setPage(pageNumber);
   };
@@ -69,7 +71,7 @@ export const VoucherTable = (props) => {
               <td className="px-4 py-3 font-medium text-[16px] ">
                 {item.name}
               </td>
-              <td className="px-4 py-3 text-lg">{item.discount}</td>
+              <td className="px-4 py-3 text-lg">{item.discount}%</td>
               <td className="px-4 py-3 text-sm">{item.startDateFormat}</td>
               <td className="px-4 py-3 text-sm">{item.endDateFormat}</td>
               <td className="px-4 py-3">
@@ -96,7 +98,7 @@ export const VoucherTable = (props) => {
                       <Edit3 size={18} />
                     </button>
                   </Link>
-                  <DeleteButton itemId={item.id} />
+                  <DeleteButton itemId={item.id} funcApi={voucherDelete} callBack={callBack}/>
                 </div>
               </td>
             </tr>
@@ -128,7 +130,7 @@ export const VoucherTable = (props) => {
 
             <div className="text-sm text-gray-600 flex flex-col gap-1 mb-2">
               <span>
-                <strong>Giảm giá:</strong> {item.discount}
+                <strong>Giảm giá:</strong> {item.discount}%
               </span>
               <span>
                 <strong>Bắt đầu:</strong> {item.startDateFormat}
@@ -151,7 +153,7 @@ export const VoucherTable = (props) => {
                     <Edit3 size={18} />
                   </button>
                 </Link>
-                <DeleteButton itemId={item.id} />
+                <DeleteButton itemId={item.id} funcApi={voucherDelete} callBack={callBack}/>
               </div>
             </div>
           </div>
