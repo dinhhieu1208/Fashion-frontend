@@ -1,5 +1,6 @@
 import { accountAdminCreate } from "@/services/accountAdminService";
-import { useMutation } from "@tanstack/react-query";
+import { getAllRole } from "@/services/roleService";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -13,6 +14,11 @@ export const AccountAdd = () => {
       setPreviewImage(URL.createObjectURL(file));
     }
   };
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["getAllRole"],
+    queryFn: getAllRole,
+  });
 
   const mutation = useMutation({
     mutationFn: accountAdminCreate,
@@ -47,11 +53,9 @@ export const AccountAdd = () => {
     mutation.mutate(formData);
   };
 
-  const roleList = [
-    { _id: "68aed93ae7b58d8e1356c091", name: "Admin" },
-    { _id: "68aed93ae7b58d8e1356c092", name: "Staff" },
-    { _id: "68aed93ae7b58d8e1356c093", name: "User" },
-  ];
+  if(isLoading) {
+    return <div>Đang tải dữ liệu</div>
+  }
 
   return (
     <>
@@ -124,7 +128,7 @@ export const AccountAdd = () => {
           <label className="block mb-1 font-medium">Vai trò</label>
           <select name="roleId" className="w-full border rounded-md p-2">
             <option value="">-- Chọn vai trò --</option>
-            {roleList.map((role) => (
+            {data?.data.map((role) => (
               <option key={role._id} value={role._id}>
                 {role.name}
               </option>
