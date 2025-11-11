@@ -1,36 +1,61 @@
-import React, { useRef, useState } from "react";
+import { accountAdminCreate } from "@/services/accountAdminService";
+import { getAllRole } from "@/services/roleService";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRef, useState } from "react";
+import { toast } from "sonner";
 
 export const AccountAdd = () => {
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState("");
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setPreviewImage(URL.createObjectURL(file));
     }
   };
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["getAllRole"],
+    queryFn: getAllRole,
+  });
+
+  const mutation = useMutation({
+    mutationFn: accountAdminCreate,
+    onSuccess: () => {
+      toast.success("Tạo tài khoản thành công")
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error(error?.response?.data?.message);
+    }
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    const form = e.target;
+    const formData = new FormData();
 
-    const data = {
-      fullName: formData.get("fullName"),
-      email: formData.get("email"),
-      password: formData.get("password"),
-      address: formData.get("address"),
-      phone: formData.get("phone"),
-      roleId: formData.get("roleId"),
-      status: formData.get("status"),
-      image: fileInputRef.current?.files?.[0] || null,
-    };
-    console.log(" Data form:", data);
+    formData.append("fullName", form.fullName.value);
+    formData.append("email", form.email.value);
+    formData.append("password", form.password.value);
+    formData.append("address", form.address.value);
+    formData.append("phone", form.phone.value);
+    formData.append("roleId", form.roleId.value);
+    formData.append("status", form.status.value);
+
+    // Thêm file nếu có
+    if (fileInputRef.current?.files?.[0]) {
+      formData.append("image", fileInputRef.current.files[0]);
+    }
+
+    console.log([...formData.entries()]); // Kiểm tra nội dung
+    mutation.mutate(formData);
   };
 
-  const roleList = [
-    { _id: "68aed93ae7b58d8e1356c091", name: "Admin" },
-    { _id: "68aed93ae7b58d8e1356c092", name: "Staff" },
-    { _id: "68aed93ae7b58d8e1356c093", name: "User" },
-  ];
+  if(isLoading) {
+    return <div>Đang tải dữ liệu</div>
+  }
 
   return (
     <>
@@ -103,7 +128,7 @@ export const AccountAdd = () => {
           <label className="block mb-1 font-medium">Vai trò</label>
           <select name="roleId" className="w-full border rounded-md p-2">
             <option value="">-- Chọn vai trò --</option>
-            {roleList.map((role) => (
+            {data?.data.map((role) => (
               <option key={role._id} value={role._id}>
                 {role.name}
               </option>

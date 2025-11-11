@@ -24,3 +24,8 @@ export const deleteRole = async (id) => {
   const res = await axiosAdmin.delete(`/admin/role/delete/${id}`);
   return res
 }
+
+export const getAllRole = async () => {
+  const res = await axiosAdmin.get("/admin/role/getALL");
+  return res.data;
+}
