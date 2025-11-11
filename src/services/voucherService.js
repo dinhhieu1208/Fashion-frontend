@@ -6,7 +6,7 @@ export const voucherAdd = async (data) => {
 }
 
 
-export const voucherList = async () => {
-  const res = await axiosAdmin.get("/admin/coupon/list");
+export const voucherList = async (keyword = "", status, page = 1) => {
+  const res = await axiosAdmin.get(`/admin/coupon/list?search=${keyword}&status=${status}&page=${page}`);
   return res.data
 }

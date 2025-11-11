@@ -3,6 +3,8 @@ import { DeleteButton } from "@/components/admin/DeleteButton";
 import { Link, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import PaginationComponent from "@/components/client/Pagination";
+import { useQuery } from "@tanstack/react-query";
+import { voucherList } from "@/services/voucherService";
 
 export const VoucherTable = (props) => {
   const { keyword, status } = props;
@@ -10,28 +12,14 @@ export const VoucherTable = (props) => {
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const sampleVouchers = [
-    {
-      id: 1,
-      name: "MUA-XUAN-AN-LANH",
-      discount: "10%",
-      startDay: "2025-09-03",
-      endDay: "2025-09-04",
-      status: "active",
-      createdBy: "Admin",
-      updatedBy: "Admin",
-    },
-    {
-      id: 2,
-      name: "HE-RUC-RO",
-      discount: "15%",
-      startDay: "2025-06-01",
-      endDay: "2025-06-15",
-      status: "inactive",
-      createdBy: "Manager",
-      updatedBy: "Admin",
-    },
-  ];
+  const { data, isLoading } = useQuery({
+    queryKey: ["voucher", keyword, status, page],
+    queryFn: () => voucherList(keyword, status, page),
+  });
+
+  if(isLoading) {
+    return <div>Đang tải dữ liệu</div>
+  }
 
   const callBack = (pageNumber) => {
     setSearchParams({ search: keyword, status: status, page: pageNumber });
@@ -71,7 +59,7 @@ export const VoucherTable = (props) => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-gray-50">
-          {sampleVouchers.map((item, index) => (
+          {data?.data.map((item, index) => (
             <tr
               key={item.id}
               className={`${
@@ -82,8 +70,8 @@ export const VoucherTable = (props) => {
                 {item.name}
               </td>
               <td className="px-4 py-3 text-lg">{item.discount}</td>
-              <td className="px-4 py-3 text-sm">{item.startDay}</td>
-              <td className="px-4 py-3 text-sm">{item.endDay}</td>
+              <td className="px-4 py-3 text-sm">{item.startDateFormat}</td>
+              <td className="px-4 py-3 text-sm">{item.endDateFormat}</td>
               <td className="px-4 py-3">
                 <span
                   className={`inline-block px-3 py-1 rounded-full text-xl font-semibold ${
@@ -96,10 +84,10 @@ export const VoucherTable = (props) => {
                 </span>
               </td>
               <td className="px-4 py-3 max-[1300px]:hidden text-xl">
-                {item.createdBy}
+                {item.createdByFormat}
               </td>
               <td className="px-4 py-3 max-[1400px]:hidden text-xl">
-                {item.updatedBy}
+                {item.updatedByFornat}
               </td>
               <td className="px-4 py-3 text-center">
                 <div className="flex justify-center gap-2">
@@ -118,7 +106,7 @@ export const VoucherTable = (props) => {
 
       {/* ✅ Mobile view */}
       <div className="lg:hidden flex flex-col gap-4 mt-3">
-        {sampleVouchers.map((item) => (
+        {data?.data.map((item) => (
           <div
             key={item.id}
             className="bg-white shadow-md rounded-xl p-4 border border-gray-200"
@@ -143,16 +131,16 @@ export const VoucherTable = (props) => {
                 <strong>Giảm giá:</strong> {item.discount}
               </span>
               <span>
-                <strong>Bắt đầu:</strong> {item.startDay}
+                <strong>Bắt đầu:</strong> {item.startDateFormat}
               </span>
               <span>
-                <strong>Kết thúc:</strong> {item.endDay}
+                <strong>Kết thúc:</strong> {item.endDateFormat}
               </span>
               <span>
-                <strong>Người tạo:</strong> {item.createdBy}
+                <strong>Người tạo:</strong> {item.createdByFormat}
               </span>
               <span>
-                <strong>Người sửa:</strong> {item.updatedBy}
+                <strong>Người sửa:</strong> {item.updatedByFornat}
               </span>
             </div>
 
@@ -170,7 +158,7 @@ export const VoucherTable = (props) => {
         ))}
       </div>
 
-      <PaginationComponent currentPage={page} onChangePage={callBack} />
+      <PaginationComponent pages={data?.totalPage || 1} currentPage={page} onChangePage={callBack} />
     </div>
   );
 };
