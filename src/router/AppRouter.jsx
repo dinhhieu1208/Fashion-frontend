@@ -39,6 +39,7 @@ import { VoucherAdd } from "@/page/admin/Voucher/VoucherAdd.jsx";
 import { VoucherList } from "@/page/admin/Voucher/VoucherList.jsx";
 import { AccountAdd } from "@/page/admin/accountAdmin/AccountAdminAdd.jsx";
 import { AccountList } from "@/page/admin/accountAdmin/AccountAdminList.jsx";
+import { AccountEdit } from "@/page/admin/accountAdmin/AccountAdminEdit.jsx";
 
 const AppRouter = () => {
   return (
@@ -93,6 +94,7 @@ const AppRouter = () => {
             <Route path="/admin/voucher/list" element={<VoucherList />} />
             <Route path="/admin/account/add" element={<AccountAdd />} />
             <Route path="/admin/account/list" element={<AccountList />} />
+            <Route path="/admin/account/edit/:id" element={<AccountEdit />} />
           </Route>
         </Route>
       </Routes>
