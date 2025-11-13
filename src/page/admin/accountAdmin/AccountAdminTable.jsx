@@ -1,52 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Edit3 } from "lucide-react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useSearchParams } from "react-router-dom";
 import { DeleteButton } from "@/components/admin/DeleteButton";
 import PaginationComponent from "@/components/client/Pagination";
-
-const accountData = [
-  {
-    id: "6913b75e3587486042baeef9",
-    name: "Test05",
-    image:
-      "https://res.cloudinary.com/dculf3koq/image/upload/v1762899806/umttgwvvdje0cnglc6u7.png",
-    status: "active",
-    createdBy: "admin01",
-    updatedBy: "admin01",
-    createdAtFormat: "05:23 12/11/2025",
-    updatedAtFormat: "05:23 12/11/2025",
-  },
-  {
-    id: "68bd3209ad6d20242dfba875",
-    name: "staff01",
-    image:
-      "https://res.cloudinary.com/dculf3koq/image/upload/v1757229583/mhhcqjvn3bozdodslffy.png",
-    status: "active",
-    createdBy: "admin01",
-    updatedBy: "staff01",
-    createdAtFormat: "14:19 07/09/2025",
-    updatedAtFormat: "14:19 28/09/2025",
-  },
-  {
-    id: "999abc999",
-    name: "staff02",
-    image: "https://res.cloudinary.com/demo/image/upload/sample.jpg",
-    status: "inactive",
-    createdBy: "admin02",
-    updatedBy: "admin02",
-    createdAtFormat: "11:00 08/09/2025",
-    updatedAtFormat: "09:30 09/09/2025",
-  },
-];
+import {
+  accountAdminList,
+  deleteAccountAdmin,
+} from "@/services/accountAdminService";
 
 export default function AccountTable({ keyword, status }) {
   const [page, setPage] = useState(1);
+  const queryClient = useQueryClient();
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    setPage(1);
+  }, [keyword, status]);
+  const { data } = useQuery({
+    queryKey: ["accountAdminList", keyword, status, page],
+    queryFn: () => accountAdminList(keyword, status, page),
+    retry: false,
+  });
 
   const onChangePage = (pageNumber) => {
     setSearchParams({ search: keyword, status: status, page: pageNumber });
     setPage(pageNumber);
+  };
+  const resetApi = () => {
+    queryClient.invalidateQueries({ queryKey: ["accountAdminList"] });
   };
 
   return (
@@ -80,7 +62,7 @@ export default function AccountTable({ keyword, status }) {
         </thead>
 
         <tbody className="divide-y divide-gray-200 bg-gray-50">
-          {accountData.map((item, index) => (
+          {data?.data?.data?.map((item, index) => (
             <tr
               key={item.id}
               className={`${
@@ -122,7 +104,11 @@ export default function AccountTable({ keyword, status }) {
                       <Edit3 size={18} />
                     </button>
                   </Link>
-                  <DeleteButton itemId={item.id} />
+                  <DeleteButton
+                    itemId={item.id}
+                    funcApi={deleteAccountAdmin}
+                    callback={resetApi}
+                  />
                 </div>
               </td>
             </tr>
@@ -132,7 +118,7 @@ export default function AccountTable({ keyword, status }) {
 
       {/* ✅ Mobile view */}
       <div className="lg:hidden flex flex-col gap-4 mt-3">
-        {accountData.map((item) => (
+        {data?.data?.data?.map((item) => (
           <div
             key={item.id}
             className="bg-white shadow-md rounded-xl p-4 border border-gray-200"
@@ -148,7 +134,7 @@ export default function AccountTable({ keyword, status }) {
                     : "text-red-700 bg-red-100"
                 }`}
               >
-                {item.status === "active" ? "Hoạt động" : "Dừng hoạt động"}
+                {item.status}
               </span>
             </div>
 
@@ -178,7 +164,11 @@ export default function AccountTable({ keyword, status }) {
                     <Edit3 size={18} />
                   </button>
                 </Link>
-                <DeleteButton itemId={item.id} />
+                <DeleteButton
+                  itemId={item.id}
+                  funcApi={deleteAccountAdmin}
+                  callback={resetApi}
+                />
               </div>
             </div>
           </div>
@@ -186,7 +176,11 @@ export default function AccountTable({ keyword, status }) {
       </div>
 
       <div className="mt-4">
-        <PaginationComponent currentPage={page} onChangePage={onChangePage} />
+        <PaginationComponent
+          pages={data?.data?.totalPage || 1}
+          currentPage={page}
+          onChangePage={onChangePage}
+        />
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ export const AccountList = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const value = e.target.search.value.trim();
+    const value = e.target.search.value;
     setKeyword(value);
     setSearchParams({ search: value, status: statusFilter });
   };
