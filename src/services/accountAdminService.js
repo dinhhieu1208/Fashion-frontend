@@ -5,6 +5,12 @@ export const accountAdminCreate = async (data) => {
   const res = await axiosAdminFormData.post("/admin/account/create", data);
   return res.data;
 };
+
+export const accountAdminEdit = async () => {
+  const res = await axiosAdmin.patch("/admin/account/edit");
+  return res.data;
+};
+
 export const accountAdminList = async (
   search = "",
   status = "",
@@ -15,6 +21,7 @@ export const accountAdminList = async (
   );
   return res;
 };
+
 export const deleteAccountAdmin = async (id) => {
   const res = await axiosAdmin.delete(`/admin/account/delete/${id}`);
   return res.data;
