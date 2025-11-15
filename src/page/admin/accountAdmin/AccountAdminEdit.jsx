@@ -1,29 +1,51 @@
-import { accountAdminDetail } from "@/services/accountAdminService";
+import { accountAdminDetail, accountAdminEdit } from "@/services/accountAdminService";
 import { getAllRole } from "@/services/roleService";
-import { useQuery } from "@tanstack/react-query";
-import { useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 export const AccountEdit = () => {
   const { id } = useParams();
-
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState("");
 
-  const { data:role } = useQuery({
+  const { data: role } = useQuery({
     queryKey: ["getAllRole"],
     queryFn: getAllRole
   });
 
-  const { data:accountDetail, isLoading } = useQuery({
+  const { data: accountDetail, isLoading } = useQuery({
     queryKey: ["accountDetail", id],
     queryFn: () => accountAdminDetail(id)
   })
+
+  const mutation = useMutation({
+    mutationFn: ({ id, data }) => accountAdminEdit(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["accountDetail"]);
+      queryClient.invalidateQueries(["getAllRole"]);
+      toast.success("Chỉnh sửa thành công");
+      navigate("/admin/account/list");
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error("Chỉnh sửa thất bại")
+    }
+  });
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) setPreviewImage(URL.createObjectURL(file));
   };
+
+  useEffect(() => {
+    if (accountDetail?.data?.image) {
+      setPreviewImage(accountDetail.data.image);
+    }
+  }, [accountDetail]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,13 +62,16 @@ export const AccountEdit = () => {
     if (fileInputRef.current?.files?.[0]) {
       formData.append("image", fileInputRef.current.files[0]);
     }
+
+    mutation.mutate({
+      id: id,
+      data: formData
+    })
   };
 
-  if(isLoading) {
+  if (isLoading) {
     return <div>Đang tải dữ liệu</div>
   }
-
-  console.log(role?.data);
 
   return (
     <>
