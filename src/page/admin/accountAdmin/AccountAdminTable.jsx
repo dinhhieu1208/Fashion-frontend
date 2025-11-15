@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Edit3 } from "lucide-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useSearchParams } from "react-router-dom";
@@ -107,7 +107,7 @@ export default function AccountTable({ keyword, status }) {
                   <DeleteButton
                     itemId={item.id}
                     funcApi={deleteAccountAdmin}
-                    callback={resetApi}
+                    callBack={resetApi}
                   />
                 </div>
               </td>
@@ -167,7 +167,7 @@ export default function AccountTable({ keyword, status }) {
                 <DeleteButton
                   itemId={item.id}
                   funcApi={deleteAccountAdmin}
-                  callback={resetApi}
+                  callBack={resetApi}
                 />
               </div>
             </div>

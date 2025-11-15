@@ -6,10 +6,15 @@ export const accountAdminCreate = async (data) => {
   return res.data;
 };
 
-export const accountAdminEdit = async () => {
-  const res = await axiosAdmin.patch("/admin/account/edit");
-  return res.data;
+export const accountAdminEdit = async (id, data) => {
+  const res = await axiosAdminFormData.patch(`/admin/account/edit/${id}`, data);
+  return res;
 };
+
+export const accountAdminDetail = async (id) => {
+  const res = await axiosAdmin.get(`/admin/account/detail/${id}`);
+  return res.data;
+}
 
 export const accountAdminList = async (
   search = "",
