@@ -1,14 +1,24 @@
-import React, { useRef, useState } from "react";
+import { accountAdminDetail } from "@/services/accountAdminService";
+import { getAllRole } from "@/services/roleService";
+import { useQuery } from "@tanstack/react-query";
+import { useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export const AccountEdit = () => {
+  const { id } = useParams();
+
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState("");
 
-  const roles = [
-    { _id: "1", name: "Admin" },
-    { _id: "2", name: "Nhân viên" },
-    { _id: "3", name: "Quản lý" },
-  ];
+  const { data:role } = useQuery({
+    queryKey: ["getAllRole"],
+    queryFn: getAllRole
+  });
+
+  const { data:accountDetail, isLoading } = useQuery({
+    queryKey: ["accountDetail", id],
+    queryFn: () => accountAdminDetail(id)
+  })
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -32,6 +42,12 @@ export const AccountEdit = () => {
     }
   };
 
+  if(isLoading) {
+    return <div>Đang tải dữ liệu</div>
+  }
+
+  console.log(role?.data);
+
   return (
     <>
       <h1 className="p-4 sm:p-6 mb-4 text-3xl font-bold">
@@ -48,7 +64,7 @@ export const AccountEdit = () => {
           <input
             type="text"
             name="fullName"
-            defaultValue=""
+            defaultValue={accountDetail?.data?.name}
             className="w-full border rounded-md p-2"
             required
           />
@@ -60,7 +76,7 @@ export const AccountEdit = () => {
           <input
             type="email"
             name="email"
-            defaultValue=""
+            defaultValue={accountDetail?.data?.email}
             className="w-full border rounded-md p-2 "
           />
         </div>
@@ -71,7 +87,7 @@ export const AccountEdit = () => {
           <input
             type="text"
             name="address"
-            defaultValue=""
+            defaultValue={accountDetail?.data?.address}
             className="w-full border rounded-md p-2"
           />
         </div>
@@ -82,7 +98,7 @@ export const AccountEdit = () => {
           <input
             type="text"
             name="phone"
-            defaultValue=""
+            defaultValue={accountDetail?.data?.phone}
             className="w-full border rounded-md p-2"
           />
         </div>
@@ -92,11 +108,11 @@ export const AccountEdit = () => {
           <label className="block mb-1 font-medium">Vai trò</label>
           <select
             name="roleId"
-            defaultValue=""
+            defaultValue={accountDetail?.data?.roleId}
             className="w-full border rounded-md p-2"
           >
             <option value="">-- Chọn vai trò --</option>
-            {roles.map((role) => (
+            {role?.data.map((role) => (
               <option key={role._id} value={role._id}>
                 {role.name}
               </option>

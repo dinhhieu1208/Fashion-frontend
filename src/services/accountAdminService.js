@@ -11,6 +11,11 @@ export const accountAdminEdit = async () => {
   return res.data;
 };
 
+export const accountAdminDetail = async (id) => {
+  const res = await axiosAdmin.get(`/admin/account/detail/${id}`);
+  return res.data;
+}
+
 export const accountAdminList = async (
   search = "",
   status = "",
