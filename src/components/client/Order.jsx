@@ -28,8 +28,8 @@ export default function OrderProduct() {
     onError: (error) => {
       console.log(error.response);
       toast.error(error.response.data.message);
-    }
-  })
+    },
+  });
 
   const handleDelete = (id) => {
     mutation.mutate(id);
@@ -102,10 +102,11 @@ export default function OrderProduct() {
                 {/* Trạng thái */}
                 <td className="p-3">
                   <span
-                    className={`rounded text-center text-sm ${order.status.key === "init"
+                    className={`rounded text-center text-sm ${
+                      order.status.key === "init"
                         ? "text-yellow-600"
                         : "text-green-600"
-                      }`}
+                    }`}
                   >
                     {order.status.value}
                   </span>
@@ -178,10 +179,11 @@ export default function OrderProduct() {
               <p>
                 <strong>Trạng thái:</strong>{" "}
                 <span
-                  className={`${order.status.key === "init"
+                  className={`${
+                    order.status.key === "init"
                       ? "text-yellow-600"
                       : "text-green-600"
-                    }`}
+                  }`}
                 >
                   {order.status.value}
                 </span>

@@ -3,6 +3,7 @@ import React from "react";
 const CartTotal = ({ cartItems }) => {
   const currency = "đ";
   const delivery_fee = 30000;
+  const discount = 0;
 
   const getCartAmount = () => {
     return cartItems.reduce(
@@ -36,6 +37,13 @@ const CartTotal = ({ cartItems }) => {
         </div>
         <hr />
         <div className="flex justify-between">
+          <p>Voucher giảm giá</p>
+          <p>
+            {discount.toLocaleString("vi-VN")} {currency}
+          </p>
+        </div>
+        <hr />
+        <div className="flex justify-between ">
           <b>Tổng tiền</b>
           <b>
             {getCartAmount() === 0

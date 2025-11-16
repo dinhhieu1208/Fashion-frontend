@@ -243,9 +243,34 @@ const Cart = () => {
               </label>
             </div>
           </div>
+          <div className="mt-6 ">
+            <div className="w-full max-w-auto">
+              <div className="max-w-md mx-auto ">
+                <label className="block  mb-3 text-xl font-bold ">
+                  Mã giảm giá
+                </label>
+                <div className="flex items-start space-x-2">
+                  <div className="flex-grow">
+                    <input
+                      type="text"
+                      name="discount_code"
+                      placeholder="Nhập mã giảm giá"
+                      className="w-full border-2 rounded-full p-3 text-base placeholder:text-gray-400 focus:outline-none "
+                    />
+                  </div>
 
+                  <button
+                    type="button"
+                    className="flex-shrink-0 bg-black text-white px-6 py-3 rounded-full text-base font-bold uppercase hover:bg-gray-500 transition-colors h-full"
+                  >
+                    ÁP DỤNG
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
           {/* Nút đặt hàng */}
-          <div className="w-full text-end mt-8">
+          <div className="w-full text-end mt-8 ">
             <button
               type="button"
               onClick={handleOrder}
