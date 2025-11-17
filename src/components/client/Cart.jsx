@@ -16,7 +16,7 @@ const Cart = () => {
   const [cartData, setCartData] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [method, setMethod] = useState("offline");
-
+  const [coupon, setCoupon] = useState("");
   useEffect(() => {
     const cartStorage = localStorage.getItem("cart");
     if (cartStorage) {
@@ -95,7 +95,7 @@ const Cart = () => {
       await profileUser();
       mutation.mutate({
         arrayOrder: selectedItems,
-        coupon: "",
+        coupon: coupon,
         paymentMethod: method,
       });
       // eslint-disable-next-line no-unused-vars
@@ -104,6 +104,10 @@ const Cart = () => {
       navigate("/login");
     }
   };
+
+  const handleChange = (event) => {
+    setCoupon(event.target.value);
+  }
 
   return (
     <div className="max-w-[1200px] mx-auto px-4 py-4">
@@ -192,7 +196,7 @@ const Cart = () => {
           <CartTotal cartItems={selectedItems} />
 
           {/* Chọn phương thức thanh toán */}
-          <div className="mt-10">
+          <div className="">
             <h2 className="text-xl sm:text-2xl font-bold mb-3">
               Phương thức thanh toán
             </h2>
@@ -250,21 +254,14 @@ const Cart = () => {
                   Mã giảm giá
                 </label>
                 <div className="flex items-start space-x-2">
-                  <div className="flex-grow">
-                    <input
-                      type="text"
-                      name="discount_code"
-                      placeholder="Nhập mã giảm giá"
-                      className="w-full border-2 rounded-full p-3 text-base placeholder:text-gray-400 focus:outline-none "
-                    />
+                  <div className="flex-grow w-full">
+                    <select name="" id="" className="w-full h-[42px] px-[10px] rounded-lg bg-white border-[1px] border-gray-400"
+                      onChange={handleChange}
+                    >
+                      <option value="">Chưa chọn</option>
+                      <option value="ABC">ABC</option>
+                    </select>
                   </div>
-
-                  <button
-                    type="button"
-                    className="flex-shrink-0 bg-black text-white px-6 py-3 rounded-full text-base font-bold uppercase hover:bg-gray-500 transition-colors h-full"
-                  >
-                    ÁP DỤNG
-                  </button>
                 </div>
               </div>
             </div>
