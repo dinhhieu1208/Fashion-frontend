@@ -2,8 +2,13 @@ import axiosAdmin from "./axiosAdmin";
 import { axiosClient } from "./axiosClient";
 
 export const createOrder = async (data) => {
-  const res = await axiosClient.post("/client/order/create", data);
-  return res;
+  if(data.paymentMethod === "offline") {
+    const res = await axiosClient.post("/client/order/create", data);
+    return res;
+  } else if(data.paymentMethod === "bank") {
+    const res = await axiosClient.post("/client/order/zaloPay", data);
+    return res;
+  }
 }
 
 export const getAllOrder = async (search = "", price = "asc", paymentStatus = "", page = 1) => {
