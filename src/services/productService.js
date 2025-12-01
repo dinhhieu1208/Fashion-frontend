@@ -29,19 +29,27 @@ export const productAdmin = async (search = "", status = "", page = "1") => {
 export const createProduct = async (data) => {
   const res = await axiosAdminFormData.post("/admin/product/create", data);
   return res;
-}
+};
 
 export const productDetail = async (id) => {
   const res = await axiosAdmin.get(`/admin/product/detail/${id}`);
   return res.data;
-}
+};
 
 export const updateProduct = async (id, data) => {
   const res = await axiosAdminFormData.patch(`/admin/product/edit/${id}`, data);
   return res;
-}
+};
 
 export const deleteProduct = async (id) => {
   const res = await axiosAdmin.delete(`/admin/product/delete/${id}`);
   return res;
-}
+};
+export const lowPriceProducts = async () => {
+  const res = await axiosClient.get("/client/product/lowPrice");
+  return res;
+};
+export const newestsProducts = async () => {
+  const res = await axiosClient.get("/client/product/newests");
+  return res;
+};
