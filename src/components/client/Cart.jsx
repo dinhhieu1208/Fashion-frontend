@@ -57,9 +57,7 @@ const Cart = () => {
 
     setSelectedItems((prev) =>
       exists
-        ? prev.filter(
-            (i) => !(i.id === item.id && i.size === item.size)
-          )
+        ? prev.filter((i) => !(i.id === item.id && i.size === item.size))
         : [...prev, item]
     );
   };
@@ -67,17 +65,17 @@ const Cart = () => {
   const mutation = useMutation({
     mutationFn: createOrder,
     onSuccess: (res) => {
-        console.log(res.data);
-        toast.success("Thanh toán thành công");
-        const remaining = cartData.filter(
-          (item) =>
-            !selectedItems.some(
-              (sel) => sel.id === item.id && sel.size === item.size
-            )
-        );
-        syncCart(remaining);
-        setSelectedItems([]);
-        window.location.href = res.data.url;
+      console.log(res.data);
+      toast.success("Thanh toán thành công");
+      const remaining = cartData.filter(
+        (item) =>
+          !selectedItems.some(
+            (sel) => sel.id === item.id && sel.size === item.size
+          )
+      );
+      syncCart(remaining);
+      setSelectedItems([]);
+      window.location.href = res.data.url;
     },
     onError: (error) => {
       toast.error(error.response?.data?.message);
@@ -136,18 +134,25 @@ const Cart = () => {
                   <img className="w-16 sm:w-20" src={item.image} />
 
                   <div>
-                    <p className="text-xs sm:text-lg font-medium">{item.name}</p>
+                    <p className="text-xs sm:text-lg font-medium">
+                      {item.name}
+                    </p>
                     <div className="flex items-center gap-5 mt-2">
                       <p className="text-[#e8002d] font-bold">
-                        {item.quantity} x {item.price.toLocaleString("vi-VN")} {currency}
+                        {item.quantity} x {item.price.toLocaleString("vi-VN")}{" "}
+                        {currency}
                       </p>
-                      <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">{item.size}</p>
+                      <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">
+                        {item.size}
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 <input
-                  onChange={(e) => updateQuantity(item.id, item.size, Number(e.target.value))}
+                  onChange={(e) =>
+                    updateQuantity(item.id, item.size, Number(e.target.value))
+                  }
                   className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1"
                   type="number"
                   min={1}
@@ -167,30 +172,53 @@ const Cart = () => {
         <div className="w-full sm:w-[450px]">
           <CartTotal cartItems={selectedItems} />
 
-          <h2 className="text-xl sm:text-2xl font-bold mb-3">Phương thức thanh toán</h2>
+          <h2 className="text-xl sm:text-2xl font-bold mb-3">
+            Phương thức thanh toán
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <label
               onClick={() => setMethod("momo")}
-              className={`flex flex-col items-center gap-2 border rounded-xl p-4 cursor-pointer hover:shadow-md ${method === "momo" ? "border-blue-500 bg-blue-50" : "border-gray-300"}`}
+              className={`flex flex-col items-center gap-2 border rounded-xl p-4 cursor-pointer hover:shadow-md ${
+                method === "momo"
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-300"
+              }`}
             >
               <img src={momo} className="w-10 h-10" />
-              <span className="text-sm font-medium text-center">Thanh toán qua Momo</span>
+              <span className="text-sm font-medium text-center">
+                Thanh toán qua Momo
+              </span>
             </label>
 
             <label
               onClick={() => setMethod("bank")}
-              className={`flex flex-col items-center gap-2 border rounded-xl p-4 cursor-pointer hover:shadow-md ${method === "bank" ? "border-blue-500 bg-blue-50" : "border-gray-300"}`}
+              className={`flex flex-col items-center gap-2 border rounded-xl p-4 cursor-pointer hover:shadow-md ${
+                method === "bank"
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-300"
+              }`}
             >
               <img src={bank1} className="w-10 h-10" />
-              <span className="text-sm font-medium text-center">Chuyển khoản Ngân hàng</span>
+              <span className="text-sm font-medium text-center">
+                Chuyển khoản Ngân hàng
+              </span>
             </label>
 
             <label
               onClick={() => setMethod("offline")}
-              className={`flex flex-col items-center gap-2 border rounded-xl p-4 cursor-pointer hover:shadow-md ${method === "offline" ? "border-blue-500 bg-blue-50" : "border-gray-300"}`}
+              className={`flex flex-col items-center gap-2 border rounded-xl p-4 cursor-pointer hover:shadow-md ${
+                method === "offline"
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-300"
+              }`}
             >
-              <img src="https://mcdn.coolmate.me/image/October2024/mceclip2_42.png" className="w-10 h-10" />
-              <span className="text-sm font-medium text-center">Thanh toán khi nhận hàng</span>
+              <img
+                src="https://mcdn.coolmate.me/image/October2024/mceclip2_42.png"
+                className="w-10 h-10"
+              />
+              <span className="text-sm font-medium text-center">
+                Thanh toán khi nhận hàng
+              </span>
             </label>
           </div>
 

@@ -6,8 +6,6 @@ import { useState, useEffect } from "react";
 // import logo2 from "../../assets/images/Logo-2.png";
 // import logo3 from "../../assets/images/Logo-3.png";
 // import logo4 from "../../assets/images/Logo-4.png";
-import clother1 from "../../assets/images/clother-1.jpg";
-import clother2 from "../../assets/images/clother-2.jpg";
 import banner1 from "../../assets/images/ilutranstion-1.jpg";
 import banner2 from "../../assets/images/ilutranstion-2.jpg";
 import banner3 from "../../assets/images/ilutranstion-3.jpg";
@@ -16,6 +14,8 @@ import slideshow1 from "../../assets/images/slideshow_1.jpg";
 import slideshow2 from "../../assets/images/slideshow_2.jpg";
 import slideshow3 from "../../assets/images/slideshow_3.jpg";
 import slideshow4 from "../../assets/images/slideshow_4.jpg";
+import { useQuery } from "@tanstack/react-query";
+import { lowPriceProducts, newestsProducts } from "@/services/productService";
 
 export default function HomePage() {
   const slides = [slideshow1, slideshow2, slideshow3, slideshow4];
@@ -28,82 +28,17 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, []);
 
-  const products = [
-    {
-      id: "1",
-      name: "Áo Thun Unisex Basic",
-      image: clother1,
-      originPrice: 199000,
-      currentPrice: 159000,
-      originPriceFormat: "199.000",
-      currentPriceFormat: "159.000",
-    },
-    {
-      id: "2",
-      name: "Quần Jean Nam Rách Gối",
-      image: "/images/clother-2.jpg",
-      originPrice: 349000,
-      // currentPrice: 0,
-      originPriceFormat: "349.000",
-      // currentPriceFormat: "0",
-    },
-    {
-      id: "3",
-      name: "Áo Sơ Mi Trắng Nam",
-      image: clother2,
-      originPrice: 259000,
-      currentPrice: 220000,
-      originPriceFormat: "259.000",
-      currentPriceFormat: "220.000",
-    },
-    {
-      id: "4",
-      name: "Áo Thun Unisex Basic",
-      image: "/images/clother-4.jpg",
-      originPrice: 199000,
-      currentPrice: 179000,
-      originPriceFormat: "199.000",
-      currentPriceFormat: "179.000",
-    },
-  ];
-  const products1 = [
-    {
-      id: "1",
-      name: "Áo Polo Nam Cotton",
-      image: "/images/clother-1.jpg",
-      originPrice: 249000,
-      currentPrice: 199000,
-      originPriceFormat: "249.000",
-      currentPriceFormat: "199.000",
-    },
-    {
-      id: "2",
-      name: "Quần Kaki Nam Dáng Slim",
-      image: "/images/clother-2.jpg",
-      originPrice: 349000,
-      // currentPrice: 0,
-      originPriceFormat: "349.000",
-      // currentPriceFormat: "0",
-    },
-    {
-      id: "3",
-      name: "Áo Len Dệt Kim Unisex",
-      image: "/images/clother-3.jpg",
-      originPrice: 299000,
-      currentPrice: 259000,
-      originPriceFormat: "299.000",
-      currentPriceFormat: "259.000",
-    },
-    {
-      id: "4",
-      name: "Áo Khoác Bomber Nam",
-      image: "/images/clother-4.jpg",
-      originPrice: 399000,
-      currentPrice: 349000,
-      originPriceFormat: "399.000",
-      currentPriceFormat: "349.000",
-    },
-  ];
+  const { data: lowProducts } = useQuery({
+    queryKey: ["lowPriceProducts"],
+    queryFn: lowPriceProducts,
+    retry: false,
+  });
+
+  const { data: newestProducts } = useQuery({
+    queryKey: ["newestsProducts"],
+    queryFn: newestsProducts,
+    retry: false,
+  });
 
   return (
     <main className="bg-white">
@@ -152,15 +87,15 @@ export default function HomePage() {
       <section className="mt-9 bg-white">
         <div className="max-w-[1400px] mx-auto px-6 py-6">
           <h2 className="text-4xl font-bold text-center">
-            SẢN PHẨM BÁN CHẠY NHẤT
+            SẢN PHẨM GIÁ TỐT NHẤT
           </h2>
           <ul className="mt-8 lg:grid grid-cols-4 gap-7">
-            {products.map((item) => (
+            {lowProducts?.data?.data?.map((item) => (
               <li
-                key={item.id}
+                key={item._id}
                 className="mt-6 md:mt-0 text-center group relative"
               >
-                <Link to={`/product/${item.id}`} className="block">
+                <Link to={`/product/${item._id}`} className="block">
                   {/* Ảnh sản phẩm */}
                   <div className="rounded-xl overflow-hidden bg-white lg:h-[385px]">
                     <img
@@ -179,18 +114,18 @@ export default function HomePage() {
                     <div className="absolute flex flex-col items-center left-1/2 -translate-x-1/2 hover:bottom-0 -bottom-5 transition-all duration-300">
                       {/* Giá sản phẩm */}
                       <div className="flex items-center justify-center font-bold text-[15px] text-center">
-                        {item.currentPriceFormat ? (
+                        {item.currentPrice ? (
                           <>
                             <span className="text-gray-400 line-through text-sm mr-2">
-                              {item.originPriceFormat} ₫
+                              {item.originPrice} ₫
                             </span>
                             <span className="mx-1">-</span>
                             <span className="text-red-600">
-                              {item.currentPriceFormat} ₫
+                              {item.currentPrice} ₫
                             </span>
                           </>
                         ) : (
-                          <span>{item.originPriceFormat} ₫</span>
+                          <span>{item.originPrice} ₫</span>
                         )}
                       </div>
 
@@ -210,7 +145,7 @@ export default function HomePage() {
 
           <div className="flex justify-center mt-8 w-15 h-15">
             <Link
-              href="/#"
+              to="/product"
               className="h-12 border border-black px-10 inline-flex items-center font-semibold text-black rounded-full text-lg text-center hover:bg-black hover:text-white transition-all duration-300"
             >
               Xem thêm
@@ -222,7 +157,7 @@ export default function HomePage() {
         <div className="max-w-[1400px] mx-auto px-6 py-6">
           <h2 className="text-4xl font-bold text-center">SẢN PHẨM MỚI NHẤT</h2>
           <ul className="mt-8 lg:grid grid-cols-4 gap-7">
-            {products1.map((item) => (
+            {newestProducts?.data?.data?.map((item) => (
               <li
                 key={item.id}
                 className="mt-6 md:mt-0 text-center group relative"
@@ -246,18 +181,18 @@ export default function HomePage() {
                     <div className="absolute flex flex-col items-center left-1/2 -translate-x-1/2 hover:bottom-0 -bottom-5 transition-all duration-300">
                       {/* Giá sản phẩm */}
                       <div className="flex items-center justify-center font-bold text-[15px] text-center">
-                        {item.currentPriceFormat ? (
+                        {item.currentPrice ? (
                           <>
                             <span className="text-gray-400 line-through text-sm mr-2">
-                              {item.originPriceFormat} ₫
+                              {item.originPrice} ₫
                             </span>
                             <span className="mx-1">-</span>
                             <span className="text-red-600">
-                              {item.currentPriceFormat} ₫
+                              {item.currentPrice} ₫
                             </span>
                           </>
                         ) : (
-                          <span>{item.originPriceFormat} ₫</span>
+                          <span>{item.originPrice} ₫</span>
                         )}
                       </div>
 
@@ -277,7 +212,7 @@ export default function HomePage() {
 
           <div className="flex justify-center mt-8 w-15 h-15">
             <Link
-              href="/#"
+              to="/product"
               className="h-12 border border-black px-10 inline-flex items-center font-semibold text-black rounded-full text-lg text-center hover:bg-black hover:text-white transition-all duration-300"
             >
               Xem thêm

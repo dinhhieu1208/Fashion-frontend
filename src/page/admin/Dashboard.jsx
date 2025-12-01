@@ -12,6 +12,8 @@ import {
 import { ShoppingCart, UserPlus, Shirt, DollarSign } from "lucide-react";
 
 import { Line } from "react-chartjs-2";
+import { useQuery } from "@tanstack/react-query";
+import { getRevenue } from "@/services/revenueService";
 
 ChartJS.register(
   LineElement,
@@ -52,6 +54,12 @@ const AdminDashboard = () => {
 
   const [orderData, setOrderData] = useState({ labels: [], datasets: [] });
   const [revenueData, setRevenueData] = useState({ labels: [], datasets: [] });
+  const { data } = useQuery({
+    queryKey: ["getRevenue"],
+    queryFn: getRevenue,
+    retry: false,
+  });
+  console.log(data);
 
   // Orders (đơn hàng)
   useEffect(() => {
@@ -149,7 +157,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="p-6 min-h-screen bg-gray-50">
-      <div className="mb-6">
+      <div className="otalOrmb-6">
         <h2 className="text-2xl font-bold text-gray-800">Admin Dashboard</h2>
       </div>
 
@@ -157,28 +165,28 @@ const AdminDashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
         <Card
           title="Đơn hàng hôm nay"
-          value="58"
+          value={data?.data?.totalOrder}
           growth="+15%"
           color="bg-gradient-to-tr from-blue-500 to-purple-600"
           icon={ShoppingCart}
         />
         <Card
           title="Khách hàng mới"
-          value="22"
+          value={data?.data?.totalUser}
           growth="+10%"
           color="bg-gradient-to-tr from-green-500 to-emerald-400"
           icon={UserPlus}
         />
         <Card
           title="Sản phẩm bán chạy"
-          value="Áo thun Basic"
+          value={data?.data?.totalProduct}
           growth="+8%"
           color="bg-gradient-to-tr from-pink-500 to-rose-400"
           icon={Shirt}
         />
         <Card
           title="Doanh thu hôm nay"
-          value="12,5tr"
+          value={data?.data?.totalPrice}
           growth="+6%"
           color="bg-gradient-to-tr from-orange-500 to-yellow-500"
           icon={DollarSign}
@@ -216,8 +224,6 @@ const AdminDashboard = () => {
     </div>
   );
 };
-
-// Card Component
 // Card Component
 const Card = ({ title, value, growth, color, icon: Icon }) => (
   <div className="bg-white text-slate-800 rounded-2xl p-4 shadow-xl flex items-center">
