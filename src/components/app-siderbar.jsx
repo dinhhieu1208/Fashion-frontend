@@ -70,7 +70,9 @@ export function AppSidebar() {
               <SidebarMenuItem className="mb-[5px]">
                 <SidebarMenuButton className="flex items-center gap-2 rounded-md hover:bg-gray-100 transition-colors duration-200">
                   <LayoutDashboard className="w-4 h-4 text-blue-600" />
-                  <span className="text-[18px]">Trang tổng quan</span>
+                  <Link to="/admin/dashboard">
+                    <span className="text-[18px]">Trang tổng quan</span>
+                  </Link>
                   <ChevronDown className="ml-auto opacity-50" size={20} />
                 </SidebarMenuButton>
               </SidebarMenuItem>
