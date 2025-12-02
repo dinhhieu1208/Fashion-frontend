@@ -12,8 +12,8 @@ import {
 import { ShoppingCart, UserPlus, Shirt, DollarSign } from "lucide-react";
 
 import { Line } from "react-chartjs-2";
-import { useQuery } from "@tanstack/react-query";
-import { getRevenue } from "@/services/revenueService";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { getRevenue, postOrders } from "@/services/revenueService";
 
 ChartJS.register(
   LineElement,
@@ -60,6 +60,16 @@ const AdminDashboard = () => {
     retry: false,
   });
   console.log(data);
+  const mutation = useMutation({
+    mutationFn: postOrders,
+    onSuccess: (res) => {
+      console.log("Post orders success:", res.data);
+    },
+    onError: (res) => {
+      console.log("Post orders error:", res);
+    },
+  });
+  console.log();
 
   // Orders (đơn hàng)
   useEffect(() => {
@@ -164,28 +174,28 @@ const AdminDashboard = () => {
       {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
         <Card
-          title="Đơn hàng hôm nay"
+          title=" Tổng Đơn hàng "
           value={data?.data?.totalOrder}
           growth="+15%"
           color="bg-gradient-to-tr from-blue-500 to-purple-600"
           icon={ShoppingCart}
         />
         <Card
-          title="Khách hàng mới"
+          title=" Tổng Khách hàng mới"
           value={data?.data?.totalUser}
           growth="+10%"
           color="bg-gradient-to-tr from-green-500 to-emerald-400"
           icon={UserPlus}
         />
         <Card
-          title="Sản phẩm bán chạy"
+          title="Tổng Sản phẩm bán chạy"
           value={data?.data?.totalProduct}
           growth="+8%"
           color="bg-gradient-to-tr from-pink-500 to-rose-400"
           icon={Shirt}
         />
         <Card
-          title="Doanh thu hôm nay"
+          title=" Tổng Doanh thu "
           value={data?.data?.totalPrice}
           growth="+6%"
           color="bg-gradient-to-tr from-orange-500 to-yellow-500"
@@ -198,12 +208,11 @@ const AdminDashboard = () => {
         <ChartBox
           title="Thống kê đơn hàng"
           description="Tăng 12% so với kỳ trước"
-          value={timeRangeOrder}
+          value={mutation}
           onChange={setTimeRangeOrder}
           options={[
-            { value: "day", label: "Ngày" },
-            { value: "week", label: "Tuần" },
             { value: "month", label: "Tháng" },
+            { value: "year", label: "Năm" },
           ]}
           data={orderData}
         />
@@ -214,9 +223,8 @@ const AdminDashboard = () => {
           value={timeRangeRevenue}
           onChange={setTimeRangeRevenue}
           options={[
-            { value: "day", label: "Ngày" },
-            { value: "week", label: "Tuần" },
             { value: "month", label: "Tháng" },
+            { value: "year", label: "Năm" },
           ]}
           data={revenueData}
         />

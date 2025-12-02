@@ -5,7 +5,7 @@ import bank1 from "../../assets/images/bank-2.png";
 import { Trash2 } from "lucide-react";
 import { profileUser } from "@/services/authService";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { createOrder } from "@/services/orderService";
 
@@ -75,7 +75,11 @@ const Cart = () => {
       );
       syncCart(remaining);
       setSelectedItems([]);
-      window.location.href = res.data.url;
+      if (res.data.url) {
+        window.location.href = res.data.url;
+      } else if (method === "offline") {
+        navigate("/cart/success");
+      }
     },
     onError: (error) => {
       toast.error(error.response?.data?.message);
@@ -233,7 +237,6 @@ const Cart = () => {
               <option value="ABC">ABC</option>
             </select>
           </div>
-
           <div className="w-full text-end mt-8">
             <button
               type="button"

@@ -5,7 +5,6 @@ import RegisterPage from "./../page/client/RegisterPage.jsx";
 import ContactPage from "./../components/client/Contact.jsx";
 import IntroducePage from "./../page/client/IntroducePage.jsx";
 import CartPage from "./../page/client/CartPage.jsx";
-import PaymentPage from "./../page/client/PaymentPage.jsx";
 import ProductPage from "./../page/client/ProductPage.jsx";
 import ProfilePage from "./../page/client/ProfilePage.jsx";
 import ProductDetailPage from "./../page/client/ProductDetailPage.jsx";
@@ -40,6 +39,7 @@ import { VoucherList } from "@/page/admin/Voucher/VoucherList.jsx";
 import { AccountAdd } from "@/page/admin/accountAdmin/AccountAdminAdd.jsx";
 import { AccountList } from "@/page/admin/accountAdmin/AccountAdminList.jsx";
 import { AccountEdit } from "@/page/admin/accountAdmin/AccountAdminEdit.jsx";
+import { PaymentPage } from "@/page/client/PaymentPage.jsx";
 
 const AppRouter = () => {
   return (
@@ -53,7 +53,7 @@ const AppRouter = () => {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/introduce" element={<IntroducePage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/cart/success" element={<PaymentPage />} />
           <Route path="/product" element={<ProductPage />} />
           <Route path="/product/:id" element={<ProductDetailPage />} />
           <Route path="/confirm/email" element={<ConfirmEmail />} />
