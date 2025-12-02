@@ -77,7 +77,7 @@ const Cart = () => {
       setSelectedItems([]);
       if (res.data.url) {
         window.location.href = res.data.url;
-      } else if (method === "offline") {
+      } else {
         navigate("/cart/success");
       }
     },
