@@ -69,8 +69,6 @@ const AdminDashboard = () => {
       console.log("Post orders error:", res);
     },
   });
-  console.log();
-
   // Orders (đơn hàng)
   useEffect(() => {
     const datasets = {
@@ -208,11 +206,12 @@ const AdminDashboard = () => {
         <ChartBox
           title="Thống kê đơn hàng"
           description="Tăng 12% so với kỳ trước"
-          value={mutation}
+          value={timeRangeOrder}
           onChange={setTimeRangeOrder}
           options={[
+            { value: "day", label: "Ngày" },
+            { value: "week", label: "Tuần" },
             { value: "month", label: "Tháng" },
-            { value: "year", label: "Năm" },
           ]}
           data={orderData}
         />
@@ -223,8 +222,9 @@ const AdminDashboard = () => {
           value={timeRangeRevenue}
           onChange={setTimeRangeRevenue}
           options={[
+            { value: "day", label: "Ngày" },
+            { value: "week", label: "Tuần" },
             { value: "month", label: "Tháng" },
-            { value: "year", label: "Năm" },
           ]}
           data={revenueData}
         />
