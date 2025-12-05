@@ -15,7 +15,9 @@ export default function ProfileAdmin() {
 
   return (
     <header className="w-full bg-white flex items-center justify-between px-6 py-4 shadow-md">
-      <div className="text-lg font-bold text-black">Clothes Shop Admin</div>
+      <div className="text-lg font-bold text-black">
+        Quản trị cửa hàng thời trang
+      </div>
 
       {/* Avatar + Name + Dropdown */}
       <div className="relative">

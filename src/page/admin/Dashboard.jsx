@@ -12,8 +12,8 @@ import {
 import { ShoppingCart, UserPlus, Shirt, DollarSign } from "lucide-react";
 
 import { Line } from "react-chartjs-2";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { getRevenue, postOrders } from "@/services/revenueService";
+import { useQuery } from "@tanstack/react-query";
+import { getRevenue } from "@/services/revenueService";
 
 ChartJS.register(
   LineElement,
@@ -60,15 +60,7 @@ const AdminDashboard = () => {
     retry: false,
   });
   console.log(data);
-  const mutation = useMutation({
-    mutationFn: postOrders,
-    onSuccess: (res) => {
-      console.log("Post orders success:", res.data);
-    },
-    onError: (res) => {
-      console.log("Post orders error:", res);
-    },
-  });
+
   // Orders (đơn hàng)
   useEffect(() => {
     const datasets = {
@@ -166,7 +158,9 @@ const AdminDashboard = () => {
   return (
     <div className="p-6 min-h-screen bg-gray-50">
       <div className="otalOrmb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Admin Dashboard</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-5">
+          Trang quản trị hệ thống
+        </h2>
       </div>
 
       {/* Cards */}

@@ -16,16 +16,16 @@ export default function RegisterForm() {
     mutationFn: registerUser,
     onSuccess: (res) => {
       if (res.data.code === "success") {
-        toast.success(res.data.message)
-        navigate("/confirm/email")
+        toast.success(" Vui lòng kiểm tra email để xác nhận.");
+        navigate("/confirm/email");
       } else {
-        toast.error("Call api fall")
-        console.log("not oke")
+        toast.error("Call api fall");
+        console.log("not oke");
       }
     },
     onError: () => {
-      console.log("not oke")
-    }
+      console.log("not oke");
+    },
   });
 
   const onSubmit = (e) => {
@@ -35,12 +35,12 @@ export default function RegisterForm() {
     const password = e.target.password.value;
 
     if (!fullName || !email || !password) {
-      toast.warning("Vui lòng nhập đầy đủ thông tin")
+      toast.warning("Vui lòng nhập đầy đủ thông tin");
     } else {
       const data = {
         fullName: fullName,
         email: email,
-        password: password
+        password: password,
       };
       mutation.mutate(data);
     }
@@ -53,7 +53,7 @@ export default function RegisterForm() {
         <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg space-y-6">
           {/* Title */}
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900">Create Account</h2>
+            <h2 className="text-3xl font-bold text-gray-900">Tạo tài khoản</h2>
             <p className="text-gray-500 text-sm mt-2">
               Bạn chỉ còn một bước nữa để trở thành thành viên của Fashion Store
             </p>
@@ -96,13 +96,13 @@ export default function RegisterForm() {
               type="submit"
               className="w-full bg-black text-white py-2 rounded-md font-medium hover:bg-gray-500 transition"
             >
-              Create Account
+              Tạo tài khoản
             </button>
           </form>
 
           <div className="flex items-center">
             <hr className="flex-grow border-gray-300" />
-            <span className="mx-3 text-sm text-gray-500">Or sign up with</span>
+            <span className="mx-3 text-sm text-gray-500">hoặc đăng ký với</span>
             <hr className="flex-grow border-gray-300" />
           </div>
 
@@ -121,12 +121,12 @@ export default function RegisterForm() {
 
           {/* Login link */}
           <p className="text-center text-sm text-gray-600">
-            Already have an account?{" "}
+            Đã có tài khoản?{" "}
             <Link
               to="/login"
               className="text-indigo-600 font-medium hover:underline"
             >
-              Login
+              Đăng nhập
             </Link>
           </p>
         </div>

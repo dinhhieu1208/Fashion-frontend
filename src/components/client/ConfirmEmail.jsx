@@ -8,20 +8,20 @@ export default function ConfirmEmailComponent() {
   const mutation = useMutation({
     mutationFn: confirmEmail,
     onSuccess: (res) => {
-      if(res.data.code === "success") {
-        toast.success(res.data.message);
+      if (res.data.code === "success") {
+        toast.success("Đăng ký thành công !");
         navigate("/login");
       }
     },
     onError: (error) => {
-      toast.error(error.response.data.message)
-    }
+      toast.error(error.response.data.message);
+    },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(e.target.otp.value);
-    if(!e.target.otp.value) {
+    if (!e.target.otp.value) {
       toast.warning("Vui lòng điền mã otp trước khi gửi");
     } else {
       mutation.mutate({ otp: e.target.otp.value });
@@ -62,10 +62,8 @@ export default function ConfirmEmailComponent() {
             className="w-full px-4 py-2 border rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
 
-          <button
-            className="w-full bg-blue-500 text-white py-2 rounded-lg font-medium hover:bg-blue-600 transition"
-          >
-            Confirm
+          <button className="w-full bg-blue-500 text-white py-2 rounded-lg font-medium hover:bg-blue-600 transition">
+            Xác nhận
           </button>
         </form>
       </div>
