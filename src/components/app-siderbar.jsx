@@ -62,7 +62,7 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-lg font-semibold mb-[10px] text-gray-700">
-            Admin Page
+            Trang Admin
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>

@@ -16,11 +16,15 @@ export default function LoginForm() {
   const mutation = useMutation({
     mutationFn: loginService,
     onSuccess: (res) => {
-      toast.success(res.data.message);
-      localStorage.setItem("isLogin", true);
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
+      if (res.data.code == "success") {
+        toast.success("Đăng nhập thành công!");
+        localStorage.setItem("isLogin", true);
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      } else {
+        toast.error("Email hoặc mật khẩu không đúng!");
+      }
     },
     onError: (error) => {
       console.log(error.response.data.message);
@@ -48,7 +52,7 @@ export default function LoginForm() {
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg space-y-6">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900">
-            Login to Your Account
+            Đăng nhập vào tài khoản của bạn
           </h2>
           <p className="text-gray-500 text-sm mt-2">
             Đăng nhập để tiếp tục khám phá xu hướng thời trang mới nhất
@@ -83,13 +87,15 @@ export default function LoginForm() {
             type="submit"
             className="w-full bg-black text-white py-2 rounded-md font-medium hover:bg-gray-500 transition"
           >
-            Login
+            Đăng nhập
           </button>
         </form>
 
         <div className="flex items-center">
           <hr className="flex-grow border-gray-300" />
-          <span className="mx-3 text-sm text-gray-500">Or login with</span>
+          <span className="mx-3 text-sm text-gray-500">
+            hoặc đăng nhập bằng
+          </span>
           <hr className="flex-grow border-gray-300" />
         </div>
 
@@ -108,12 +114,12 @@ export default function LoginForm() {
 
         {/* Register link */}
         <p className="text-center text-sm text-gray-600">
-          Don’t have an account?{" "}
+          Không có tài khoản?{" "}
           <Link
             to="/register"
             className="text-indigo-600 font-medium hover:underline"
           >
-            Create Account
+            Tạo tài khoản
           </Link>
         </p>
       </div>
