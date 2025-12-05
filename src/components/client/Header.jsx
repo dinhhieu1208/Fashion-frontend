@@ -183,7 +183,7 @@ export default function Header() {
                 <Link to="/product">Sản Phẩm</Link>
               </li>
               <li>
-                <Link to="/introduce">Bài Viết</Link>
+                <Link to="/introduce">Giới Thiệu</Link>
               </li>
               <li>
                 <Link to="/contact">Liên Hệ</Link>
