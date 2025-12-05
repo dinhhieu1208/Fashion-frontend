@@ -177,7 +177,7 @@ export default function HomePage() {
                   </h3>
 
                   {/* Giá + Add to cart */}
-                  <div className="mt-2 relative h-5 overflow-hidden">
+                  <div className="mt-2 relative h-5 overflow-hidden md:mb-5">
                     <div className="absolute flex flex-col items-center left-1/2 -translate-x-1/2 hover:bottom-0 -bottom-5 transition-all duration-300">
                       {/* Giá sản phẩm */}
                       <div className="flex items-center justify-center font-bold text-[15px] text-center">

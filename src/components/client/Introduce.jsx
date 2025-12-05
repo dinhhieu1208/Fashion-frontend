@@ -3,14 +3,6 @@ import about from "../../assets/images/aboutUs.jpg";
 const About = () => {
   return (
     <div className="max-w-[1200px] mx-auto px-4 py-4">
-      <div className="text-center text-2xl pt-10 border-t">
-        <div className="inline-flex gap-2 items-center mb-3">
-          <span className="text-gray-500 font-medium">
-            Liên hệ về chúng tôi
-          </span>
-        </div>
-      </div>
-
       <div className="my-10 flex flex-col md:flex-row gap-16">
         <img
           className="w-full md:max-w-[460px] rounded"
