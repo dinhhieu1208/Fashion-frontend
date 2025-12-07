@@ -19,8 +19,10 @@ const Profile = () => {
   const mutation = useMutation({
     mutationFn: profileUserEdit,
     onSuccess: (res) => {
-      queryClient.invalidateQueries(["users"]);
-      toast.success(res.data.message);
+      if (res.code === "success") {
+        queryClient.invalidateQueries(["users"]);
+        toast.success("Cập nhật thông tin thành công!");
+      }
     },
     onError: (error) => {
       console.log(error.response.data.message);

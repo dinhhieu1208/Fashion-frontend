@@ -18,13 +18,13 @@ export default function ProfileAdmin() {
   const mutation = useMutation({
     mutationFn: profileAdminEdit,
     onSuccess: () => {
-      toast.success("Hồ sơ đã được chỉnh sửa");
+      toast.success("Cập nhật thông tin thành công!");
     },
     onError: () => {
       toast.error("Lỗi");
     },
-    retry: false
-  })
+    retry: false,
+  });
 
   const [previewImage, setPreviewImage] = useState("");
 
